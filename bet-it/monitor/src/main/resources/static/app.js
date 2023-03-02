@@ -15,29 +15,29 @@ function setConnected(connected) {
 }
 
 function newEventReceived(event) {
-    //console.log(event);
+    console.log('event received', event);
 
     // id used to find transaction via JavaScript, "-" from UUID not valid as JS-ID.
-    var jsTransactionId = event.transactionId;
+    //var jsTransactionId = event.transactionId;
     
-    if (!eventsPerTransaction[jsTransactionId]) {
-        eventsPerTransaction[jsTransactionId] = [];
-        $("#events").prepend('<tr><td><a href="/bpmn.html?traceId='+event.transactionId+'" target="blank_">'+event.transactionId+'</a></td><td id="' + event.transactionId + '"></td></tr>');
-    }
+    // if (!eventsPerTransaction[jsTransactionId]) {
+    //     eventsPerTransaction[jsTransactionId] = [];
+    //     $("#events").prepend('<tr><td><a href="/bpmn.html?traceId='+event.body+'" target="blank_">'+event.body+'</a></td><td id="' + event.body + '"></td></tr>');
+    // }
+    $("#events").prepend('<tr><td>' + event + '</td></tr>');
+    // eventsPerTransaction[jsTransactionId].push(event);
 
-    eventsPerTransaction[jsTransactionId].push(event);
-
-    var color = 'info';
-    if (event.type=='Command') {
-        color = 'danger'; // or 'warning'?
-    }
-    var randomId = Math.floor((1 + Math.random()) * 0x10000);
-    var prettyJson = JSON.stringify(JSON.parse(event.sourceJson), null, 2);
-    var html = 
-          '<div class="alert alert-'+color+'">'+event.type+': '+event.name+' (from '+event.sender+') '          
-        + '<a label="Details" data-toggle="collapse" data-target="#'+randomId+'" class="btn btn-default table-row-btn"><span class="glyphicon glyphicon-eye-open"></span></a>'
-        + '<div class="collapse" id="'+ randomId + '"><pre>' + prettyJson + '</pre></div>'
-        + '</div>';
+    // var color = 'info';
+    // if (event.type=='Command') {
+    //     color = 'danger'; // or 'warning'?
+    // }
+    // var randomId = Math.floor((1 + Math.random()) * 0x10000);
+    // var prettyJson = JSON.stringify(JSON.parse(event.sourceJson), null, 2);
+    // var html =
+    //       '<div class="alert alert-'+color+'">'+event.type+': '+event.name+' (from '+event.sender+') '
+    //     + '<a label="Details" data-toggle="collapse" data-target="#'+randomId+'" class="btn btn-default table-row-btn"><span class="glyphicon glyphicon-eye-open"></span></a>'
+    //     + '<div class="collapse" id="'+ randomId + '"><pre>' + prettyJson + '</pre></div>'
+    //     + '</div>';
     $('td[id^="'+jsTransactionId+'"]').append(html);
 }
 
@@ -48,7 +48,7 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/events', function (event) {
-            newEventReceived(JSON.parse(event.body));
+                newEventReceived(event.body);
         });
     });
 }

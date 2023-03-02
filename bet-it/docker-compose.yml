@@ -54,6 +54,20 @@ services:
       - kafka
 
 
+  monitor:
+    build:
+      context: monitor
+      dockerfile: Dockerfile
+    networks:
+      - bet-it
+    ports:
+      - "8095:8095"
+    depends_on:
+      - kafka
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+
+
 networks:
   bet-it:
     driver: bridge

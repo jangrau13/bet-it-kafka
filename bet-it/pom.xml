@@ -10,7 +10,6 @@
     <modules>
         <module>base-application</module>
         <module>base-application-json</module>
-
         <module>monitor</module>
     </modules>
 
