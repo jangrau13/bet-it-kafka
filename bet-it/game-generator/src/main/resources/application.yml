@@ -1,0 +1,19 @@
+server:
+    port: 8083  # Tomcat default port
+
+
+spring:
+    kafka:
+        consumer:
+            bootstrap-servers: kafka:9092
+            group-id: myGroup
+            auto-offset-reset: earliest
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        producer:
+            bootstrap-servers: kafka:9092
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+        topic: bet.message-topic
+        bet-it-result-topic: bet.result

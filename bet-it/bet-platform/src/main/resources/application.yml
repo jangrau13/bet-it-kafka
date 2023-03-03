@@ -1,0 +1,16 @@
+server:
+    port: 8082  # Tomcat default port
+
+
+spring:
+    kafka:
+        consumer:
+            bootstrap-servers: kafka:9092
+            group-id: betPlatform
+            auto-offset-reset: earliest
+        producer:
+            bootstrap-servers: kafka:9092
+
+        topic: bet.message-topic
+        bet-it-bid-topic: bet.bid
+        bet-it-result-topic: bet.result

@@ -10,6 +10,8 @@
     <modules>
         <module>base-application</module>
         <module>base-application-json</module>
+        <module>bet-platform</module>
+        <module>game-generator</module>
         <module>monitor</module>
     </modules>
 
