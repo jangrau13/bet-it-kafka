@@ -12,7 +12,6 @@ public class ProducerService<T> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-
     @Value("${spring.kafka.bet-it-result-topic}")
     private String betItResultTopic;
 
@@ -23,8 +22,8 @@ public class ProducerService<T> {
     private KafkaTemplate<String, T> kafkaTemplateSuperHero;
 
 
-    public void sendSuperHeroMessage(T betItResult) {
-        logger.info("#### -> Publishing BetItResult :: {}", betItResult);
-        kafkaTemplateSuperHero.send(betItResultTopic, betItResult);
+    public void sendMessage(T game) {
+        logger.info("#### -> Publishing BetItResult :: {}", game);
+        kafkaTemplateSuperHero.send(betItResultTopic, game);
     }
 }

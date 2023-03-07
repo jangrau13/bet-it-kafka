@@ -11,8 +11,9 @@
         <module>base-application</module>
         <module>base-application-json</module>
         <module>bet-platform</module>
-        <module>game-generator</module>
+        <module>game-master</module>
         <module>monitor</module>
+        <module>game-info</module>
     </modules>
 
     <build>

@@ -33,9 +33,7 @@ public class Platform {
     }
 
     public boolean isBidWon(BetItResult betItResult){
-        BetItBid bid = bidList.stream().filter((betItBid -> {
-            return betItBid.getBetGameNumber().equals(betItResult.getBetGameNumber());
-        })).collect(Collectors.toList()).get(0);
+        BetItBid bid = bidList.stream().filter((betItBid -> betItBid.getBetGameNumber().equals(betItResult.getBetGameNumber()))).collect(Collectors.toList()).get(0);
         if(bid != null){
             boolean res = bid.isHomeTeamWillWin() == betItResult.isHomeTeamWillWin();
             logger.info("$$$$$$$$$$ yes, there was a bet for this bet and the result is" + res);

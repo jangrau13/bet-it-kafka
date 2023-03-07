@@ -1,4 +1,11 @@
-# lab03Part1-kafka-spring
+# Bet Platform
+
+## Monitor
+http://localhost:8095/ to monitor the messages
+
+## Create Game
+
+
 
 In this lab, you will see how to use the Spring Boot-Kafka integration to send and consume message from a Spring Boot application via Kafka.
 

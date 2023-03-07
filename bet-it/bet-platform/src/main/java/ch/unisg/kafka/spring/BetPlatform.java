@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootKafkaApplication {
+public class BetPlatform {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootKafkaApplication.class, args);
+		SpringApplication.run(BetPlatform.class, args);
 	}
 }
