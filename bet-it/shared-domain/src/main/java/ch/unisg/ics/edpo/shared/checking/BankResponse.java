@@ -14,13 +14,22 @@ public class BankResponse implements Serializable {
     private BankResponseType bankResponseType;
 
     @Getter
-    private String BiddingId;
+    private String biddingId;
 
     @Getter
     private BidState bidState;
     public BankResponse(BankResponseType bankResponseType, String biddingId, BidState bidState) {
         this.bankResponseType = bankResponseType;
-        BiddingId = biddingId;
+        this.biddingId = biddingId;
         this.bidState = bidState;
+    }
+
+    @Override
+    public String toString() {
+        return "BankResponse{" +
+                "bankResponseType=" + bankResponseType +
+                ", BiddingId='" + biddingId + '\'' +
+                ", bidState=" + bidState +
+                '}';
     }
 }

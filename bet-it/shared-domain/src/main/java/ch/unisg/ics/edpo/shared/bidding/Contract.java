@@ -42,4 +42,15 @@ public class Contract implements  Serializable{
     public Contract(){
     }
 
+    @Override
+    public String toString() {
+        return "Contract{" +
+                "contractId='" + contractId + '\'' +
+                ", ratio=" + ratio +
+                ", gameId='" + gameId + '\'' +
+                ", winHome=" + winHome +
+                ", winAway=" + winAway +
+                ", writerName='" + writerName + '\'' +
+                '}';
+    }
 }

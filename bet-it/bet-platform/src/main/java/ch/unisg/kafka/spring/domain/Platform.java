@@ -31,6 +31,8 @@ public class Platform {
 
 
     public void handleBankResponse(BankResponse bankResponse){
+        logger.info("All bidding ids are : " + bids.keySet());
+        logger.info("The id we are looking for is : " + bankResponse.getBiddingId());
         Bid bid = bids.get(bankResponse.getBiddingId());
         bid.setBidState(bankResponse.getBidState());
     }
@@ -80,6 +82,7 @@ public class Platform {
      * Check if bid actually got accepted before making any payments
      */
     private void makePayments(Bid bid, Contract contract) {
+        logger.info("Some payments need to happen asap!");
     }
 
 }

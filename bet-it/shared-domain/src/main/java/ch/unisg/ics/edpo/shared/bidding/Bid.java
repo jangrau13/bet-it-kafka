@@ -39,5 +39,16 @@ public class Bid implements  Serializable{
         this.amount = amount;
         this.bidState = BidState.PROPOSED;
     }
+
+    @Override
+    public String toString() {
+        return "Bid{" +
+                "bidId='" + bidId + '\'' +
+                ", contractId='" + contractId + '\'' +
+                ", buyerName='" + buyerName + '\'' +
+                ", amount=" + amount +
+                ", bidState=" + bidState +
+                '}';
+    }
 }
 
