@@ -15,6 +15,10 @@ POST localhost:8082/platform/bet/write body: { "winHome": boolean, "winAway": bo
 
 POST localhost:8082/platform/bet/bid body: { "buyerName": String, "amount": float, "contractId": String}
 
+This will set the bid, if however the bank eventually rejects the bid, it will be deleted. If the bank does not reject it, it will be set as active.
+
+
+
 In this lab, you will see how to use the Spring Boot-Kafka integration to send and consume message from a Spring Boot application via Kafka.
 
 This lab is adapted from [here](https://github.com/rahul-ghadge/spring-boot-kafka).
