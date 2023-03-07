@@ -1,8 +1,8 @@
 package ch.unisg.kafka.spring.service;
 
+import ch.unisg.ics.edpo.shared.checking.BankResponse;
+import ch.unisg.ics.edpo.shared.game.Game;
 import ch.unisg.kafka.spring.domain.Platform;
-import ch.unisg.kafka.spring.model.BetItBid;
-import ch.unisg.kafka.spring.model.BetItResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -14,23 +14,17 @@ public class ConsumerService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @KafkaListener(topics = {"${spring.kafka.bet-it-bid-topic}"}, containerFactory = "kafkaListenerBetItBidFactory", groupId = "bet-platform")
-    public void consumeBetItBid(BetItBid betItBid) {
+    @KafkaListener(topics = {"${spring.kafka.game-topic}"}, containerFactory = "kafkaListenerGameFactory", groupId = "bet-platform")
+    public void consumeBetItBid(Game game) {
+        logger.info("**** -> Consuming Game Update :: {}", game);
         Platform platform = Platform.getInstance();
-        platform.addBetItBid(betItBid);
-        logger.info("**** -> Consumed BetItBid :: {}", betItBid);
-
+        platform.updateGame(game);
     }
 
-    @KafkaListener(topics = {"${spring.kafka.bet-it-result-topic}"}, containerFactory = "kafkaListenerBetItBidFactory", groupId = "bet-platform")
-    public void consumeBetItResult(BetItResult betItResult) {
+    @KafkaListener(topics = {"${spring.kafka.bank-response}"}, containerFactory = "kafkaListenerBankResultFactory", groupId = "bet-platform")
+    public void consumeBetItResult(BankResponse bankResponse) {
         Platform platform = Platform.getInstance();
-        logger.info("**** -> Consumed BetItResult :: {}", betItResult);
-        if(platform.isBidWon(betItResult)){
-            logger.info("******* Bet was in Bet-List :: {}", betItResult);
-        };
-
-
+        platform.handleBankResponse(bankResponse);
     }
 
 }

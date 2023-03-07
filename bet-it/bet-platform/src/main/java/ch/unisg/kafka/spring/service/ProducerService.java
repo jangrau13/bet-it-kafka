@@ -12,8 +12,8 @@ public class ProducerService<T> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${spring.kafka.bet-it-bid-topic}")
-    private String betBidTopic;
+    @Value("${spring.kafka.check-bid}")
+    private String checkBidTopic;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
@@ -24,6 +24,6 @@ public class ProducerService<T> {
 
     public void sendBetItBidMessage(T betItBid) {
         logger.info("#### -> Publishing bet-it bid :: {}", betItBid);
-        kafkaTemplatebetItBid.send(betBidTopic, betItBid);
+        kafkaTemplatebetItBid.send(checkBidTopic, betItBid);
     }
 }

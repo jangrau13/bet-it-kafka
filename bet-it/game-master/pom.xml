@@ -49,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>ch.unisg.ics.edpo</groupId>
-            <artifactId>game-info</artifactId>
+            <artifactId>shared-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

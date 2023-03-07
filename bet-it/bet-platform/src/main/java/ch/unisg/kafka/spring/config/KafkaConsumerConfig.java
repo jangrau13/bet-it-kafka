@@ -1,7 +1,7 @@
 package ch.unisg.kafka.spring.config;
 
-import ch.unisg.kafka.spring.model.BetItBid;
-import ch.unisg.kafka.spring.model.BetItResult;
+import ch.unisg.ics.edpo.shared.checking.BankResponse;
+import ch.unisg.ics.edpo.shared.game.Game;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class KafkaConsumerConfig {
     // Bet-It-Bid Consumer
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Bean
-    public ConsumerFactory<String, BetItBid> consumerBetItBidFactory() {
+    public ConsumerFactory<String, Game> consumerGameFactory() {
        Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -45,13 +45,13 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 
-        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(BetItBid.class));
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(Game.class));
     }
 
     @Bean
-    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerBetItBidFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, BetItBid> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerBetItBidFactory());
+    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerGameFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Game> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerGameFactory());
         factory.setMessageConverter(new StringJsonMessageConverter());
         factory.setBatchListener(true);
         return factory;
@@ -61,7 +61,7 @@ public class KafkaConsumerConfig {
     // Bet-It-Result Consumer
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Bean
-    public ConsumerFactory<String, BetItResult> consumerBetItResultFactory() {
+    public ConsumerFactory<String, BankResponse> consumerBankResponseFactory() {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -69,18 +69,17 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 
-        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(BetItResult.class));
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(BankResponse.class));
     }
 
     @Bean
-    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerBetItResultFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, BetItResult> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerBetItResultFactory());
+    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerBankResultFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, BankResponse> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerBankResponseFactory());
         factory.setMessageConverter(new StringJsonMessageConverter());
         factory.setBatchListener(true);
         return factory;
     }
-
 
     @Bean
     public KafkaListenerErrorHandler myTopicErrorHandler() {

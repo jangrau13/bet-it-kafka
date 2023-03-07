@@ -1,9 +1,10 @@
 package ch.unisg.kafka.spring.controllers;
 
-import ch.unisg.ics.edpo.Game;
-import ch.unisg.ics.edpo.Score;
+import ch.unisg.ics.edpo.shared.game.Game;
+import ch.unisg.ics.edpo.shared.game.Score;
 import ch.unisg.kafka.spring.service.ProducerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -14,6 +15,8 @@ public class KafkaController {
 
     private final ProducerService<Game> producerService;
 
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
     public KafkaController(ProducerService<Game> producerService) {
         this.producerService = producerService;
     }
@@ -21,12 +24,11 @@ public class KafkaController {
     private Score getRandomScore(){
         Random ran = new Random();
 
-        /**
-         * not random yet
+        /*
+          not random yet
          */
         return new Score(2, 3);
     }
-
 
     private void startRandomGame(Game game){
         new Thread(() -> {
@@ -43,7 +45,8 @@ public class KafkaController {
 
     @PostMapping(value= "/createRandom")
     public Map<String, Object> createRandomGame(@RequestBody String gameName) {
-        Game game = new Game(UUID.randomUUID().toString(), gameName, new Date());
+        log.info("Trying to create Game with name: " + gameName);
+        Game game = new Game(UUID.randomUUID().toString(), gameName, new Score(0, 0), false);
         startRandomGame(game);
         Map<String, Object> map = new HashMap<>();
         map.put("message", "Successfully published BetResult..!");
