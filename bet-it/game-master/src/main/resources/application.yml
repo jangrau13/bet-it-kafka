@@ -15,4 +15,4 @@ spring:
             key-serializer: org.apache.kafka.common.serialization.StringSerializer
             value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-        game-topic: game-topic
+        game-topic: bet.game-topic

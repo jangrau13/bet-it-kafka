@@ -4,17 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
+import java.io.Serializable;
+public class Bid implements  Serializable{
 
-public class Bid {
 
+    public Bid(){
+    }
+
+    @Getter @Setter
+    private String bidId;
     @Getter
-    private final String bidId;
+    private String contractId;
     @Getter
-    private final String contractId;
+    private String buyerName;
     @Getter
-    private final String buyerName;
-    @Getter
-    private final float amount;
+    private float amount;
 
     @Getter @Setter
     private BidState bidState;

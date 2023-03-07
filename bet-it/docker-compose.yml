@@ -41,6 +41,16 @@ services:
       - "8082:8082"
     depends_on:
       - kafka
+  bank:
+    build:
+      context: bank
+      dockerfile: Dockerfile
+    networks:
+      - bet-it
+    ports:
+      - "8081:8081"
+    depends_on:
+      - kafka
 
   game-master:
     build:

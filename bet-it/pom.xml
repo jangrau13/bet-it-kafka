@@ -21,6 +21,7 @@
         <module>game-master</module>
         <module>monitor</module>
         <module>shared-domain</module>
+        <module>bank</module>
     </modules>
 
     <properties>

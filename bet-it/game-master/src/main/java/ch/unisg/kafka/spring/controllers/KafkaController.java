@@ -34,7 +34,7 @@ public class KafkaController {
         new Thread(() -> {
             try {
                 producerService.sendMessage(game);
-                Thread.sleep(3000);
+                Thread.sleep(60000);
                 Game finished = game.update(getRandomScore(), true);
                 producerService.sendMessage(finished);
             } catch (InterruptedException e) {

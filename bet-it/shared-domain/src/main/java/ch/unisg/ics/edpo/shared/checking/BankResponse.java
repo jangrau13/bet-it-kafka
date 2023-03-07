@@ -3,16 +3,21 @@ package ch.unisg.ics.edpo.shared.checking;
 import ch.unisg.ics.edpo.shared.bidding.BidState;
 import lombok.Getter;
 
-public class BankResponse {
+import java.io.Serializable;
+
+public class BankResponse implements Serializable {
+
+    public BankResponse(){
+    }
 
     @Getter
-    private final BankResponseType bankResponseType;
+    private BankResponseType bankResponseType;
 
     @Getter
-    private final String BiddingId;
+    private String BiddingId;
 
     @Getter
-    private final BidState bidState;
+    private BidState bidState;
     public BankResponse(BankResponseType bankResponseType, String biddingId, BidState bidState) {
         this.bankResponseType = bankResponseType;
         BiddingId = biddingId;

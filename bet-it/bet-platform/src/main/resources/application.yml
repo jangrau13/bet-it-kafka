@@ -11,6 +11,6 @@ spring:
         producer:
             bootstrap-servers: kafka:9092
 
-        game-topic: game-topic
-        bank-response: bank-response
-        check-bid: check-bid
+        game-topic: bet.game-topic
+        bank-response: bet.bank-response
+        reserve-bid: bet.reserve-bid

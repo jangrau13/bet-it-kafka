@@ -15,14 +15,14 @@ public class ConsumerService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @KafkaListener(topics = {"${spring.kafka.game-topic}"}, containerFactory = "kafkaListenerGameFactory", groupId = "bet-platform")
-    public void consumeBetItBid(Game game) {
+    public void consumeGameMessage(Game game) {
         logger.info("**** -> Consuming Game Update :: {}", game);
         Platform platform = Platform.getInstance();
         platform.updateGame(game);
     }
 
     @KafkaListener(topics = {"${spring.kafka.bank-response}"}, containerFactory = "kafkaListenerBankResultFactory", groupId = "bet-platform")
-    public void consumeBetItResult(BankResponse bankResponse) {
+    public void consumeBankResponse(BankResponse bankResponse) {
         Platform platform = Platform.getInstance();
         platform.handleBankResponse(bankResponse);
     }

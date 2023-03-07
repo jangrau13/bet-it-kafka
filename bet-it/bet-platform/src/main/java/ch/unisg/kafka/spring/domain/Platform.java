@@ -2,6 +2,7 @@ package ch.unisg.kafka.spring.domain;
 
 import ch.unisg.ics.edpo.shared.bidding.Bid;
 import ch.unisg.ics.edpo.shared.bidding.Contract;
+import ch.unisg.ics.edpo.shared.bidding.ReserveBid;
 import ch.unisg.ics.edpo.shared.checking.BankResponse;
 import ch.unisg.ics.edpo.shared.game.Game;
 import org.slf4j.Logger;
@@ -28,8 +29,6 @@ public class Platform {
     }
 
 
-    private void checkIfBothValid(Bid bid, Contract contract){
-    }
 
     public void handleBankResponse(BankResponse bankResponse){
         Bid bid = bids.get(bankResponse.getBiddingId());
@@ -37,14 +36,22 @@ public class Platform {
     }
 
 
-    public void addBid(Bid bid){
+    public ReserveBid addBid(Bid bid){
+        if(!contracts.containsKey(bid.getContractId())){
+            return null;
+        }
+
         Contract contract = contracts.get(bid.getContractId());
         bids.put(bid.getBidId(), bid);
-        checkIfBothValid(bid, contract);
+        return new ReserveBid(bid, contract);
     }
 
-    public void addContract(Contract contract) {
-        contracts.put(contract.getContractId(), contract);
+    public boolean addContract(Contract contract) {
+        if(games.containsKey(contract.getGameId())){
+            contracts.put(contract.getContractId(), contract);
+            return true;
+        }
+        return false;
     }
 
     public void updateGame(Game game){
@@ -53,12 +60,16 @@ public class Platform {
             contracts.values().stream()
                     .filter(contract -> contract.getGameId().equals(game.getId()))
                     .forEach((this::handleContractsOfFinishedGame));
+
+            games.remove(game.getId());
+        } else {
+            games.put(game.getId(), game);
         }
-        games.remove(game.getId());
     }
 
 
     private void handleContractsOfFinishedGame(Contract contract){
+        logger.info("We're handling a contract from " + contract.getWriterName() + " with id: " + contract.getContractId());
         bids.values().stream()
                 .filter(bid -> bid.getContractId().equals(contract.getContractId()))
                 .forEach(bid -> makePayments(bid, contract));

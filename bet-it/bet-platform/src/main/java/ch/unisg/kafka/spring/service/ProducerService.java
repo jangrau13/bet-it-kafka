@@ -12,7 +12,7 @@ public class ProducerService<T> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${spring.kafka.check-bid}")
+    @Value("${spring.kafka.reserve-bid}")
     private String checkBidTopic;
 
     @Autowired
@@ -22,8 +22,8 @@ public class ProducerService<T> {
     private KafkaTemplate<String, T> kafkaTemplatebetItBid;
 
 
-    public void sendBetItBidMessage(T betItBid) {
-        logger.info("#### -> Publishing bet-it bid :: {}", betItBid);
+    public void sendReserveBidMessage(T betItBid) {
+        logger.info("#### -> Publishing reserve bid :: {}", betItBid);
         kafkaTemplatebetItBid.send(checkBidTopic, betItBid);
     }
 }

@@ -1,38 +1,45 @@
 package ch.unisg.ics.edpo.shared.bidding;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
+import java.io.Serializable;
+public class Contract implements  Serializable{
+    @Getter @Setter
+    private String contractId;
+    @Getter
+    private float ratio;
+    @Getter
+    private String gameId;
+    @Getter
+    private boolean winHome;
 
-public final class Contract {
     @Getter
-    private final String contractId;
+    private boolean winAway;
+
     @Getter
-    private final float ratio;
-    @Getter
-    private final String gameId;
-    @Getter
-    private final WinCondition condition;
-    @Getter
-    private final String writerName;
+    private String writerName;
 
     public Contract(String contractId,
                     float ratio,
                     String gameId,
-                    WinCondition condition,
-                    String writerName) {
+                    boolean winHome, String writerName) {
         this.contractId = contractId;
         this.ratio = ratio;
         this.gameId = gameId;
-        this.condition = condition;
+        this.winHome = winHome;
         this.writerName = writerName;
     }
-    public Contract(float ratio, String gameId, WinCondition condition, String writerName) {
+    public Contract(float ratio, String gameId, boolean winHome, String writerName) {
+        this.winHome = winHome;
         this.contractId = UUID.randomUUID().toString();
         this.gameId = gameId;
-        this.condition = condition;
         this.writerName = writerName;
         this.ratio = ratio;
+    }
+
+    public Contract(){
     }
 
 }
