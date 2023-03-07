@@ -5,7 +5,15 @@ http://localhost:8095/ to monitor the messages
 
 ## Create Game
 
+POST localhost:8083/game/createRandom body: "GameName"
 
+## Create Contract
+
+POST localhost:8082/platform/bet/write body: { "winHome": boolean, "winAway": boolean, "ratio": float, "writerName": String, "gameId": "String"
+
+## Create Bid
+
+POST localhost:8082/platform/bet/bid body: { "buyerName": String, "amount": float, "contractId": String}
 
 In this lab, you will see how to use the Spring Boot-Kafka integration to send and consume message from a Spring Boot application via Kafka.
 
