@@ -1,6 +1,8 @@
 package ch.unisg.ics.edpo.shared.game;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -8,6 +10,8 @@ import java.io.Serializable;
 /**
  * This is representing a game for now. Up for change in the future.
  */
+@Data
+@Builder
 public class Game implements Serializable{
 
     public Game(){

@@ -13,4 +13,5 @@ spring:
 
         game-topic: bet.game-topic
         bank-response: bet.bank-response
+        bad-bank-response: bet.bad-bank-response
         reserve-bid: bet.reserve-bid

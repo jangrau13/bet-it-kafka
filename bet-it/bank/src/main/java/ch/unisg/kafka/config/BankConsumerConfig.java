@@ -1,8 +1,6 @@
-package ch.unisg.kafka.spring.config;
+package ch.unisg.kafka.config;
 
 import ch.unisg.ics.edpo.shared.bidding.ReserveBid;
-import ch.unisg.ics.edpo.shared.checking.BankResponse;
-import ch.unisg.ics.edpo.shared.game.Game;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -23,7 +21,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
-public class KafkaConsumerConfig {
+public class BankConsumerConfig {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

@@ -1,8 +1,12 @@
 package ch.unisg.ics.edpo.shared.game;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import java.io.Serializable;
+@Data
+@Builder
 public class Score implements Serializable{
 
     public Score(){

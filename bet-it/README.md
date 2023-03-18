@@ -94,7 +94,7 @@ on the Terminal.
     ```
 
 4. #### Kafka Configuration
-   The Kafka Producer configuration is in the **ch.unisg.kafka.spring.config.KafkaProducerConfig.java** class.  
+   The Kafka Producer configuration is in the **ch.unisg.config.spring.KafkaProducerConfig.java** class.  
    This class is marked with the `@Configuration` annotation. For the JSON producer we have to set the value serializer property to `JsonSerializer.class`
    and pass that factory to the KafkaTemplate.  
    For the String producer we have to set the value serializer property to `StringSerializer.class` and pass that factory to a new KafkaTemplate.
@@ -122,7 +122,7 @@ on the Terminal.
       }
       ```
 
-   The Kafka Consumer configuration is in the **ch.unisg.kafka.spring.config.KafkaConsumerConfig.java** class.  
+   The Kafka Consumer configuration is in the **ch.unisg.config.spring.KafkaConsumerConfig.java** class.  
    This class is marked with annotations `@Configuration` and `@EnableKafka` (mandatory to consume messages in config class or main class).
    For the JSON consumer we have to set value deserializer property to `JsonDeserializer.class` and pass that factory to ConsumerFactory.  
    For the String consumer we have to set value deserializer property to `StringDeserializer.class` and pass that factory to a new ConsumerFactory.
@@ -176,7 +176,7 @@ on the Terminal.
       }
 
 5. #### Publishing Messages to a Kafka Topic
-   In the **ch.unisg.kafka.spring.service.ProducerService.java** class both String and JSON `KafkaTemplate`s are autowired.
+   In the **ch.unisg.service.spring.ProducerService.java** class both String and JSON `KafkaTemplate`s are autowired.
    Using the send() method we can publish messages (records) to kafka topics.
     - Publishing a Message containing a value as JSON Object
         ```
@@ -200,7 +200,7 @@ on the Terminal.
         ```
 
 6. #### Consuming Messages from a Kafka Topic
-   In the **ch.unisg.kafka.spring.service.ConsumerService.java** class, we are consuming messages from topics using the `@KafkaListener` annotation.
+   In the **ch.unisg.service.spring.ConsumerService.java** class, we are consuming messages from topics using the `@KafkaListener` annotation.
    We are binding the consumer factory from the **KafkaConsumerConfig.java** class to the **containerFactory** in the KafkaListener.
     ```
     // String Consumer

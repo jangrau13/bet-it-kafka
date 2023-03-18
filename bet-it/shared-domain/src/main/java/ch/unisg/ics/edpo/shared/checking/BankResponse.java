@@ -1,10 +1,14 @@
 package ch.unisg.ics.edpo.shared.checking;
 
 import ch.unisg.ics.edpo.shared.bidding.BidState;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 import java.io.Serializable;
 
+@Data
+@Builder
 public class BankResponse implements Serializable {
 
     public BankResponse(){

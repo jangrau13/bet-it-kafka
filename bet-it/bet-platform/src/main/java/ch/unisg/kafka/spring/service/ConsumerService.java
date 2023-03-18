@@ -27,4 +27,10 @@ public class ConsumerService {
         platform.handleBankResponse(bankResponse);
     }
 
+    @KafkaListener(topics = {"${spring.kafka.bad-bank-response}"}, containerFactory = "kafkaListenerBankResultFactory", groupId = "bet-platform")
+    public void consumeBadBankResponse(Object o) {
+        System.out.println("o.getClass() = " + o.getClass());
+
+    }
+
 }

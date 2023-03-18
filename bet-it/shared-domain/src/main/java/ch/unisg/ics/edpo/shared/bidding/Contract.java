@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.util.UUID;
 import java.io.Serializable;
+
 public class Contract implements  Serializable{
     @Getter @Setter
     private String contractId;

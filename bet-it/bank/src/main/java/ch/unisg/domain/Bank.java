@@ -1,4 +1,4 @@
-package ch.unisg.kafka.spring.domain;
+package ch.unisg.domain;
 
 import ch.unisg.ics.edpo.shared.bidding.Bid;
 import ch.unisg.ics.edpo.shared.bidding.BidState;

@@ -28,8 +28,6 @@ public class Platform {
         return instance;
     }
 
-
-
     public void handleBankResponse(BankResponse bankResponse){
         logger.info("All bidding ids are : " + bids.keySet());
         logger.info("The id we are looking for is : " + bankResponse.getBiddingId());

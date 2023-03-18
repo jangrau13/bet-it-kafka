@@ -13,3 +13,11 @@ spring:
 
         bank-response: bet.bank-response
         reserve-bid: bet.reserve-bid
+
+
+
+camunda.bpm:
+    admin-user:
+        id: demo
+        password: demo
+    filter.create: All Tasks
