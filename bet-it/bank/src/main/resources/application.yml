@@ -21,3 +21,9 @@ camunda.bpm:
         id: demo
         password: demo
     filter.create: All Tasks
+    deployment-resource-pattern:
+        - classpath*:**/*.bpmn
+        - classpath*:**/*.bpmn20.xml
+        - classpath*:**/*.dmn
+        - classpath*:**/*.dmn11.xml
+        - classpath*:**/*.form

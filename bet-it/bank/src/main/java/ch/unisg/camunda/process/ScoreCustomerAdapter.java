@@ -19,11 +19,11 @@ public class ScoreCustomerAdapter implements JavaDelegate {
         String name = (String) execution.getVariable("customer");
 
         if (name.equals("Lukas")) {
-            execution.setVariable("customerScore", (boolean)true);
+            execution.setVariable("customerScore", (int)5);
             WorkflowLogger.info(logger, "scoreCustomer","Customer scores a 6");
         }
         else {
-            execution.setVariable("customerScore", (boolean)false);
+            execution.setVariable("customerScore", (int)6);
             WorkflowLogger.info(logger, "scoreCustomer","Customer scores a 5");
         }
 

@@ -23,7 +23,6 @@ public class BankConsumerService {
     private final static String CHECKING_SCORE = "MessageKafkaDemo";
 
     private final BankProducerService<BankResponse> bankProducerService;
-    private final Bank bank = new Bank();
 
 
     @KafkaListener(topics = {"${spring.kafka.reserve-bid}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bet-platform")

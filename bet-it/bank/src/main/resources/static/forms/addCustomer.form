@@ -1,0 +1,49 @@
+{
+  "components": [
+    {
+      "text": "# Debit Suisse\n## Add Customer",
+      "type": "text",
+      "id": "Field_1hn9hjh"
+    },
+    {
+      "label": "Name of Customer",
+      "type": "textfield",
+      "id": "Field_00xo1xl",
+      "key": "customerName",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Money",
+      "type": "number",
+      "id": "Field_0zkosxz",
+      "key": "customerMoney",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "is approved",
+      "type": "checkbox",
+      "id": "Field_14e3yg1",
+      "key": "isApproved"
+    },
+    {
+      "action": "submit",
+      "label": "Add Customer",
+      "type": "button",
+      "id": "Field_14idb70",
+      "key": "field_13yxts8"
+    }
+  ],
+  "type": "default",
+  "id": "addCustomerForm",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.9.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.18.0",
+  "schemaVersion": 7
+}
