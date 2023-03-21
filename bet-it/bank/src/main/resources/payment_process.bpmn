@@ -17,23 +17,13 @@
     <bpmn:exclusiveGateway id="Gateway_1uimf1h" name="ScoreAccepted">
       <bpmn:incoming>Flow_1p81zy9</bpmn:incoming>
       <bpmn:outgoing>Flow_1jd06fq</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0zuqxqx</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1p81zy9" sourceRef="Activity_0zhduij" targetRef="Gateway_1uimf1h" />
-    <bpmn:sequenceFlow id="Flow_1jd06fq" name="Yes" sourceRef="Gateway_1uimf1h" targetRef="Activity_0tcd2jw">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${customerScore &gt; 5} </bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1jd06fq" name="Yes" sourceRef="Gateway_1uimf1h" targetRef="Activity_0tcd2jw" />
     <bpmn:startEvent id="Event_1tzsyds">
       <bpmn:outgoing>Flow_1rif9cl</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1rif9cl" sourceRef="Event_1tzsyds" targetRef="Activity_0zhduij" />
-    <bpmn:serviceTask id="Activity_01c8ecf" name="badResponse" camunda:class="ch.unisg.camunda.delegates.PaymentFailedDelegate">
-      <bpmn:extensionElements />
-      <bpmn:incoming>Flow_0zuqxqx</bpmn:incoming>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_0zuqxqx" name="No" sourceRef="Gateway_1uimf1h" targetRef="Activity_01c8ecf">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${customerScore &lt; 6} </bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmn:message id="Message_1maa6ei" name="MessageKafkaDemo" />
   <bpmn:message id="Message_119r48s" name="MessageBoundary" />
@@ -62,9 +52,6 @@
       <bpmndi:BPMNShape id="Event_1tzsyds_di" bpmnElement="Event_1tzsyds">
         <dc:Bounds x="152" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_10vhblb_di" bpmnElement="Activity_01c8ecf">
-        <dc:Bounds x="470" y="250" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0ehw2mw_di" bpmnElement="Flow_0ehw2mw">
         <di:waypoint x="790" y="117" />
         <di:waypoint x="942" y="117" />
@@ -83,13 +70,6 @@
       <bpmndi:BPMNEdge id="Flow_1rif9cl_di" bpmnElement="Flow_1rif9cl">
         <di:waypoint x="188" y="117" />
         <di:waypoint x="320" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0zuqxqx_di" bpmnElement="Flow_0zuqxqx">
-        <di:waypoint x="520" y="142" />
-        <di:waypoint x="520" y="250" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="528" y="193" width="15" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

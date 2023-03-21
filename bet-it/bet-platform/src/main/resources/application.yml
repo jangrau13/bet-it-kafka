@@ -15,3 +15,15 @@ spring:
         bank-response: bet.bank-response
         bad-bank-response: bet.bad-bank-response
         reserve-bid: bet.reserve-bid
+
+camunda.bpm:
+    admin-user:
+        id: demo
+        password: demo
+    filter.create: All Tasks
+    deployment-resource-pattern:
+        - classpath*:**/*.bpmn
+        - classpath*:**/*.bpmn20.xml
+        - classpath*:**/*.dmn
+        - classpath*:**/*.dmn11.xml
+        - classpath*:**/*.form

@@ -37,6 +37,10 @@ public class Bank {
         privateBank.put(name, amount);
     }
 
+    public boolean isCustomer(String name){
+        return privateBank.get(name) != null;
+    }
+
     public BankResponse reserveBidding(Bid bid, Contract contract){
 
         boolean doesItWork = new Random().nextBoolean();

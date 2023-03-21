@@ -2,6 +2,7 @@ package ch.unisg.camunda.process;
 
 
 import ch.unisg.camunda.util.WorkflowLogger;
+import ch.unisg.domain.Bank;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
@@ -16,18 +17,20 @@ public class ScoreCustomerAdapter implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) {
 
-        String name = (String) execution.getVariable("customer");
+        String buyerName = (String) execution.getVariable("buyerName");
 
-        if (name.equals("Lukas")) {
-            execution.setVariable("customerScore", (int)5);
-            WorkflowLogger.info(logger, "scoreCustomer","Customer scores a 6");
+        String writerName = (String) execution.getVariable("writerName");
+
+        logger.info("--------------------------buyer name:" + buyerName);
+        logger.info("--------------------------writer name:" + writerName);
+
+        Bank bank  = Bank.getInstance();
+
+        if(bank.isCustomer(writerName) && bank.isCustomer(buyerName)){
+            logger.info("++++++++++++++++++++++++++++valid transaction");
+        }else{
+            logger.info("++++++++++++++++++++++++++++not a valid transaction");
         }
-        else {
-            execution.setVariable("customerScore", (int)6);
-            WorkflowLogger.info(logger, "scoreCustomer","Customer scores a 5");
-        }
-
-
 
     }
 
