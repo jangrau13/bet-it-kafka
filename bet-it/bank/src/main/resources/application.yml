@@ -13,17 +13,11 @@ spring:
 
         bank-response: bet.bank-response
         reserve-bid: bet.reserve-bid
+        payment-request: bet.payment-request
 
-
-
-camunda.bpm:
-    admin-user:
-        id: demo
-        password: demo
-    filter.create: All Tasks
-    deployment-resource-pattern:
-        - classpath*:**/*.bpmn
-        - classpath*:**/*.bpmn20.xml
-        - classpath*:**/*.dmn
-        - classpath*:**/*.dmn11.xml
-        - classpath*:**/*.form
+zeebe:
+    client:
+        broker:
+            gateway-address: zeebe:26500
+        security:
+            plaintext: true

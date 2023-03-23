@@ -1,5 +1,6 @@
 package ch.unisg.kafka.spring.service;
 
+import ch.unisg.ics.edpo.shared.bidding.ReserveBid;
 import ch.unisg.ics.edpo.shared.checking.BankResponse;
 import ch.unisg.ics.edpo.shared.game.Game;
 import ch.unisg.kafka.spring.domain.Platform;
@@ -27,10 +28,14 @@ public class ConsumerService {
         platform.handleBankResponse(bankResponse);
     }
 
-    @KafkaListener(topics = {"${spring.kafka.bad-bank-response}"}, containerFactory = "kafkaListenerBankResultFactory", groupId = "bet-platform")
-    public void consumeBadBankResponse(Object o) {
-        System.out.println("o.getClass() = " + o.getClass());
+    @KafkaListener(topics = {"${spring.kafka.check-successful}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bet-platform")
+    public void consumeSuccessfulCheckResponse(ReserveBid reserveBid) {
+        System.out.println("successful bid = " + reserveBid.getBid().getBidId());
+    }
 
+    @KafkaListener(topics = {"${spring.kafka.check-negative}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bet-platform")
+    public void consumeFailedCheckResponse(ReserveBid reserveBid) {
+        System.out.println("failed bid = " + reserveBid.getBid().getBidId());
     }
 
 }

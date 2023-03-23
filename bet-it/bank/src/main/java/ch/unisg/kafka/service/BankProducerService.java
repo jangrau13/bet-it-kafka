@@ -23,7 +23,7 @@ public class BankProducerService<T> {
 
 
     public void sendBankResponse(T bankResponse) {
-        logger.info("#### -> Publishing Bank Response:: {}", bankResponse);
-        kafkaTemplatebetItBid.send(checkBidTopic, bankResponse);
+        //logger.info("#### -> Publishing Bank Response:: {}", bankResponse);
+        //kafkaTemplatebetItBid.send(checkBidTopic, bankResponse);
     }
 }

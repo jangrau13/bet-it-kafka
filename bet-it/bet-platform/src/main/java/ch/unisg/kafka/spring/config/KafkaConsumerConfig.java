@@ -1,5 +1,6 @@
 package ch.unisg.kafka.spring.config;
 
+import ch.unisg.ics.edpo.shared.bidding.ReserveBid;
 import ch.unisg.ics.edpo.shared.checking.BankResponse;
 import ch.unisg.ics.edpo.shared.game.Game;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -76,6 +77,30 @@ public class KafkaConsumerConfig {
     public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerBankResultFactory() {
         ConcurrentKafkaListenerContainerFactory<String, BankResponse> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerBankResponseFactory());
+        factory.setMessageConverter(new StringJsonMessageConverter());
+        factory.setBatchListener(true);
+        return factory;
+    }
+
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Bet-It-Result Consumer
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    @Bean
+    public ConsumerFactory<String, ReserveBid> consumerReserveBidFactory() {
+        Map<String, Object> config = new HashMap<>();
+
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(ReserveBid.class));
+    }
+
+    @Bean
+    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerReserveBidFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, ReserveBid> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerReserveBidFactory());
         factory.setMessageConverter(new StringJsonMessageConverter());
         factory.setBatchListener(true);
         return factory;

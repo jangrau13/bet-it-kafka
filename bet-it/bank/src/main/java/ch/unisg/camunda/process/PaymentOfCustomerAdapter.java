@@ -1,7 +1,6 @@
 package ch.unisg.camunda.process;
 
 
-import ch.unisg.camunda.util.WorkflowLogger;
 import ch.unisg.domain.Bank;
 import ch.unisg.ics.edpo.shared.bidding.Bid;
 import ch.unisg.ics.edpo.shared.bidding.Contract;
@@ -9,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-@Service("ScoreCustomerAdapter")
-public class ScoreCustomerAdapter  {
+@Service("PaymentOfCustomerAdapter")
+public class PaymentOfCustomerAdapter  {
 
 //    private final Logger logger = LoggerFactory.getLogger(this.getClass()); implements JavaDelegate
 //
@@ -29,16 +28,16 @@ public class ScoreCustomerAdapter  {
 //        logger.info("--------------------------buyer name:" + buyerName);
 //        logger.info("--------------------------writer name:" + writerName);
 //
-//        Bank bank  = Bank.getInstance();
+//        Bank bank = Bank.getInstance();
 //
-//        if(bank.isCustomer(writerName) && bank.isCustomer(buyerName)){
+//        if (bank.isCustomer(writerName) && bank.isCustomer(buyerName)) {
 //            logger.info("++++++++++++++++++++++++++++valid transaction");
 //            isValid = true;
 //        } else if (bank.isCustomer(writerName)) {
 //            bailName = buyerName;
 //        } else if (bank.isCustomer(writerName)) {
 //            bailName = writerName;
-//        } else{
+//        } else {
 //            logger.info("++++++++++++++++++++++++++++not a valid transaction");
 //            bailName = "both";
 //        }
