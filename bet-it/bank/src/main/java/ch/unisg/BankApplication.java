@@ -12,9 +12,9 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableZeebeClient
-@ZeebeDeployment(resources = "classpath:send-email.bpmn")
-public class BankApplication {
+@ZeebeDeployment(resources = {"send-email.bpmn", "ping-pong.bpmn"})
 
+public class BankApplication {
 
 
 	public static void main(String[] args) {

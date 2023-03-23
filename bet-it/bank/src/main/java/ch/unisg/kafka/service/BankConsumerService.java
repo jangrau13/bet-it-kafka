@@ -36,7 +36,15 @@ public class BankConsumerService {
     @KafkaListener(topics = {"${spring.kafka.reserve-bid}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bet-platform")
     public void consumeReserveBidMessage(ReserveBid reserveBid) {
         logger.info("**** -> Consuming Reserve Bid Update :: {}", reserveBid);
+        final ProcessInstanceEvent pingPong =
+                client
+                        .newCreateInstanceCommand()
+                        .bpmnProcessId("ping-pong")
+                        .latestVersion()
+                        .send()
+                        .join();
         //messageService.checkScore(reserveBid, CHECKING_SCORE);
+        logger.info("**** -> Consuming Reserve Bid Update II :: {}", reserveBid);
         final ProcessInstanceEvent event =
                 client
                         .newCreateInstanceCommand()
