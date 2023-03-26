@@ -12,18 +12,19 @@ public class BankProducerService<T> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${spring.kafka.bank-response}")
-    private String checkBidTopic;
+    @Value("${spring.kafka.two-factor-success}")
+    private String twoFactorSuccessTopic;
+
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    private KafkaTemplate<String, T> kafkaTemplatebetItBid;
+    private KafkaTemplate<String, T> kafkaTemplateTwoFactor;
 
 
-    public void sendBankResponse(T bankResponse) {
-        //logger.info("#### -> Publishing Bank Response:: {}", bankResponse);
-        //kafkaTemplatebetItBid.send(checkBidTopic, bankResponse);
+    public void sendTwoFactorResponse(T twoFactor) {
+        logger.info("#### -> Publishing Two Factor Successful:: {}", twoFactor);
+        kafkaTemplateTwoFactor.send(twoFactorSuccessTopic, twoFactor);
     }
 }

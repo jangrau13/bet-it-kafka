@@ -13,6 +13,8 @@ spring:
 
         bank-response: bet.bank-response
         reserve-bid: bet.reserve-bid
+        two-factor: bet.two-factor-customer
+        two-factor-success: bet.two-factor-customer-success
         payment-request: bet.payment-request
 
 zeebe:

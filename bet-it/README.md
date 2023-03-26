@@ -1,5 +1,9 @@
 # Bet Platform
 
+## Build
+mvn clean install -DskipTests
+docker-compose up --build -d
+
 ## Monitor
 http://localhost:8095/ to monitor the messages
 
@@ -17,7 +21,8 @@ POST localhost:8082/platform/bet/bid body: { "buyerName": String, "amount": floa
 
 This will set the bid, if however the bank eventually rejects the bid, it will be deleted. If the bank does not reject it, it will be set as active.
 
-
+### Add Connector Templates
+https://docs.camunda.io/docs/self-managed/connectors-deployment/install-and-start/
 
 In this lab, you will see how to use the Spring Boot-Kafka integration to send and consume message from a Spring Boot application via Kafka.
 
