@@ -12,14 +12,12 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableZeebeClient
-@ZeebeDeployment(resources = {"send-email.bpmn", "ping-pong.bpmn"})
+@ZeebeDeployment(resources = {"check_customer.bpmn", "add_customer.bpmn"})
 
 public class BankApplication {
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(BankApplication.class, args);
-
 	}
 
 

@@ -1,9 +1,11 @@
 package ch.unisg.kafka.service;
 
-import ch.unisg.camunda.service.MessageService;
+
+import ch.unisg.ics.edpo.shared.bank.TwoFactor;
 import ch.unisg.ics.edpo.shared.bidding.ReserveBid;
-import ch.unisg.ics.edpo.shared.checking.BankResponse;
-import ch.unisg.domain.Bank;
+import ch.unisg.util.VariablesUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.spring.client.ZeebeClientLifecycle;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Map;
 
 
@@ -22,12 +28,13 @@ import java.util.Map;
 @Slf4j
 public class BankConsumerService {
 
+    private final BankProducerService<TwoFactor> twoFactorService;
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final MessageService messageService;
-    private final static String CHECKING_SCORE = "MessageKafkaDemo";
+    private final static String CHECK_REQUEST = "Check_Contract";
 
-    private final BankProducerService<BankResponse> bankProducerService;
+    private final static String TWO_FACTOR_SUCCESS = "Two_Factor_Success";
 
     @Autowired
     private ZeebeClientLifecycle client;
@@ -36,31 +43,65 @@ public class BankConsumerService {
     @KafkaListener(topics = {"${spring.kafka.reserve-bid}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bet-platform")
     public void consumeReserveBidMessage(ReserveBid reserveBid) {
         logger.info("**** -> Consuming Reserve Bid Update :: {}", reserveBid);
-        final ProcessInstanceEvent pingPong =
-                client
-                        .newCreateInstanceCommand()
-                        .bpmnProcessId("ping-pong")
-                        .latestVersion()
-                        .send()
-                        .join();
-        //messageService.checkScore(reserveBid, CHECKING_SCORE);
-        logger.info("**** -> Consuming Reserve Bid Update II :: {}", reserveBid);
-        final ProcessInstanceEvent event =
-                client
-                        .newCreateInstanceCommand()
-                        .bpmnProcessId("send-email")
-                        .latestVersion()
-                        .variables(Map.of("message_content", "Hello from the Spring Boot get started"))
-                        .send()
-                        .join();
+        try {
+            client.newPublishMessageCommand()
+                            .messageName(CHECK_REQUEST)
+                            .correlationKey(reserveBid.getBid().getBidId())
+                            .variables(VariablesUtil.toVariableMap(reserveBid))
+                            .send()
+                            .exceptionally(throwable -> {throw new RuntimeException("Could not publish message " + reserveBid, throwable);});
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-    @KafkaListener(topics = {"${spring.kafka.payment-request}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bet-platform")
-    public void consumePaymentRequestMessage(ReserveBid reserveBid) {
-        logger.info("**** -> Consuming Reserve Bid Update for Payment :: {}", reserveBid);
-        //messageService.checkScore(reserveBid, CHECKING_SCORE);
+    @KafkaListener(topics = {"${spring.kafka.two-factor}"}, containerFactory = "kafkaListenerTwoFactorFactory", groupId = "bet-platform")
+    public void consumeTwoFactorMessage(String json) {
+        logger.info("**** -> Consuming Two Factor :: {}", json);
+        Pattern pattern = Pattern.compile("(?<!\\\\)=(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)");
+        Matcher matcher = pattern.matcher(json);
+        json = json.replaceAll("([a-zA-Z0-9]+)\\s*=\\s*([a-zA-Z0-9\\s]+)", "\"$1\":\"$2\"");
+        logger.info("transformed JSON: "+ json);
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            TwoFactor twoFactorData = mapper.readValue(json, TwoFactor.class);
+            String correlationId = twoFactorData.getCorrelationId();
+            String user = twoFactorData.getName();
+            logger.info("user = " + user);
+            logger.info("correlationId = " + correlationId);
+            twoFactorService.sendTwoFactorResponse(twoFactorData);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
+    @KafkaListener(topics = {"${spring.kafka.two-factor-success}"}, containerFactory = "kafkaListenerTwoFactorSuccessFactory", groupId = "bet-platform")
+    public void consumeTwoFactorSuccessMessage(TwoFactor twoFactor) {
+        logger.info("**** -> Consuming Two Factor Success:: {}", twoFactor);
+        try {
+            client.newPublishMessageCommand()
+                    .messageName(TWO_FACTOR_SUCCESS)
+                    .correlationKey(twoFactor.getCorrelationId())
+                    .variables(VariablesUtil.toVariableMap(twoFactor))
+                    .send()
+                    .exceptionally(throwable -> {throw new RuntimeException("Could not publish message " + twoFactor, throwable);});
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
 }

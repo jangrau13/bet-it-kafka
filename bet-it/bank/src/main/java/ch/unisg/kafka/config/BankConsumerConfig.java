@@ -1,5 +1,6 @@
 package ch.unisg.kafka.config;
 
+import ch.unisg.ics.edpo.shared.bank.TwoFactor;
 import ch.unisg.ics.edpo.shared.bidding.ReserveBid;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -55,6 +56,55 @@ public class BankConsumerConfig {
         factory.setBatchListener(true);
         return factory;
     }
+
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Bet-It-Two Factor
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    @Bean
+    public ConsumerFactory<String, String> consumerTwoFactorFactory() {
+        Map<String, Object> config = new HashMap<>();
+
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new StringDeserializer());
+    }
+
+    @Bean
+    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerTwoFactorFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerTwoFactorFactory());
+        factory.setMessageConverter(new StringJsonMessageConverter());
+        factory.setBatchListener(true);
+        return factory;
+    }
+
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Bet-It-Two Factor success
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    @Bean
+    public ConsumerFactory<String, TwoFactor> consumerTwoFactorSuccessFactory() {
+        Map<String, Object> config = new HashMap<>();
+
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(TwoFactor.class));
+    }
+
+    @Bean
+    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerTwoFactorSuccessFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, TwoFactor> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerTwoFactorSuccessFactory());
+        factory.setMessageConverter(new StringJsonMessageConverter());
+        factory.setBatchListener(true);
+        return factory;
+    }
+
 
 
     @Bean
