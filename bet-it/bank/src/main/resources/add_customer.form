@@ -16,16 +16,6 @@
       }
     },
     {
-      "label": "UUID for two Factor",
-      "type": "textfield",
-      "id": "Field_0frr42o",
-      "key": "two_factor_auth",
-      "validate": {
-        "required": true
-      },
-      "properties": {}
-    },
-    {
       "label": "Amount",
       "type": "number",
       "id": "Field_14sjxco",
@@ -45,7 +35,7 @@
   "type": "default",
   "id": "add_customer",
   "executionPlatform": "Camunda Cloud",
-  "executionPlatformVersion": "8.1.0",
+  "executionPlatformVersion": "8.2.0",
   "exporter": {
     "name": "Camunda Modeler",
     "version": "5.9.0"

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_126zhi9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0">
   <bpmn:process id="check_customer" name="check_customer" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" name="Listen to check request">
+    <bpmn:startEvent id="Check_Request" name="Listen to check request ">
       <bpmn:outgoing>Flow_1ndatev</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0ia6r5n" messageRef="Message_3o82khg" />
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1ndatev" sourceRef="StartEvent_1" targetRef="Activity_0bxjbjq" />
+    <bpmn:sequenceFlow id="Flow_1ndatev" sourceRef="Check_Request" targetRef="Activity_0bxjbjq" />
     <bpmn:serviceTask id="Activity_0bxjbjq" name="Check_Customer_Existence">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="customer-existence" />
@@ -21,7 +21,7 @@
   <bpmn:message id="Message_3o82khg" name="Check_Contract" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="check_customer">
-      <bpmndi:BPMNShape id="Event_07galba_di" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="Event_07galba_di" bpmnElement="Check_Request">
         <dc:Bounds x="179" y="79" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="160" y="122" width="74" height="27" />
