@@ -12,8 +12,6 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableZeebeClient
-@ZeebeDeployment(resources = {"check_customer.bpmn", "add_customer.bpmn"})
-
 public class BankApplication {
 
 	public static void main(String[] args) {
