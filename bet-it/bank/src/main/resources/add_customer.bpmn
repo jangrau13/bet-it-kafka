@@ -58,7 +58,11 @@
 }</zeebe:userTaskForm>
     </bpmn:extensionElements>
     <bpmn:startEvent id="StartEvent_1">
-      <bpmn:extensionElements />
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=uuid()" target="myUuid" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0idgf78</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0idgf78" sourceRef="StartEvent_1" targetRef="Activity_0myd72j" />
@@ -77,7 +81,7 @@
           <zeebe:input source="kafka:9092" target="topic.bootstrapServers" />
           <zeebe:input source="bet.two-factor-customer" target="topic.topicName" />
           <zeebe:input source="payload" target="message.key" />
-          <zeebe:input source="={&#34;name&#34;:  customerName ,&#10;&#34;correlationId&#34;: two_factor_auth}" target="message.value" />
+          <zeebe:input source="={&#34;name&#34;:  customerName ,&#10;&#34;correlationId&#34;: myUuid}" target="message.value" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="twoFactorResult" />
