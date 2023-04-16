@@ -55,15 +55,19 @@
     <bpmn:userTask id="Activity_0myd72j" name="Add Customer">
       <bpmn:extensionElements>
         <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_0aelva9" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;bet.two-factor-customer&#34;" target="topic" />
+          <zeebe:output source="=customerName" target="name" />
+        </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0idgf78</bpmn:incoming>
       <bpmn:outgoing>Flow_0x6jooj</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0x6jooj" sourceRef="Activity_0myd72j" targetRef="Activity_0bpvip4" />
     <bpmn:endEvent id="Event_1bdb0g0">
-      <bpmn:incoming>Flow_1x750hm</bpmn:incoming>
+      <bpmn:incoming>Flow_0xn1xgr</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1x750hm" sourceRef="Event_1g0mulx" targetRef="Event_1bdb0g0" />
+    <bpmn:sequenceFlow id="Flow_1x750hm" sourceRef="Event_1g0mulx" targetRef="Gateway_1uhw8y4" />
     <bpmn:intermediateCatchEvent id="Event_1g0mulx">
       <bpmn:incoming>Flow_0uzdsk2</bpmn:incoming>
       <bpmn:outgoing>Flow_1x750hm</bpmn:outgoing>
@@ -78,26 +82,51 @@
       <bpmn:outgoing>Flow_0d56wrz</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0uzdsk2" sourceRef="Activity_12b46ki" targetRef="Event_1g0mulx" />
-    <bpmn:serviceTask id="Activity_12b46ki" name="kafka" zeebe:modelerTemplate="io.camunda.connectors.KAFKA.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg width=&#39;18&#39; height=&#39;18&#39; viewBox=&#39;0 0 256 416&#39; xmlns=&#39;http://www.w3.org/2000/svg&#39; preserveAspectRatio=&#39;xMidYMid&#39;%3E%3Cpath d=&#39;M201.816 230.216c-16.186 0-30.697 7.171-40.634 18.461l-25.463-18.026c2.703-7.442 4.255-15.433 4.255-23.797 0-8.219-1.498-16.076-4.112-23.408l25.406-17.835c9.936 11.233 24.409 18.365 40.548 18.365 29.875 0 54.184-24.305 54.184-54.184 0-29.879-24.309-54.184-54.184-54.184-29.875 0-54.184 24.305-54.184 54.184 0 5.348.808 10.505 2.258 15.389l-25.423 17.844c-10.62-13.175-25.911-22.374-43.333-25.182v-30.64c24.544-5.155 43.037-26.962 43.037-53.019C124.171 24.305 99.862 0 69.987 0 40.112 0 15.803 24.305 15.803 54.184c0 25.708 18.014 47.246 42.067 52.769v31.038C25.044 143.753 0 172.401 0 206.854c0 34.621 25.292 63.374 58.355 68.94v32.774c-24.299 5.341-42.552 27.011-42.552 52.894 0 29.879 24.309 54.184 54.184 54.184 29.875 0 54.184-24.305 54.184-54.184 0-25.883-18.253-47.553-42.552-52.894v-32.775a69.965 69.965 0 0 0 42.6-24.776l25.633 18.143c-1.423 4.84-2.22 9.946-2.22 15.24 0 29.879 24.309 54.184 54.184 54.184 29.875 0 54.184-24.305 54.184-54.184 0-29.879-24.309-54.184-54.184-54.184zm0-126.695c14.487 0 26.27 11.788 26.27 26.271s-11.783 26.27-26.27 26.27-26.27-11.787-26.27-26.27c0-14.483 11.783-26.271 26.27-26.271zm-158.1-49.337c0-14.483 11.784-26.27 26.271-26.27s26.27 11.787 26.27 26.27c0 14.483-11.783 26.27-26.27 26.27s-26.271-11.787-26.271-26.27zm52.541 307.278c0 14.483-11.783 26.27-26.27 26.27s-26.271-11.787-26.271-26.27c0-14.483 11.784-26.27 26.271-26.27s26.27 11.787 26.27 26.27zm-26.272-117.97c-20.205 0-36.642-16.434-36.642-36.638 0-20.205 16.437-36.642 36.642-36.642 20.204 0 36.641 16.437 36.641 36.642 0 20.204-16.437 36.638-36.641 36.638zm131.831 67.179c-14.487 0-26.27-11.788-26.27-26.271s11.783-26.27 26.27-26.27 26.27 11.787 26.27 26.27c0 14.483-11.783 26.271-26.27 26.271z&#39; style=&#39;fill:%23231f20&#39;/%3E%3C/svg%3E">
+    <bpmn:serviceTask id="Activity_12b46ki" name="send need for 2-Factor to Kafka">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:connector-kafka:1" />
-        <zeebe:ioMapping>
-          <zeebe:input source="username" target="authentication.username" />
-          <zeebe:input source="password" target="authentication.password" />
-          <zeebe:input source="kafka:9092" target="topic.bootstrapServers" />
-          <zeebe:input source="bet.two-factor-customer" target="topic.topicName" />
-          <zeebe:input source="value" target="message.key" />
-          <zeebe:input source="={&#34;name&#34;: customerName, &#34;correlationId&#34;: correlationId}" target="message.value" />
-        </zeebe:ioMapping>
+        <zeebe:taskDefinition type="send-to-kafka" />
         <zeebe:taskHeaders />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0d56wrz</bpmn:incoming>
       <bpmn:outgoing>Flow_0uzdsk2</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0xn1xgr" sourceRef="Activity_0g4vuu2" targetRef="Event_1bdb0g0" />
+    <bpmn:serviceTask id="Activity_0g4vuu2" name="send Success Message to Kafka">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;bet.added-new-customer&#34;" target="topic" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0l9w4pb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xn1xgr</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0l9w4pb" sourceRef="Gateway_1uhw8y4" targetRef="Activity_0g4vuu2" />
+    <bpmn:sequenceFlow id="Flow_0kx4axz" sourceRef="Gateway_1uhw8y4" targetRef="Activity_17twy89" />
+    <bpmn:parallelGateway id="Gateway_1uhw8y4">
+      <bpmn:incoming>Flow_1x750hm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0l9w4pb</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0kx4axz</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:serviceTask id="Activity_17twy89" name="Start Check Contract via Kafka">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;Check_Contract&#34;" target="messageName" />
+          <zeebe:input source="={&#34;bidderName&#34;: name}" target="bid" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0kx4axz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aend41</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0g9zxfg">
+      <bpmn:incoming>Flow_0aend41</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0aend41" sourceRef="Activity_17twy89" targetRef="Event_0g9zxfg" />
   </bpmn:process>
   <bpmn:message id="Message_0vid80v" name="Two_Factor_Success">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=two_factor_auth" />
+      <zeebe:subscription correlationKey="=correlationId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -109,19 +138,32 @@
         <dc:Bounds x="280" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1bdb0g0_di" bpmnElement="Event_1bdb0g0">
-        <dc:Bounds x="922" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1422l1j_di" bpmnElement="Event_1g0mulx">
-        <dc:Bounds x="792" y="232" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_05gfd2f_di" bpmnElement="Activity_0bpvip4">
         <dc:Bounds x="420" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1422l1j_di" bpmnElement="Event_1g0mulx">
+        <dc:Bounds x="762" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_19jjrui_di" bpmnElement="Activity_12b46ki">
-        <dc:Bounds x="610" y="120" width="100" height="80" />
+        <dc:Bounds x="610" y="77" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bdb0g0_di" bpmnElement="Event_1bdb0g0">
+        <dc:Bounds x="1072" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1szdy5m_di" bpmnElement="Activity_0g4vuu2">
+        <dc:Bounds x="910" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1todvu8_di" bpmnElement="Gateway_1uhw8y4">
+        <dc:Bounds x="825" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_011bua7_di" bpmnElement="Activity_17twy89">
+        <dc:Bounds x="800" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g9zxfg_di" bpmnElement="Event_0g9zxfg">
+        <dc:Bounds x="832" y="352" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0idgf78_di" bpmnElement="Flow_0idgf78">
         <di:waypoint x="215" y="117" />
@@ -131,22 +173,33 @@
         <di:waypoint x="380" y="117" />
         <di:waypoint x="420" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1x750hm_di" bpmnElement="Flow_1x750hm">
-        <di:waypoint x="828" y="250" />
-        <di:waypoint x="875" y="250" />
-        <di:waypoint x="875" y="117" />
-        <di:waypoint x="922" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d56wrz_di" bpmnElement="Flow_0d56wrz">
-        <di:waypoint x="470" y="77" />
-        <di:waypoint x="470" y="57" />
-        <di:waypoint x="660" y="57" />
-        <di:waypoint x="660" y="120" />
+        <di:waypoint x="520" y="117" />
+        <di:waypoint x="610" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0uzdsk2_di" bpmnElement="Flow_0uzdsk2">
-        <di:waypoint x="660" y="200" />
-        <di:waypoint x="660" y="250" />
-        <di:waypoint x="792" y="250" />
+        <di:waypoint x="710" y="117" />
+        <di:waypoint x="762" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x750hm_di" bpmnElement="Flow_1x750hm">
+        <di:waypoint x="798" y="117" />
+        <di:waypoint x="825" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xn1xgr_di" bpmnElement="Flow_0xn1xgr">
+        <di:waypoint x="1010" y="117" />
+        <di:waypoint x="1072" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l9w4pb_di" bpmnElement="Flow_0l9w4pb">
+        <di:waypoint x="875" y="117" />
+        <di:waypoint x="910" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kx4axz_di" bpmnElement="Flow_0kx4axz">
+        <di:waypoint x="850" y="142" />
+        <di:waypoint x="850" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0aend41_di" bpmnElement="Flow_0aend41">
+        <di:waypoint x="850" y="300" />
+        <di:waypoint x="850" y="352" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
