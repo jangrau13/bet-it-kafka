@@ -97,9 +97,30 @@ public class BankConsumerConfig {
     }
 
     @Bean
+    public ConsumerFactory<String, HashMap> consumerHashMapFactory() {
+        Map<String, Object> config = new HashMap<>();
+
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(HashMap.class));
+    }
+
+    @Bean
     public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerTwoFactorSuccessFactory() {
         ConcurrentKafkaListenerContainerFactory<String, TwoFactor> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerTwoFactorSuccessFactory());
+        factory.setMessageConverter(new StringJsonMessageConverter());
+        factory.setBatchListener(true);
+        return factory;
+    }
+
+    @Bean
+    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerMapFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, HashMap> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerHashMapFactory());
         factory.setMessageConverter(new StringJsonMessageConverter());
         factory.setBatchListener(true);
         return factory;

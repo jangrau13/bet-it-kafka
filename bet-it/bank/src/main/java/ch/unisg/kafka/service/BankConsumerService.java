@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Map;
@@ -29,6 +31,8 @@ import java.util.Map;
 public class BankConsumerService {
 
     private final BankProducerService<TwoFactor> twoFactorService;
+
+    private final BankProducerService<Map> mapService;
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -70,12 +74,18 @@ public class BankConsumerService {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            TwoFactor twoFactorData = mapper.readValue(json, TwoFactor.class);
-            String correlationId = twoFactorData.getCorrelationId();
-            String user = twoFactorData.getName();
-            logger.info("user = " + user);
-            logger.info("correlationId = " + correlationId);
-            twoFactorService.sendTwoFactorResponse(twoFactorData);
+            Map variables = mapper.readValue(json, HashMap.class);
+            if(variables.containsKey("correlationId") && variables.containsKey("name")){
+                String correlationId = (String) variables.get("correlationId");
+                String user = (String) variables.get("name");
+                logger.info("user = " + user);
+                logger.info("correlationId = " + correlationId);
+                TwoFactor twoFactorData = new TwoFactor(user,correlationId);
+                twoFactorService.sendTwoFactorResponse(twoFactorData);
+            }else{
+                logger.warn("Job did not contain name and correlationId, did not continue with the process");
+            }
+
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -100,6 +110,43 @@ public class BankConsumerService {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    @KafkaListener(topics = {"${spring.kafka.camunda}"}, containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
+    public void consumeCamundaMessage(HashMap variables) {
+        logger.info("**** -> Consuming Camunda Variables:: {}", variables);
+
+            if(variables.containsKey("messageName")){
+                //means that we want to talk to Camunda
+                logger.info("Camunda Kafka Interface has realized that we want to start or restart a Camunda Process");
+                try {
+                    String messageName = variables.get("messageName").toString();
+                    String uuid = UUID.randomUUID().toString();
+                    if (variables.containsKey("correlationId")) {
+                        uuid = (String) variables.get("correlationId");
+                    }
+                    logger.info("starting Camunda Message command with the messageName {}", messageName);
+                    client.newPublishMessageCommand()
+                            .messageName(messageName)
+                            .correlationKey(uuid)
+                            .variables(variables)
+                            .send()
+                            .exceptionally(throwable -> {
+                                throw new RuntimeException("Could not publish message " + variables, throwable);
+                            });
+                } finally {
+                    logger.info("in finally");
+                }
+            } else if (variables.containsKey("topic")) {
+                //means that we want to talk with the other java processes
+                logger.info("Camunda Kafka Interface has realized that we want to publish to a *public* topic.");
+                mapService.sendCamundaMessage(variables,(String) variables.get("topic"));
+                logger.info("sent Message to Kafka", variables);
+            } else{
+            logger.warn("Camunda Message did not contain ");
+        }
+
 
     }
 

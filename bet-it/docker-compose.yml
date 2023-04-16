@@ -1,12 +1,13 @@
 
 services:
   zeebe:
-    image: camunda/zeebe:${CAMUNDA_PLATFORM_VERSION:-8.1.9}
+    image: camunda/zeebe:${CAMUNDA_PLATFORM_VERSION:-8.2.1}
     container_name: zeebe
     environment:
       - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME=io.camunda.zeebe.exporter.ElasticsearchExporter
       - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_URL=http://elasticsearch:9200
       - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_BULK_SIZE=1
+      - zeebe.tasklist.elasticsearch.username=
     ports:
       - 26500:26500
     volumes:
@@ -17,7 +18,7 @@ services:
       - elasticsearch
 
   operate:
-    image: camunda/operate:${CAMUNDA_PLATFORM_VERSION:-8.1.9}
+    image: camunda/operate:${CAMUNDA_PLATFORM_VERSION:-8.2.1}
     container_name: operate
     environment:
       - CAMUNDA_OPERATE_ZEEBE_GATEWAYADDRESS=zeebe:26500
@@ -31,7 +32,7 @@ services:
       - elasticsearch
 
   tasklist:
-    image: camunda/tasklist:${CAMUNDA_CLOUD_VERSION:-1.3.5}
+    image: camunda/tasklist:${CAMUNDA_PLATFORM_VERSION:-8.2.1}
     container_name: tasklist
     environment:
       - CAMUNDA_TASKLIST_ZEEBE_GATEWAYADDRESS=zeebe:26500
@@ -74,7 +75,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ALLOW_ANONYMOUS_LOGIN: 'yes'
     volumes:
-      - ./zookeeper_docker_data/data:/bitnami/zookeeper/data
+      - zookeeper:/bitnami/zookeeper/data
 
   kafka:
     image: "bitnami/kafka:latest"
@@ -94,58 +95,9 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
-      - ./kafka_docker_data/data:/bitnami/kafka/data
+      - kafka:/bitnami/kafka/data
     depends_on:
       - zookeeper
-
-  schemaregistry:
-    image: confluentinc/cp-schema-registry:5.2.1
-    restart: always
-    networks:
-      - bet-it
-    depends_on:
-      - zookeeper
-    environment:
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
-      SCHEMA_REGISTRY_HOST_NAME: schemaregistry
-      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
-    ports:
-      - 8281:8081
-
-  connect:
-    image: confluentinc/cp-kafka-connect:5.2.1
-    depends_on:
-      - zookeeper
-      - kafka
-      - schemaregistry
-    networks:
-      - bet-it
-    ports:
-      - "8283:8083"
-    volumes:
-      - ./zeebe_kafka_connect:/etc/kafka-connect/jars/
-    environment:
-      CONNECT_BOOTSTRAP_SERVERS: "kafka:9092"
-      CONNECT_REST_PORT: 8083
-      CONNECT_GROUP_ID: compose-connect-group
-      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
-      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
-      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
-      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
-      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect"
-      CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
-      CONNECT_LOG4J_LOGGERS: "org.apache.kafka.connect.runtime.rest=WARN,org.reflections=ERROR"
-      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
-      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
-      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
-      CONNECT_PLUGIN_PATH: '/usr/share/java,/etc/kafka-connect/jars'
-      ALLOW_PLAINTEXT_LISTENER: 'yes'
-
 
 
   kafdrop:
@@ -199,6 +151,10 @@ volumes:
   zeebe:
     driver: local
   elastic:
+    driver: local
+  zookeeper:
+    driver: local
+  kafka:
     driver: local
 
 
