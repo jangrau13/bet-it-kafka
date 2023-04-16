@@ -28,6 +28,8 @@ public class CustomerExistenceChecker {
     final String bidderName = (String) bidMap.get("buyerName");
     LOG.info("bidderName = " + bidderName);
 
+
+
     client.newCompleteCommand(job.getKey()).send()
       // join(); <-- This would block for the result. While this is easier-to-read code, it has limitations for parallel work.
       // Hence, the following code leverages reactive programming. This is discssed in https://blog.bernd-ruecker.com/writing-good-workers-for-camunda-cloud-61d322cad862.

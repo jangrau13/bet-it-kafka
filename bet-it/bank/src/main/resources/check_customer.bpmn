@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_126zhi9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0">
   <bpmn:process id="check_customer" name="check_customer" isExecutable="true">
-    <bpmn:startEvent id="Check_Request" name="Listen to check request ">
-      <bpmn:outgoing>Flow_1ndatev</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0ia6r5n" messageRef="Message_3o82khg" />
-    </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1ndatev" sourceRef="Check_Request" targetRef="Activity_0bxjbjq" />
     <bpmn:serviceTask id="Activity_0bxjbjq" name="Check_Customer_Existence">
       <bpmn:extensionElements>
@@ -17,32 +13,35 @@
       <bpmn:incoming>Flow_13sij8j</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_13sij8j" sourceRef="Activity_0bxjbjq" targetRef="Event_0fhnl0t" />
+    <bpmn:startEvent id="Check_Request" name="Listen to check request ">
+      <bpmn:outgoing>Flow_1ndatev</bpmn:outgoing>
+    </bpmn:startEvent>
   </bpmn:process>
   <bpmn:message id="Message_3o82khg" name="Check_Contract" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="check_customer">
-      <bpmndi:BPMNShape id="Event_07galba_di" bpmnElement="Check_Request">
+      <bpmndi:BPMNShape id="Event_0fhnl0t_di" bpmnElement="Event_0fhnl0t">
+        <dc:Bounds x="722" y="92" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0iihp8k_di" bpmnElement="Check_Request">
         <dc:Bounds x="179" y="79" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="160" y="122" width="74" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0zxj9kt_di" bpmnElement="Activity_0bxjbjq">
-        <dc:Bounds x="330" y="70" width="100" height="80" />
+        <dc:Bounds x="360" y="57" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fhnl0t_di" bpmnElement="Event_0fhnl0t">
-        <dc:Bounds x="532" y="92" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ndatev_di" bpmnElement="Flow_1ndatev">
         <di:waypoint x="215" y="97" />
-        <di:waypoint x="273" y="97" />
-        <di:waypoint x="273" y="110" />
-        <di:waypoint x="330" y="110" />
+        <di:waypoint x="360" y="97" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13sij8j_di" bpmnElement="Flow_13sij8j">
-        <di:waypoint x="430" y="110" />
-        <di:waypoint x="532" y="110" />
+        <di:waypoint x="460" y="97" />
+        <di:waypoint x="591" y="97" />
+        <di:waypoint x="591" y="110" />
+        <di:waypoint x="722" y="110" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

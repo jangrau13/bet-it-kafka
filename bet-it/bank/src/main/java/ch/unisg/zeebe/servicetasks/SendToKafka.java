@@ -30,10 +30,6 @@ public class SendToKafka {
     Map map = job.getVariablesAsMap();
     LOG.info("ZeebeWorker send-to-kafka received map", map);
     if(map.containsKey("topic")){
-        //check that we do not start a Camunda Process again
-        if(map.containsKey("messageName")){
-            map.remove("messageName");
-        }
         mapService.sendCamundaMessage(map,"camunda");
         LOG.info("sending Message to Camunda Kafka Interface");
     }else{

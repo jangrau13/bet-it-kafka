@@ -121,11 +121,12 @@ public class BankConsumerService {
                 //means that we want to talk to Camunda
                 logger.info("Camunda Kafka Interface has realized that we want to start or restart a Camunda Process");
                 try {
-                    String messageName = (String) variables.get("messageName");
+                    String messageName = variables.get("messageName").toString();
                     String uuid = UUID.randomUUID().toString();
                     if (variables.containsKey("correlationId")) {
                         uuid = (String) variables.get("correlationId");
                     }
+                    logger.info("starting Camunda Message command with the messageName {}", messageName);
                     client.newPublishMessageCommand()
                             .messageName(messageName)
                             .correlationKey(uuid)
