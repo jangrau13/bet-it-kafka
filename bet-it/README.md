@@ -23,7 +23,7 @@ POST localhost:8082/platform/bet/write body: { "winHome": boolean, "winAway": bo
 
 ## Create Bid
 
-POST localhost:8082/platform/bet/bid body: { "buyerName": String, "amount": float, "contractId": String}
+POST localhost:8082/platform/bet/bid body: { "buyerName": String, "amount": String, "contractId": String}
 
 This will set the bid, if however the bank potentially rejects the bid, it will be deleted. If the bank does not reject it, it will be set as active.
 
@@ -53,7 +53,7 @@ If the request to the camunda topic contains a "messageName" the API will create
 If the request does not contain a "messageName", but a topic it will post the variables of Camunda to the topic specified in the payload.
 In order to use this feature from Camunda, a [ZeebeWorker](bank/src/main/java/ch/unisg/zeebe/servicetasks/SendToKafka.java) was created, which automatically send the Camunda task to the camunda topic.
 An example of how to use this feature from the Camunda side, please refer to [add_customer.bpmn](bank/src/main/resources/add_customer.bpmn).
-An example of how to use this feature from the Microservice side, please refer to [BankController.java](src/main/java/ch/unisg/controller/BankController.java)
+An example of how to use this feature from the Microservice side, please refer to [BankController.java](bank/src/main/java/ch/unisg/controller/BankController.java)
 
 ### Add Connector Templates
 If you want to use templates for the Camunda Desktop Modeler download the templates and follow the [instructions](https://docs.camunda.io/docs/self-managed/connectors-deployment/install-and-start/)
