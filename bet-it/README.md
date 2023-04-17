@@ -47,12 +47,12 @@ This will set the bid, if however the bank potentially rejects the bid, it will 
 ## Kafka Camunda API
 We were expecting Kafka and Camunda to operate more easily, so that you can tell camunda as a task (with an own implementation for every task) to post a topic on Kafka and for a Microservice to start a Camunda Process by posting something on Kafka.
 In order to achieve this we implemented this API by ourselves in the bank microservice, where we are using the Camunda Tool. 
-You can find the implemenation [here](src/main/java/ch/unisg/kafka/service/BankConsumerService.java) at line 116 (might change, but it is a Map implementation listening on the camunda topic).
+You can find the implemenation [here](bank/src/main/java/ch/unisg/kafka/service/BankConsumerService.java) at line 116 (might change, but it is a Map implementation listening on the camunda topic).
 This API is transforming Kafka request from/to Camunda to/from Kafka depending on the map keys "messageName" and "topic". 
 If the request to the camunda topic contains a "messageName" the API will create the camunda process with that name (if it exists). 
 If the request does not contain a "messageName", but a topic it will post the variables of Camunda to the topic specified in the payload.
-In order to use this feature from Camunda, a [ZeebeWorker](src/main/java/ch/unisg/zeebe/servicetasks/SendToKafka.java) was created, which automatically send the Camunda task to the camunda topic.
-An example of how to use this feature from the Camunda side, please refer to [add_customer.bpmn](bet-it/bank/src/main/resources/add_customer.bpmn).
+In order to use this feature from Camunda, a [ZeebeWorker](bank/src/main/java/ch/unisg/zeebe/servicetasks/SendToKafka.java) was created, which automatically send the Camunda task to the camunda topic.
+An example of how to use this feature from the Camunda side, please refer to [add_customer.bpmn](bank/src/main/resources/add_customer.bpmn).
 An example of how to use this feature from the Microservice side, please refer to [BankController.java](src/main/java/ch/unisg/controller/BankController.java)
 
 ### Add Connector Templates
