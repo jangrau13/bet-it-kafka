@@ -44,6 +44,19 @@ This will set the bid, if however the bank potentially rejects the bid, it will 
 14. if done right, you can inspect [kafdrop](http://localhost:9000) for the topic bet.added-new-customer to see. Also intersting is the camunda topic. There you will see everything via the [Kafka Camunda API](#kafka-camunda-api)
 
 
+## Payment Process
+- [ ] make payment after Game ended
+- [ ] add fraud mechanism, that we have to redo (compensate) the whole process including the bet itself
+
+## Check Customer Process
+- [ ] when going for a Contract, the system should check the user, whether it thinks that the contract user is trustworthy. This is done by the [risk management controller](bank/src/main/java/ch/unisg/controller/RiskManagementController.java)
+- [ ] the above process should be modeled as a Camunda process
+- [ ] when going for a bid, the system should check both the contract user and the bidder, whether in case of success both parties would be able to pay. This could be done a little bit risky, so for example that if users have more than one bet open, that they get accepted with the risk of them not being able to pay, which would trigger a deletion of the bet.
+- [ ] when creating a customer add via event-carried state transfer a flag on how trust-worthy he/she is
+
+
+
+
 ## Kafka Camunda API
 We were expecting Kafka and Camunda to operate more easily, so that you can tell camunda as a task (with an own implementation for every task) to post a topic on Kafka and for a Microservice to start a Camunda Process by posting something on Kafka.
 In order to achieve this we implemented this API by ourselves in the bank microservice, where we are using the Camunda Tool. 
