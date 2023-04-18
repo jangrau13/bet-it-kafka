@@ -25,7 +25,7 @@ game.published, game.started, game.ended (events) via rest api
 2. Create Bet zeebe workflow via zeebe_addon topic: camunda.bet_request, (messageName=BET_REQUEST, ...bet)
 3. Bet-Workflow
 4. 
-   3. freeze account kafka event: topic: bank.freeze_request, wait for: camunda.bank_freeze_rejected, camunda.bank_freeze_accepted
+   3. freeze account kafka event: topic: bank.freeze_request, wait for: camunda.bank_freeze_rejected, camunda.bank_freeze_accepted :: Jan do we want Camudna to react to the fail? I implemented a variant for it, but if yes, we would have to define the messageName again
    4. Check if game not started (rest api game_master)
    5. Bet created event (bet-platform) bet_accepted, bet_rejected topic 
    6. Bet_Platform has list of running of accepted bets, game.ended -> camunda.bet_ended (messageName: BET_ENDED, correlation_id, ...betResult)
