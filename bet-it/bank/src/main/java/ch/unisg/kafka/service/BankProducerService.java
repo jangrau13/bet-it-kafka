@@ -8,6 +8,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class BankProducerService<T> {
@@ -34,6 +35,7 @@ public class BankProducerService<T> {
 
     public void sendCamundaMessage(T camundaMessage, String topic){
         logger.info("#### -> Publishing Camunda Message Successful:: {}", camundaMessage);
-        kafkaTemplate.send(topic, camundaMessage);
+        String uuid = UUID.randomUUID().toString();
+        kafkaTemplate.send(topic, uuid, camundaMessage);
     }
 }
