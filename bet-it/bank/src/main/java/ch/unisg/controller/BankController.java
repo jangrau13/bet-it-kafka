@@ -3,6 +3,9 @@ package ch.unisg.controller;
 import ch.unisg.kafka.service.BankProducerService;
 import ch.unisg.services.BankService;
 import io.camunda.zeebe.spring.client.ZeebeClientLifecycle;
+import io.confluent.ksql.api.client.Client;
+import io.confluent.ksql.api.client.Row;
+import io.confluent.ksql.api.client.StreamedQueryResult;
 import lombok.RequiredArgsConstructor;
 
 import org.slf4j.Logger;
@@ -13,11 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
+
 
 @RestController
 @RequestMapping(value = "/bank")
@@ -29,10 +30,11 @@ public class BankController {
     private final static String TWO_FACTOR_REQUEST = "TwoFactorAPI";
     private final BankProducerService<Map> mapService;
 
-    private final BankService bankService;
 
     @Autowired
     private ZeebeClientLifecycle client;
+
+    private final Client ksqlClient;
 
     @PostMapping(
             value = "/twoFactor",
@@ -77,7 +79,7 @@ public class BankController {
             String to = (String) transaction.get("to");
             int amount = (int) transaction.get("amount");
             //check if transaction is valid
-            if (bankService.testService(from, to, amount)) {
+            if (true) {
                 //add some delay for Camunda to work nice
                 try {
                     Thread.sleep((long) (Math.random() * 6000));
@@ -99,4 +101,32 @@ public class BankController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    @GetMapping(value="/users")
+    public List<String> getTransactions() throws ExecutionException, InterruptedException {
+        log.info("querying ksql now");
+        StreamedQueryResult sqr = ksqlClient
+                .streamQuery("SELECT * FROM user;")
+                .get();
+        Row row;
+        List<String> l = new ArrayList<>();
+        while ((row = sqr.poll()) != null) {
+            l.add(mapRowToTransaction(row));
+        }
+        return l;
+    }
+
+
+    private String mapRowToTransaction(Row row) {
+        log.info("row {}", row);
+        if(row.columnNames().contains("name")){
+            return  row.getString("name");
+        }else{
+            return "";
+        }
+
+    }
+
+
+
 }

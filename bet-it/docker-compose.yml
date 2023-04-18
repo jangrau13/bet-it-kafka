@@ -17,6 +17,50 @@ services:
     depends_on:
       - elasticsearch
 
+  ksqldb-server:
+    image: confluentinc/ksqldb-server:0.28.2
+    hostname: ksqldb-server
+    container_name: ksqldb-server
+    depends_on:
+      - kafka
+    ports:
+      - "8488:8088"
+    networks:
+      - bet-it
+    environment:
+      KSQL_LISTENERS: http://0.0.0.0:8088
+      KSQL_BOOTSTRAP_SERVERS: kafka:9092
+      KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
+      KSQL_KSQLDB_AUTO_OFFSET_RESET: "earliest"
+
+  ksqldb-cli:
+    image: confluentinc/ksqldb-cli:0.28.2
+    container_name: ksqldb-cli
+    networks:
+      - bet-it
+    depends_on:
+      - kafka
+      - ksqldb-server
+    entrypoint: /bin/sh
+    tty: true
+
+  connectors: # https://docs.camunda.io/docs/components/integration-framework/connectors/out-of-the-box-connectors/available-connectors-overview/
+    image: camunda/connectors-bundle:${CAMUNDA_CONNECTORS_VERSION:-0.16.1}
+    container_name: connectors
+    environment:
+      - ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS=zeebe:26500
+      - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
+      - CAMUNDA_OPERATE_CLIENT_URL=http://operate:8080
+      - CAMUNDA_OPERATE_CLIENT_USERNAME=demo
+      - CAMUNDA_OPERATE_CLIENT_PASSWORD=demo
+    env_file: connector-secrets.txt
+    networks:
+      - bet-it
+    depends_on:
+      - zeebe
+      - operate
+
   operate:
     image: camunda/operate:${CAMUNDA_PLATFORM_VERSION:-8.2.1}
     container_name: operate

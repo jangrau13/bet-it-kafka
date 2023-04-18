@@ -1,38 +1,35 @@
-package ch.unisg.controller;
+package ch.unisg.kafka.spring.controllers;
 
-import ch.unisg.kafka.service.BankProducerService;
-import ch.unisg.services.BankService;
-import io.camunda.zeebe.spring.client.ZeebeClientLifecycle;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 @RestController
-@RequestMapping(value = "/riskmanagement")
+@RequestMapping(value = "/gamemanagement")
 @RequiredArgsConstructor
-public class RiskManagementController {
+public class GameManagerController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
-     * fake REST API to test whether the person should be accepted or not. If the name start with good, the person will be accepted.
-     * if the person starts with bad, there will be an false coming back. Otherwise random.
-     * @param user
+     * fake REST API to test whether the gameId should be accepted for gambling or not. If the name start with good, the gameId will be accepted.
+     * if the gameId starts with bad, there will be an false coming back. Otherwise random.
+     * @param gameId
      * @return true or false
      */
     @GetMapping(
             value = "/check", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Boolean> doTwoFactor(@RequestParam String user) {
-        log.info("Checking the following user: " + user);
+    public ResponseEntity<Boolean> doTwoFactor(@RequestParam String gameId) {
+        log.info("Checking the following gameId: " + gameId);
         try {
             Thread.sleep((long) (Math.random() * 6000));
         } catch (InterruptedException e) {
@@ -40,13 +37,13 @@ public class RiskManagementController {
         }
         // also for Camunda, maybe it fails :)
         Random rd = new Random();
-        if(user.startsWith("good")){
+        if(gameId.startsWith("good")){
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
-        if(user.startsWith("bad")){
+        if(gameId.startsWith("bad")){
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
-        if(user.startsWith("error")){
+        if(gameId.startsWith("error")){
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if (rd.nextBoolean()) {
