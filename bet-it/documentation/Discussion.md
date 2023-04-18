@@ -29,7 +29,7 @@ game.published, game.started, game.ended (events) via rest api
    4. Check if game not started (rest api game_master)
    5. Bet created event (bet-platform) bet_accepted, bet_rejected topic 
    6. Bet_Platform has list of running of accepted bets, game.ended -> camunda.bet_ended (messageName: BET_ENDED, correlation_id, ...betResult)
-   7. pay bet kafka event: topic: bank.pay_bet, wait for: camunda.bank_paid
+   7. pay bet kafka event: topic: bank.pay_bet, wait for: camunda.bank_paid :: also here, don't we want to have this as a REST API to have synchronously? It would be easier. Otherwise we have to leave Camunda also for compensation. I implemented it like this now
    8. bet.resolved
    9. Fraud Detector 
    10. If fraud -> bank.payment_reverse
