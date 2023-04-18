@@ -4,8 +4,7 @@
 1. Call Customer API (name, password, bankpassword?), where: bet-platform :: creating a customer should be done on the bank MS 
 2. API Fire Camunda Workflow over zeebe
 3. Zeebe calls bank to check if user with that bankpassword exists
-4. Include Task List to check for passport? (We dont send passport image), to maybe check if its this person :: I don't want to implement this and this generates work load
-5. If TaskList completed User is created :: user creation all on the bank side (already implemented)
+5. If TaskList completed User is created :: user creation all on the bank side (already implemented), this is not really implemented.
 
 ## 2. Create Contract
 1. Creating via bet-platform api, Game needs to already exist
@@ -42,5 +41,6 @@ This potentially needs to be sent to multiple camunda workflows that are waiting
 
 4.2 i would split this logic and leave it to the bank, we can still do this as a camunda process later?
 How does the process know what game has finished? the game-master doesn't need to know any of the contracts or collerationids.
+User Creation should be triggered by an api call
 
 
