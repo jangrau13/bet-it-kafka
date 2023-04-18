@@ -6,7 +6,6 @@
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:output source="=&#34;errorJn&#34;" target="user" />
-          <zeebe:output source="=goodGame" target="gameId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1sbqat8</bpmn:outgoing>
@@ -61,7 +60,7 @@
           <zeebe:input source="=&#34;CONTRACT_ACCEPTED&#34;" target="messageName" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_15pkcoc</bpmn:incoming>
+      <bpmn:incoming>Flow_06a65om</bpmn:incoming>
       <bpmn:outgoing>Flow_0ficx4x</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:sendTask id="Activity_1c0408r" name="We don&#39;t trust you">
@@ -75,16 +74,17 @@
       <bpmn:incoming>Flow_1dh7fqo</bpmn:incoming>
       <bpmn:outgoing>Flow_0e22jox</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_1dh7fqo" name="no" sourceRef="Gateway_17jnl47" targetRef="Activity_1c0408r" />
+    <bpmn:sequenceFlow id="Flow_1dh7fqo" sourceRef="Gateway_17jnl47" targetRef="Activity_1c0408r" />
     <bpmn:endEvent id="Event_0cvwf93">
+      <bpmn:incoming>Flow_01u74kx</bpmn:incoming>
       <bpmn:incoming>Flow_0e22jox</bpmn:incoming>
       <bpmn:incoming>Flow_0d61uu7</bpmn:incoming>
-      <bpmn:incoming>Flow_13q9i2c</bpmn:incoming>
       <bpmn:terminateEventDefinition id="TerminateEventDefinition_0lhoyeb" />
     </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_01u74kx" sourceRef="Event_1hloh0u" targetRef="Event_0cvwf93" />
     <bpmn:intermediateCatchEvent id="Event_1hloh0u" name="Command Style, was it really sent?">
       <bpmn:incoming>Flow_0ficx4x</bpmn:incoming>
-      <bpmn:outgoing>Flow_13q9i2c</bpmn:outgoing>
+      <bpmn:outgoing>Flow_01u74kx</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1qbq8ly" messageRef="Message_3mnkomi" />
     </bpmn:intermediateCatchEvent>
     <bpmn:serviceTask id="Activity_0bpvip4" name="get UUID">
@@ -92,67 +92,13 @@
         <zeebe:taskDefinition type="uuid-creator" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1w5vbo6</bpmn:incoming>
-      <bpmn:outgoing>Flow_090xsed</bpmn:outgoing>
+      <bpmn:outgoing>Flow_06a65om</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0e22jox" sourceRef="Activity_1c0408r" targetRef="Event_0cvwf93" />
     <bpmn:sequenceFlow id="Flow_0d61uu7" sourceRef="Activity_0t4ac74" targetRef="Event_0cvwf93" />
     <bpmn:sequenceFlow id="Flow_0ficx4x" sourceRef="Activity_1drxn3p" targetRef="Event_1hloh0u" />
+    <bpmn:sequenceFlow id="Flow_06a65om" sourceRef="Activity_0bpvip4" targetRef="Activity_1drxn3p" />
     <bpmn:sequenceFlow id="Flow_06ypld0" sourceRef="Event_0txkzot" targetRef="Activity_0t4ac74" />
-    <bpmn:serviceTask id="Activity_0xj210d" name="Call Game Manager">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="noAuth" target="authentication.type" />
-          <zeebe:input source="get" target="method" />
-          <zeebe:input source="=&#34;http://bank:8083/gamemanagement/check?gameId=&#34; + gameId" target="url" />
-          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="resultVariable" value="test" />
-          <zeebe:header key="resultExpression" value="=response" />
-          <zeebe:header key="errorExpression" value="=bpmnError(&#34;500&#34;, &#34;no more retries&#34;)" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_090xsed</bpmn:incoming>
-      <bpmn:outgoing>Flow_0x8b5c8</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sendTask id="Activity_19fnxqb" name="Send Game Management Down">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="send-to-kafka" />
-        <zeebe:ioMapping>
-          <zeebe:input source="=&#34;camunda.contract_rejected&#34;" target="topic" />
-          <zeebe:input source="=&#34;Game Management not available, until this is back, the game is over. We are sorry&#34;" target="reason" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0eqf3p0</bpmn:incoming>
-    </bpmn:sendTask>
-    <bpmn:exclusiveGateway id="Gateway_0fq6xwm" name="is the game still on?" default="Flow_0vgpa9h">
-      <bpmn:incoming>Flow_0x8b5c8</bpmn:incoming>
-      <bpmn:outgoing>Flow_15pkcoc</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0vgpa9h</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sendTask id="Activity_1ltji98" name="Game is already over">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="send-to-kafka" />
-        <zeebe:ioMapping>
-          <zeebe:input source="=&#34;camunda.contract_rejected&#34;" target="topic" />
-          <zeebe:input source="=&#34;Game is already over. We are sorry&#34;" target="reason" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0vgpa9h</bpmn:incoming>
-    </bpmn:sendTask>
-    <bpmn:boundaryEvent id="Event_1ohui02" attachedToRef="Activity_0xj210d">
-      <bpmn:outgoing>Flow_0eqf3p0</bpmn:outgoing>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_1qvpz68" errorRef="Error_0q43gf6" />
-    </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_0x8b5c8" sourceRef="Activity_0xj210d" targetRef="Gateway_0fq6xwm" />
-    <bpmn:sequenceFlow id="Flow_0eqf3p0" sourceRef="Event_1ohui02" targetRef="Activity_19fnxqb" />
-    <bpmn:sequenceFlow id="Flow_15pkcoc" name="yes" sourceRef="Gateway_0fq6xwm" targetRef="Activity_1drxn3p">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=body = true</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0vgpa9h" name="no" sourceRef="Gateway_0fq6xwm" targetRef="Activity_1ltji98" />
-    <bpmn:sequenceFlow id="Flow_090xsed" sourceRef="Activity_0bpvip4" targetRef="Activity_0xj210d" />
-    <bpmn:sequenceFlow id="Flow_13q9i2c" sourceRef="Event_1hloh0u" targetRef="Event_0cvwf93" />
     <bpmn:textAnnotation id="TextAnnotation_0nucno8">
       <bpmn:text>change to StartMessageEvent with Message CONTRACT_REQUEST and change the output user when changing to kafka based, then you should use the built-in user</bpmn:text>
     </bpmn:textAnnotation>
@@ -161,10 +107,6 @@
       <bpmn:text>change topic to "camunda.contract_accepted". Now it is at camunda for testing reasons</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_1nli50w" sourceRef="Activity_1drxn3p" targetRef="TextAnnotation_0n2vjy8" />
-    <bpmn:textAnnotation id="TextAnnotation_02qv3rk">
-      <bpmn:text>change the output gameId when changing to kafka based, then you should use the built-in user</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_0rkgyfn" sourceRef="TextAnnotation_02qv3rk" targetRef="Activity_0xj210d" />
   </bpmn:process>
   <bpmn:message id="Message_209plgo" name="CONTRACT_REQUEST" />
   <bpmn:message id="Message_0ksclf7" name="=CONTRACT_ACCEPTED">
@@ -198,10 +140,6 @@
         <dc:Bounds x="220" y="100" width="100" height="199" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0xb6age" bpmnElement="TextAnnotation_02qv3rk">
-        <dc:Bounds x="820" y="700" width="99.99274099883856" height="112.65969802555169" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1l4sybz_di" bpmnElement="Contract_Request_Received">
         <dc:Bounds x="179" y="369" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -226,58 +164,33 @@
         <dc:Bounds x="820" y="347" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00we54k_di" bpmnElement="Event_0cvwf93">
+        <dc:Bounds x="1302" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1l71z0j_di" bpmnElement="Event_1hloh0u">
+        <dc:Bounds x="1212" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1189" y="295" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0buj3im_di" bpmnElement="Activity_1drxn3p">
+        <dc:Bounds x="970" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_05gfd2f_di" bpmnElement="Activity_0bpvip4">
         <dc:Bounds x="700" y="230" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00we54k_di" bpmnElement="Event_0cvwf93">
-        <dc:Bounds x="1372" y="382" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_06c5mbf" bpmnElement="Activity_0xj210d">
-        <dc:Bounds x="1020" y="630" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_11kyozu" bpmnElement="Activity_19fnxqb">
-        <dc:Bounds x="1370" y="753" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0paopsw" bpmnElement="Gateway_0fq6xwm" isMarkerVisible="true">
-        <dc:Bounds x="1185" y="645" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1175" y="702" width="77" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1uivcd2" bpmnElement="Activity_1ltji98">
-        <dc:Bounds x="1430" y="630" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1l71z0j_di" bpmnElement="Event_1hloh0u">
-        <dc:Bounds x="1372" y="222" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1349" y="265" width="87" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0buj3im_di" bpmnElement="Activity_1drxn3p">
-        <dc:Bounds x="1150" y="210" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1nli50w_di" bpmnElement="Association_1nli50w">
+        <di:waypoint x="1009" y="230" />
+        <di:waypoint x="994" y="178" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_06nmxzp_di" bpmnElement="Association_06nmxzp">
         <di:waypoint x="202" y="370" />
         <di:waypoint x="221" y="299" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0rkgyfn_di" bpmnElement="Association_0rkgyfn">
-        <di:waypoint x="920" y="766" />
-        <di:waypoint x="1020" y="697" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1nli50w_di" bpmnElement="Association_1nli50w">
-        <di:waypoint x="1151" y="217" />
-        <di:waypoint x="1020" y="129" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_06ucooy_di" bpmnElement="Event_0txkzot">
         <dc:Bounds x="302" y="409" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1a5gx91" bpmnElement="Event_1ohui02">
-        <dc:Bounds x="1032" y="692" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sbqat8_di" bpmnElement="Flow_1sbqat8">
         <di:waypoint x="215" y="387" />
@@ -298,68 +211,33 @@
       <bpmndi:BPMNEdge id="Flow_1dh7fqo_di" bpmnElement="Flow_1dh7fqo">
         <di:waypoint x="625" y="387" />
         <di:waypoint x="820" y="387" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="716" y="369" width="13" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d61uu7_di" bpmnElement="Flow_0d61uu7">
         <di:waypoint x="740" y="510" />
-        <di:waypoint x="1390" y="510" />
-        <di:waypoint x="1390" y="418" />
+        <di:waypoint x="1320" y="510" />
+        <di:waypoint x="1320" y="288" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0e22jox_di" bpmnElement="Flow_0e22jox">
         <di:waypoint x="920" y="387" />
-        <di:waypoint x="1146" y="387" />
-        <di:waypoint x="1146" y="400" />
-        <di:waypoint x="1372" y="400" />
+        <di:waypoint x="1320" y="387" />
+        <di:waypoint x="1320" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01u74kx_di" bpmnElement="Flow_01u74kx">
+        <di:waypoint x="1248" y="270" />
+        <di:waypoint x="1302" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ficx4x_di" bpmnElement="Flow_0ficx4x">
-        <di:waypoint x="1250" y="250" />
-        <di:waypoint x="1299" y="250" />
-        <di:waypoint x="1299" y="240" />
-        <di:waypoint x="1372" y="240" />
+        <di:waypoint x="1070" y="270" />
+        <di:waypoint x="1212" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06a65om_di" bpmnElement="Flow_06a65om">
+        <di:waypoint x="800" y="270" />
+        <di:waypoint x="970" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06ypld0_di" bpmnElement="Flow_06ypld0">
         <di:waypoint x="320" y="445" />
         <di:waypoint x="320" y="510" />
         <di:waypoint x="640" y="510" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_0asaw6o" bpmnElement="Flow_0x8b5c8">
-        <di:waypoint x="1120" y="670" />
-        <di:waypoint x="1185" y="670" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_18tk8k1" bpmnElement="Flow_0eqf3p0">
-        <di:waypoint x="1050" y="728" />
-        <di:waypoint x="1050" y="793" />
-        <di:waypoint x="1370" y="793" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1efi0dq" bpmnElement="Flow_15pkcoc">
-        <di:waypoint x="1210" y="645" />
-        <di:waypoint x="1210" y="468" />
-        <di:waypoint x="1200" y="468" />
-        <di:waypoint x="1200" y="290" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1197" y="477" width="17" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_017rq7m" bpmnElement="Flow_0vgpa9h">
-        <di:waypoint x="1235" y="670" />
-        <di:waypoint x="1430" y="670" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1326" y="652" width="13" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_090xsed_di" bpmnElement="Flow_090xsed">
-        <di:waypoint x="800" y="270" />
-        <di:waypoint x="1000" y="270" />
-        <di:waypoint x="1000" y="670" />
-        <di:waypoint x="1020" y="670" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_13q9i2c_di" bpmnElement="Flow_13q9i2c">
-        <di:waypoint x="1408" y="240" />
-        <di:waypoint x="1470" y="240" />
-        <di:waypoint x="1470" y="400" />
-        <di:waypoint x="1408" y="400" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
