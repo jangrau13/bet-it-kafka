@@ -116,6 +116,69 @@ public class BankController {
         return l;
     }
 
+    /**
+     * still fake in order to freeze accounts
+     * @return boolean
+     */
+
+    @GetMapping(value="/freeze", produces = {MediaType.APPLICATION_JSON_VALUE} )
+    public ResponseEntity<Boolean> freeze(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+        return fakeBooleanResponse(from);
+    }
+
+    /**
+     * still fake in order to unfreeze accounts
+     * @return boolean
+     */
+
+    @GetMapping(value="/unfreeze", produces = {MediaType.APPLICATION_JSON_VALUE} )
+    public ResponseEntity<Boolean> unfreeze(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+        return fakeBooleanResponse(from);
+    }
+
+    /**
+     * still fake in order to pay accounts
+     * @return boolean
+     */
+
+    @GetMapping(value="/payment", produces = {MediaType.APPLICATION_JSON_VALUE} )
+    public ResponseEntity<Boolean> payment(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+        return fakeBooleanResponse(from);
+    }
+
+    /**
+     * still fake in order to reversePayment accounts
+     * @return boolean
+     */
+
+    @GetMapping(value="/paymentReverse", produces = {MediaType.APPLICATION_JSON_VALUE} )
+    public ResponseEntity<Boolean> reversePayment(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+        return fakeBooleanResponse(from);
+    }
+
+    private static ResponseEntity<Boolean> fakeBooleanResponse(String from) {
+        if(from.startsWith("good")){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        if(from.startsWith("bad")){
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+        if(from.startsWith("error")){
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }else {
+            Random rd = new Random();
+            if (rd.nextBoolean()) {
+                if (rd.nextBoolean()) {
+                    return new ResponseEntity<>(true, HttpStatus.OK);
+                }else{
+                    return new ResponseEntity<>(false, HttpStatus.OK);
+                }
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
 
     private String mapRowToTransaction(Row row) {
         log.info("row {}", row);
