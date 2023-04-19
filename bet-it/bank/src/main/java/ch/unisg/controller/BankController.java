@@ -121,7 +121,7 @@ public class BankController {
      */
 
     @GetMapping(value="/freeze", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> freeze(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+    public ResponseEntity<Boolean> freeze(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo,  @RequestParam int amountFrom) {
         return fakeBooleanResponse(from);
     }
 
@@ -131,7 +131,7 @@ public class BankController {
      */
 
     @GetMapping(value="/unfreeze", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> unfreeze(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+    public ResponseEntity<Boolean> unfreeze(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo,  @RequestParam int amountFrom) {
         return fakeBooleanResponse(from);
     }
 
@@ -141,7 +141,7 @@ public class BankController {
      */
 
     @GetMapping(value="/payment", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> payment(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+    public ResponseEntity<Boolean> payment(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo,  @RequestParam int amountFrom) {
         return fakeBooleanResponse(from);
     }
 
@@ -151,7 +151,7 @@ public class BankController {
      */
 
     @GetMapping(value="/paymentReverse", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> reversePayment(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+    public ResponseEntity<Boolean> reversePayment(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo, @RequestParam int amountFrom) {
         return fakeBooleanResponse(from);
     }
 
