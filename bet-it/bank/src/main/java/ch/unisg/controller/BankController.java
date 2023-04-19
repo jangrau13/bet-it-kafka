@@ -1,7 +1,6 @@
 package ch.unisg.controller;
 
 import ch.unisg.kafka.service.BankProducerService;
-import ch.unisg.services.BankService;
 import io.camunda.zeebe.spring.client.ZeebeClientLifecycle;
 import io.confluent.ksql.api.client.Client;
 import io.confluent.ksql.api.client.Row;
