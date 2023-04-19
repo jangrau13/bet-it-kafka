@@ -5,8 +5,8 @@
     <bpmn:startEvent id="Contract_Request_Received" name="Contract Request Received">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=&#34;errorJn&#34;" target="user" />
-          <zeebe:output source="=goodGame" target="gameId" />
+          <zeebe:output source="=&#34;badLukas&#34;" target="user" />
+          <zeebe:output source="=&#34;goodGame&#34;" target="gameId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1sbqat8</bpmn:outgoing>
@@ -23,16 +23,12 @@
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="test" />
           <zeebe:header key="resultExpression" value="=response" />
-          <zeebe:header key="errorExpression" value="=bpmnError(&#34;500&#34;, &#34;no more retries&#34;)" />
+          <zeebe:header key="errorExpression" value="=if error.code = &#34;500&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else if error.code = &#34;404&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else null" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1sbqat8</bpmn:incoming>
       <bpmn:outgoing>Flow_1ux6rwa</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:boundaryEvent id="Event_0txkzot" attachedToRef="Activity_125sz5d">
-      <bpmn:outgoing>Flow_06ypld0</bpmn:outgoing>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_058dw3n" errorRef="Error_0q43gf6" />
-    </bpmn:boundaryEvent>
     <bpmn:sendTask id="Activity_0t4ac74" name="Send Risk Management Down">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-kafka" />
@@ -90,6 +86,9 @@
     <bpmn:serviceTask id="Activity_0bpvip4" name="get UUID">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="uuid-creator" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;errorLukas&#34;" target="user" />
+        </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1w5vbo6</bpmn:incoming>
       <bpmn:outgoing>Flow_090xsed</bpmn:outgoing>
@@ -97,7 +96,6 @@
     <bpmn:sequenceFlow id="Flow_0e22jox" sourceRef="Activity_1c0408r" targetRef="Event_0cvwf93" />
     <bpmn:sequenceFlow id="Flow_0d61uu7" sourceRef="Activity_0t4ac74" targetRef="Event_0cvwf93" />
     <bpmn:sequenceFlow id="Flow_0ficx4x" sourceRef="Activity_1drxn3p" targetRef="Event_1hloh0u" />
-    <bpmn:sequenceFlow id="Flow_06ypld0" sourceRef="Event_0txkzot" targetRef="Activity_0t4ac74" />
     <bpmn:serviceTask id="Activity_0xj210d" name="Call Game Manager">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
@@ -110,7 +108,7 @@
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="test" />
           <zeebe:header key="resultExpression" value="=response" />
-          <zeebe:header key="errorExpression" value="=bpmnError(&#34;500&#34;, &#34;no more retries&#34;)" />
+          <zeebe:header key="errorExpression" value="=if error.code = &#34;500&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else if error.code = &#34;404&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else null" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_090xsed</bpmn:incoming>
@@ -153,6 +151,11 @@
     <bpmn:sequenceFlow id="Flow_0vgpa9h" name="no" sourceRef="Gateway_0fq6xwm" targetRef="Activity_1ltji98" />
     <bpmn:sequenceFlow id="Flow_090xsed" sourceRef="Activity_0bpvip4" targetRef="Activity_0xj210d" />
     <bpmn:sequenceFlow id="Flow_13q9i2c" sourceRef="Event_1hloh0u" targetRef="Event_0cvwf93" />
+    <bpmn:boundaryEvent id="Event_0txkzot" attachedToRef="Activity_125sz5d">
+      <bpmn:outgoing>Flow_06ypld0</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_058dw3n" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_06ypld0" sourceRef="Event_0txkzot" targetRef="Activity_0t4ac74" />
     <bpmn:textAnnotation id="TextAnnotation_0nucno8">
       <bpmn:text>change to StartMessageEvent with Message CONTRACT_REQUEST and change the output user when changing to kafka based, then you should use the built-in user</bpmn:text>
     </bpmn:textAnnotation>
@@ -265,7 +268,7 @@
         <dc:Bounds x="1032" y="692" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_06ucooy_di" bpmnElement="Event_0txkzot">
-        <dc:Bounds x="302" y="409" width="36" height="36" />
+        <dc:Bounds x="322" y="409" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sbqat8_di" bpmnElement="Flow_1sbqat8">
         <di:waypoint x="215" y="387" />
@@ -308,8 +311,8 @@
         <di:waypoint x="1372" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06ypld0_di" bpmnElement="Flow_06ypld0">
-        <di:waypoint x="320" y="445" />
-        <di:waypoint x="320" y="510" />
+        <di:waypoint x="340" y="445" />
+        <di:waypoint x="340" y="510" />
         <di:waypoint x="640" y="510" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0asaw6o" bpmnElement="Flow_0x8b5c8">
