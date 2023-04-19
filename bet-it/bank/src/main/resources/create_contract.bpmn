@@ -5,8 +5,8 @@
     <bpmn:startEvent id="Contract_Request_Received" name="Contract Request Received">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=&#34;badLukas&#34;" target="user" />
-          <zeebe:output source="=&#34;goodGame&#34;" target="gameId" />
+          <zeebe:output source="=&#34;goodLukas&#34;" target="user" />
+          <zeebe:output source="=&#34;errorGame&#34;" target="gameId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1sbqat8</bpmn:outgoing>
@@ -57,7 +57,7 @@
           <zeebe:input source="=&#34;CONTRACT_ACCEPTED&#34;" target="messageName" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_15pkcoc</bpmn:incoming>
+      <bpmn:incoming>Flow_0ck6e5b</bpmn:incoming>
       <bpmn:outgoing>Flow_0ficx4x</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:sendTask id="Activity_1c0408r" name="We don&#39;t trust you">
@@ -88,6 +88,7 @@
         <zeebe:taskDefinition type="uuid-creator" />
         <zeebe:ioMapping>
           <zeebe:output source="=&#34;errorLukas&#34;" target="user" />
+          <zeebe:output source="=null" target="body" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1w5vbo6</bpmn:incoming>
@@ -145,7 +146,7 @@
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0x8b5c8" sourceRef="Activity_0xj210d" targetRef="Gateway_0fq6xwm" />
     <bpmn:sequenceFlow id="Flow_0eqf3p0" sourceRef="Event_1ohui02" targetRef="Activity_19fnxqb" />
-    <bpmn:sequenceFlow id="Flow_15pkcoc" name="yes" sourceRef="Gateway_0fq6xwm" targetRef="Activity_1drxn3p">
+    <bpmn:sequenceFlow id="Flow_15pkcoc" name="yes" sourceRef="Gateway_0fq6xwm" targetRef="Activity_10tuhvm">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=body = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0vgpa9h" name="no" sourceRef="Gateway_0fq6xwm" targetRef="Activity_1ltji98" />
@@ -156,6 +157,19 @@
       <bpmn:errorEventDefinition id="ErrorEventDefinition_058dw3n" errorRef="Error_0q43gf6" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_06ypld0" sourceRef="Event_0txkzot" targetRef="Activity_0t4ac74" />
+    <bpmn:serviceTask id="Activity_10tuhvm" name="get UUID">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="uuid-creator" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;errorLukas&#34;" target="user" />
+          <zeebe:output source="=null" target="body" />
+          <zeebe:output source="=correlationId" target="correlationId" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15pkcoc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ck6e5b</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0ck6e5b" sourceRef="Activity_10tuhvm" targetRef="Activity_1drxn3p" />
     <bpmn:textAnnotation id="TextAnnotation_0nucno8">
       <bpmn:text>change to StartMessageEvent with Message CONTRACT_REQUEST and change the output user when changing to kafka based, then you should use the built-in user</bpmn:text>
     </bpmn:textAnnotation>
@@ -264,6 +278,10 @@
         <dc:Bounds x="820" y="700" width="99.99274099883856" height="112.65969802555169" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1t47go9" bpmnElement="Activity_10tuhvm">
+        <dc:Bounds x="1160" y="530" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1a5gx91" bpmnElement="Event_1ohui02">
         <dc:Bounds x="1032" y="692" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -326,11 +344,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_1efi0dq" bpmnElement="Flow_15pkcoc">
         <di:waypoint x="1210" y="645" />
-        <di:waypoint x="1210" y="468" />
-        <di:waypoint x="1200" y="468" />
-        <di:waypoint x="1200" y="290" />
+        <di:waypoint x="1210" y="610" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1197" y="477" width="17" height="14" />
+          <dc:Bounds x="1197" y="517" width="17" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_017rq7m" bpmnElement="Flow_0vgpa9h">
@@ -363,6 +379,12 @@
       <bpmndi:BPMNEdge id="Association_0rkgyfn_di" bpmnElement="Association_0rkgyfn">
         <di:waypoint x="920" y="766" />
         <di:waypoint x="1020" y="697" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ck6e5b_di" bpmnElement="Flow_0ck6e5b">
+        <di:waypoint x="1210" y="530" />
+        <di:waypoint x="1210" y="410" />
+        <di:waypoint x="1200" y="410" />
+        <di:waypoint x="1200" y="290" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
