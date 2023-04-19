@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0bnwgm1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0bnwgm1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.10.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
   <bpmn:process id="Process_06vpn3w" name="Create Contract Workflow" isExecutable="true">
     <bpmn:sequenceFlow id="Flow_1sbqat8" sourceRef="Contract_Request_Received" targetRef="Activity_125sz5d" />
     <bpmn:startEvent id="Contract_Request_Received" name="Contract Request Received">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=&#34;badLukas&#34;" target="user" />
+          <zeebe:output source="=&#34;goodLukas&#34;" target="user" />
           <zeebe:output source="=&#34;goodGame&#34;" target="gameId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
@@ -264,11 +264,11 @@
         <dc:Bounds x="820" y="700" width="99.99274099883856" height="112.65969802555169" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1a5gx91" bpmnElement="Event_1ohui02">
-        <dc:Bounds x="1032" y="692" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_06ucooy_di" bpmnElement="Event_0txkzot">
         <dc:Bounds x="322" y="409" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1a5gx91" bpmnElement="Event_1ohui02">
+        <dc:Bounds x="1032" y="692" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1sbqat8_di" bpmnElement="Flow_1sbqat8">
         <di:waypoint x="215" y="387" />
@@ -310,11 +310,6 @@
         <di:waypoint x="1299" y="240" />
         <di:waypoint x="1372" y="240" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_06ypld0_di" bpmnElement="Flow_06ypld0">
-        <di:waypoint x="340" y="445" />
-        <di:waypoint x="340" y="510" />
-        <di:waypoint x="640" y="510" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0asaw6o" bpmnElement="Flow_0x8b5c8">
         <di:waypoint x="1120" y="670" />
         <di:waypoint x="1185" y="670" />
@@ -351,6 +346,11 @@
         <di:waypoint x="1470" y="240" />
         <di:waypoint x="1470" y="400" />
         <di:waypoint x="1408" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06ypld0_di" bpmnElement="Flow_06ypld0">
+        <di:waypoint x="340" y="445" />
+        <di:waypoint x="340" y="510" />
+        <di:waypoint x="640" y="510" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_06nmxzp_di" bpmnElement="Association_06nmxzp">
         <di:waypoint x="202" y="370" />
