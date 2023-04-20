@@ -42,3 +42,10 @@
 4. try to add the aggregator pattern (maybe add a recommendation for adding a customer)
 5. have a 202_ACCEPTED for the contract implemented
 6. implement at least a stateful resilience pattern --> name it explicitely
+
+## ToDos
+1. explicitely tell about state reslience patterns
+2. say where we use event notification, which one are event carried state transfer
+3. Event Subprocess
+4. why we chose Camunda v8
+5. add ADR to flexibility and complexity --> JSON
