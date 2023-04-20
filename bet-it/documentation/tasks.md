@@ -41,4 +41,4 @@
 3. ADRs on how we added error handling on those subprocesses (maybe add one with human intervention)
 4. try to add the aggregator pattern (maybe add a recommendation for adding a customer)
 5. have a 202_ACCEPTED for the contract implemented
-6. implement at least a stateful resilience pattern
+6. implement at least a stateful resilience pattern --> name it explicitely
