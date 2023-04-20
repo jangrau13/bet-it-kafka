@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0bnwgm1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:process id="Bet_Workflow" name="Create Bet Workflow" isExecutable="true">
+    <bpmn:sendTask id="BetAcceptedEvent" name="Send Bet Accepted">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;bet.accepted.camunda&#34;" target="topic" />
+          <zeebe:input source="=&#34;GAME_ENDED&#34;" target="messageName" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15pkcoc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ficx4x</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_0cvwf93">
+      <bpmn:incoming>Flow_1iw79pm</bpmn:incoming>
+      <bpmn:incoming>no_fraud_detected</bpmn:incoming>
+      <bpmn:incoming>Flow_0pmx3qc</bpmn:incoming>
+      <bpmn:incoming>Flow_05dta9o</bpmn:incoming>
+      <bpmn:incoming>Flow_0uabkjc</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0lhoyeb" />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="Game_Ended_Listener" name="Game Ended">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=correlationId" target="correlationId" />
+          <zeebe:output source="=&#34;goodJan&#34;" target="to" />
+          <zeebe:output source="=&#34;20&#34;" target="amountTo" />
+          <zeebe:output source="=&#34;goodLukas&#34;" target="from" />
+          <zeebe:output source="=&#34;100&#34;" target="amountFrom" />
+          <zeebe:output source="=null" target="url" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ficx4x</bpmn:incoming>
+      <bpmn:outgoing>Flow_15wglvo</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1qbq8ly" messageRef="Message_0pecr2i" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0ficx4x" sourceRef="BetAcceptedEvent" targetRef="Game_Ended_Listener" />
+    <bpmn:serviceTask id="Activity_0xj210d" name="Call Game Manager">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="get" target="method" />
+          <zeebe:input source="=&#34;http://game-master:8083/gamemanagement/check?gameId=&#34; + gameId" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="test" />
+          <zeebe:header key="resultExpression" value="=response" />
+          <zeebe:header key="errorExpression" value="=if error.code = &#34;500&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else if error.code = &#34;404&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else null" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>freeze_good</bpmn:incoming>
+      <bpmn:outgoing>Flow_0x8b5c8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="Activity_19fnxqb" name="Send Game Management Down">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;camunda.bet_rejected&#34;" target="topic" />
+          <zeebe:input source="=&#34;Game Management not available, until this is back, the game is over. We are sorry&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1gkytus</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="Gateway_0fq6xwm" name="is the game still on?" default="Flow_0vgpa9h">
+      <bpmn:incoming>Flow_0x8b5c8</bpmn:incoming>
+      <bpmn:outgoing>Flow_15pkcoc</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0vgpa9h</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="GameAlreadyOverEvent" name="Game is already over">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;bet.rejected.camunda&#34;" target="topic" />
+          <zeebe:input source="=&#34;Game is already over. We are sorry&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1d3rrpd</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_0x8b5c8" sourceRef="Activity_0xj210d" targetRef="Gateway_0fq6xwm" />
+    <bpmn:sequenceFlow id="Flow_15pkcoc" name="yes" sourceRef="Gateway_0fq6xwm" targetRef="BetAcceptedEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=body = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0vgpa9h" name="no" sourceRef="Gateway_0fq6xwm" targetRef="parallel_gateway2" />
+    <bpmn:sequenceFlow id="Flow_0ciu4mc" sourceRef="Bet_Request_Received" targetRef="Activity_14z3h7b" />
+    <bpmn:sequenceFlow id="freeze_bad" name="freeze did not work" sourceRef="check_freeze" targetRef="parallel_gateway" />
+    <bpmn:sendTask id="freeze_rejected_event" name="Freeze failed">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;bank.freeze_rejected&#34;" target="topic" />
+          <zeebe:input source="=&#34;Get more money my friends&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0cns46h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1iw79pm</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1iw79pm" sourceRef="freeze_rejected_event" targetRef="Event_0cvwf93" />
+    <bpmn:sequenceFlow id="Flow_1d3rrpd" sourceRef="parallel_gateway2" targetRef="GameAlreadyOverEvent" />
+    <bpmn:parallelGateway id="parallel_gateway2">
+      <bpmn:incoming>Flow_0vgpa9h</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d3rrpd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0xfxa9i</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:boundaryEvent id="Event_0txkzot" attachedToRef="Activity_0xj210d">
+      <bpmn:outgoing>Flow_1gkytus</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1qw0c4x" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1gkytus" sourceRef="Event_0txkzot" targetRef="Activity_19fnxqb" />
+    <bpmn:sequenceFlow id="Flow_0cns46h" sourceRef="parallel_gateway" targetRef="freeze_rejected_event" />
+    <bpmn:parallelGateway id="parallel_gateway">
+      <bpmn:incoming>freeze_bad</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cns46h</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1rq87d3</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sendTask id="bet_rejected_event" name="Bet Rejected">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;bet.rejected.camunda&#34;" target="topic" />
+          <zeebe:input source="=&#34;Get more money my friends&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rq87d3</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1rq87d3" sourceRef="parallel_gateway" targetRef="bet_rejected_event" />
+    <bpmn:serviceTask id="BankPayCommand" name="Call Bank to Pay">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="get" target="method" />
+          <zeebe:input source="=&#34;http://bank:8081/bank/payment?from=&#34; + from + &#34;&#38;to=&#34; + to + &#34;&#38;amountTo=&#34; + amountTo + &#34;&#38;amountFrom=&#34; + amountFrom" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="test" />
+          <zeebe:header key="resultExpression" value="=response" />
+          <zeebe:header key="errorExpression" value="=if error.code = &#34;500&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else if error.code = &#34;404&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else null" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15wglvo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1u1kvfb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="BankIsDownEvent" name="Bank is down">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;camunda.payment.bank-down&#34;" target="topic" />
+          <zeebe:input source="=&#34;bank is down&#34;" target="reason" />
+          <zeebe:input source="=&#34;PAYMENT_DONE&#34;" target="messageName" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_112n1jh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a7bp7z</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:boundaryEvent id="Event_08tp5rr" attachedToRef="BankPayCommand">
+      <bpmn:outgoing>Flow_112n1jh</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0yo8jvg" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_112n1jh" sourceRef="Event_08tp5rr" targetRef="BankIsDownEvent" />
+    <bpmn:intermediateCatchEvent id="PaymentFinallyDoneReceived" name="Payment finally done">
+      <bpmn:incoming>Flow_0a7bp7z</bpmn:incoming>
+      <bpmn:outgoing>Flow_06domme</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_11ag1ct" messageRef="Message_10lopma" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0a7bp7z" sourceRef="BankIsDownEvent" targetRef="PaymentFinallyDoneReceived" />
+    <bpmn:sequenceFlow id="Flow_1u1kvfb" sourceRef="BankPayCommand" targetRef="Gateway_0jhgtsp" />
+    <bpmn:eventBasedGateway id="Gateway_0jhgtsp" name="maybe we can detect fraud?">
+      <bpmn:incoming>Flow_1u1kvfb</bpmn:incoming>
+      <bpmn:incoming>Flow_06domme</bpmn:incoming>
+      <bpmn:outgoing>fraud_detected</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0iw2a87</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Event_1pnpr9s">
+      <bpmn:incoming>fraud_detected</bpmn:incoming>
+      <bpmn:outgoing>Flow_02f22xd</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1p5s2l3" messageRef="Message_3714ejd" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="fraud_detected" name="yes" sourceRef="Gateway_0jhgtsp" targetRef="Event_1pnpr9s" />
+    <bpmn:intermediateCatchEvent id="Event_06elfpv" name="No fraud detected">
+      <bpmn:incoming>Flow_0iw2a87</bpmn:incoming>
+      <bpmn:outgoing>no_fraud_detected</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_10887fb">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0iw2a87" sourceRef="Gateway_0jhgtsp" targetRef="Event_06elfpv" />
+    <bpmn:serviceTask id="CompensatePaymentCommand" name="Compensate Payment">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="get" target="method" />
+          <zeebe:input source="=&#34;http://bank:8081/bank/paymentReverse?from=&#34; + from + &#34;&#38;to=&#34; + to+ &#34;&#38;amount=&#34; + amount" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="test" />
+          <zeebe:header key="resultExpression" value="=response" />
+          <zeebe:header key="errorExpression" value="=bpmnError(&#34;500&#34;, &#34;no more retries&#34;)" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02f22xd</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_1ksrorr" attachedToRef="CompensatePaymentCommand">
+      <bpmn:outgoing>Flow_05f1vq3</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_11j8gjd" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_02f22xd" sourceRef="Event_1pnpr9s" targetRef="CompensatePaymentCommand" />
+    <bpmn:sequenceFlow id="no_fraud_detected" name="no fraud detected " sourceRef="Event_06elfpv" targetRef="Event_0cvwf93" />
+    <bpmn:sequenceFlow id="Flow_06domme" sourceRef="PaymentFinallyDoneReceived" targetRef="Gateway_0jhgtsp" />
+    <bpmn:sequenceFlow id="Flow_05f1vq3" sourceRef="Event_1ksrorr" targetRef="HumanCompensationEvent2" />
+    <bpmn:sequenceFlow id="Flow_05dta9o" sourceRef="HumanCompensationEvent2" targetRef="Event_0cvwf93" />
+    <bpmn:serviceTask id="sending_freeze" name="Send Freeze Request to Bank">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="get" target="method" />
+          <zeebe:input source="=&#34;http://bank:8081/bank/freeze?from=&#34; + from + &#34;&#38;to=&#34; + to + &#34;&#38;amountTo=&#34; + amountTo + &#34;&#38;amountFrom=&#34; + amountFrom" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="test" />
+          <zeebe:header key="resultExpression" value="=response" />
+          <zeebe:header key="errorExpression" value="=if error.code = &#34;500&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else if error.code = &#34;404&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else null" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1saxaxq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0tmwb8i</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_0zozjok" attachedToRef="sending_freeze">
+      <bpmn:outgoing>Flow_0pdxx3c</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0lwoefn" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0tmwb8i" sourceRef="sending_freeze" targetRef="check_freeze" />
+    <bpmn:sendTask id="Activity_18esgm6" name="Send Bank Down">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;bet.rejected.camunda&#34;" target="topic" />
+          <zeebe:input source="=&#34;Bank is not available, until this is back, the game is over. We are sorry&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pdxx3c</bpmn:incoming>
+      <bpmn:outgoing>Flow_02s5vmj</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_0pdxx3c" sourceRef="Event_0zozjok" targetRef="Activity_18esgm6" />
+    <bpmn:exclusiveGateway id="check_freeze" name="Freeze worked?" default="freeze_bad">
+      <bpmn:incoming>Flow_0tmwb8i</bpmn:incoming>
+      <bpmn:outgoing>freeze_bad</bpmn:outgoing>
+      <bpmn:outgoing>freeze_good</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="freeze_good" name="freeze worked" sourceRef="check_freeze" targetRef="Activity_0xj210d">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=body = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_15wglvo" sourceRef="Game_Ended_Listener" targetRef="BankPayCommand" />
+    <bpmn:serviceTask id="send_unfreeze_command" name="Send Unfreeze">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="get" target="method" />
+          <zeebe:input source="=&#34;http://bank:8081/bank/unfreeze?from=&#34; + from + &#34;&#38;to=&#34; + to+ &#34;&#38;amountTo=&#34; + amountTo + &#34;&#38;amountFrom=&#34; + amountFrom" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="test" />
+          <zeebe:header key="resultExpression" value="=response" />
+          <zeebe:header key="errorExpression" value="=if error.code = &#34;500&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else if error.code = &#34;404&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else null" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xfxa9i</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uabkjc</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0xfxa9i" sourceRef="parallel_gateway2" targetRef="send_unfreeze_command" />
+    <bpmn:boundaryEvent id="Event_18xuosy" attachedToRef="send_unfreeze_command">
+      <bpmn:outgoing>Flow_16wi3eb</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0gp5x6r" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_16wi3eb" sourceRef="Event_18xuosy" targetRef="HumanCompensationEvent1" />
+    <bpmn:userTask id="HumanCompensationEvent1" name="Compensate by a Human">
+      <bpmn:incoming>Flow_16wi3eb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pmx3qc</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0pmx3qc" sourceRef="HumanCompensationEvent1" targetRef="Event_0cvwf93" />
+    <bpmn:userTask id="HumanCompensationEvent2" name="Compensate by a Human">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_05f1vq3</bpmn:incoming>
+      <bpmn:outgoing>Flow_05dta9o</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0uabkjc" sourceRef="send_unfreeze_command" targetRef="Event_0cvwf93" />
+    <bpmn:endEvent id="Event_1ek7ur6">
+      <bpmn:incoming>Flow_02s5vmj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02s5vmj" sourceRef="Activity_18esgm6" targetRef="Event_1ek7ur6" />
+    <bpmn:startEvent id="Bet_Request_Received" name="Bet Request Received">
+      <bpmn:extensionElements />
+      <bpmn:outgoing>Flow_0ciu4mc</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1fjea9j" messageRef="Message_0e2rdub" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1saxaxq" sourceRef="Activity_14z3h7b" targetRef="sending_freeze" />
+    <bpmn:userTask id="Activity_14z3h7b" name="Test var">
+      <bpmn:incoming>Flow_0ciu4mc</bpmn:incoming>
+      <bpmn:outgoing>Flow_1saxaxq</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:textAnnotation id="TextAnnotation_09mm8hr">
+      <bpmn:text>in order to compensate</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_026b7vu">
+      <bpmn:text>if bank is down, send it to kafka to retry it when bank is up again</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_16sdulq" sourceRef="BankIsDownEvent" targetRef="TextAnnotation_026b7vu" />
+    <bpmn:association id="Association_14a4tm4" sourceRef="TextAnnotation_09mm8hr" targetRef="HumanCompensationEvent1" />
+  </bpmn:process>
+  <bpmn:message id="Message_209plgo" name="CONTRACT_REQUEST" />
+  <bpmn:message id="Message_0ksclf7" name="=CONTRACT_ACCEPTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3u62evr" name="=&#34;CONTRACT_ACCEPTED&#34;">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_11ih5m1" name="=CONTRACT_ACCEPTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3mnkomi" name="FREEZE_ACCEPTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:error id="Error_0q43gf6" name="no more retries" errorCode="500" />
+  <bpmn:message id="Message_0t28gf2" name="REVERSE_PAYMENT_DONE">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3714ejd" name="FRAUD_DETECTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=betId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_1spad5g" name="FREEZE_ACCEPTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3k8joc8" name="FREEZE_REJECTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_0pecr2i" name="GAME_ENDED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=betId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_03an8ik" name="REVERSE_PAYMENT_DONE">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_10lopma" name="PAYMENT_DONE">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=betId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_0e2rdub" name="BET_REQUEST" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Bet_Workflow">
+      <bpmndi:BPMNShape id="TextAnnotation_09mm8hr_di" bpmnElement="TextAnnotation_09mm8hr">
+        <dc:Bounds x="1580" y="800" width="100" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_026b7vu_di" bpmnElement="TextAnnotation_026b7vu">
+        <dc:Bounds x="1950" y="240" width="100" height="85" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0buj3im_di" bpmnElement="BetAcceptedEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1300" y="120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00we54k_di" bpmnElement="Event_0cvwf93">
+        <dc:Bounds x="2612" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1l71z0j_di" bpmnElement="Game_Ended_Listener" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1522" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1511" y="175" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_06c5mbf" bpmnElement="Activity_0xj210d" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1170" y="540" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_11kyozu" bpmnElement="Activity_19fnxqb" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1170" y="751" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0paopsw" bpmnElement="Gateway_0fq6xwm" isMarkerVisible="true">
+        <dc:Bounds x="1335" y="555" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1325" y="612" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1uivcd2" bpmnElement="GameAlreadyOverEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1570" y="410" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ken77s_di" bpmnElement="parallel_gateway2">
+        <dc:Bounds x="1505" y="555" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1t7vbo7_di" bpmnElement="parallel_gateway">
+        <dc:Bounds x="975" y="258" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0dd568u" bpmnElement="bet_rejected_event" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1090" y="300" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1gvgk9i" bpmnElement="BankPayCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1790" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ld5nb8" bpmnElement="BankIsDownEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1790" y="420" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1avnbfa" bpmnElement="PaymentFinallyDoneReceived" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1922" y="592" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1905" y="635" width="76" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1b8lzxy_di" bpmnElement="Gateway_0jhgtsp">
+        <dc:Bounds x="2085" y="115" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2076" y="78" width="71" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1pnpr9s_di" bpmnElement="Event_1pnpr9s" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="2332" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06elfpv_di" bpmnElement="Event_06elfpv" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="2332" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2308" y="275" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_15hmmpq" bpmnElement="CompensatePaymentCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="2560" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0a49bj0" bpmnElement="sending_freeze" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="490" y="243" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1ewalga" bpmnElement="Activity_18esgm6" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="490" y="430" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0udqy6s_di" bpmnElement="check_freeze" isMarkerVisible="true">
+        <dc:Bounds x="755" y="258" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="745" y="228" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0bi9sxa" bpmnElement="send_unfreeze_command" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1620" y="670" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gpwspz_di" bpmnElement="HumanCompensationEvent1" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1620" y="850" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15aa4as_di" bpmnElement="HumanCompensationEvent2" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="2720" y="224" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ek7ur6_di" bpmnElement="Event_1ek7ur6">
+        <dc:Bounds x="532" y="572" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yv96lj_di" bpmnElement="Bet_Request_Received" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="172" y="265" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="160" y="308" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1vhzvoj" bpmnElement="freeze_rejected_event" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1080" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01bcq6d_di" bpmnElement="Activity_14z3h7b">
+        <dc:Bounds x="290" y="243" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_16sdulq_di" bpmnElement="Association_16sdulq">
+        <di:waypoint x="1874" y="420" />
+        <di:waypoint x="1954" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_14a4tm4_di" bpmnElement="Association_14a4tm4">
+        <di:waypoint x="1630" y="841" />
+        <di:waypoint x="1630" y="850" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_1m8uqzr" bpmnElement="Event_18xuosy">
+        <dc:Bounds x="1652" y="732" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_10ufcb5" bpmnElement="Event_0zozjok">
+        <dc:Bounds x="522" y="305" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0393rke" bpmnElement="Event_1ksrorr">
+        <dc:Bounds x="2592" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0p8g1sg" bpmnElement="Event_08tp5rr">
+        <dc:Bounds x="1822" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0sfget7" bpmnElement="Event_0txkzot">
+        <dc:Bounds x="1202" y="602" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_1efi0dq" bpmnElement="Flow_15pkcoc">
+        <di:waypoint x="1360" y="555" />
+        <di:waypoint x="1360" y="378" />
+        <di:waypoint x="1350" y="378" />
+        <di:waypoint x="1350" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1347" y="387" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ficx4x_di" bpmnElement="Flow_0ficx4x">
+        <di:waypoint x="1400" y="160" />
+        <di:waypoint x="1449" y="160" />
+        <di:waypoint x="1449" y="150" />
+        <di:waypoint x="1522" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1iw79pm_di" bpmnElement="Flow_1iw79pm">
+        <di:waypoint x="1180" y="220" />
+        <di:waypoint x="1366" y="220" />
+        <di:waypoint x="1366" y="390" />
+        <di:waypoint x="2612" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ds15cf_di" bpmnElement="no_fraud_detected">
+        <di:waypoint x="2368" y="250" />
+        <di:waypoint x="2490" y="250" />
+        <di:waypoint x="2490" y="390" />
+        <di:waypoint x="2612" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2463" y="317" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05dta9o_di" bpmnElement="Flow_05dta9o">
+        <di:waypoint x="2770" y="304" />
+        <di:waypoint x="2770" y="390" />
+        <di:waypoint x="2648" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pmx3qc_di" bpmnElement="Flow_0pmx3qc">
+        <di:waypoint x="1720" y="890" />
+        <di:waypoint x="2206" y="890" />
+        <di:waypoint x="2206" y="390" />
+        <di:waypoint x="2612" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uabkjc_di" bpmnElement="Flow_0uabkjc">
+        <di:waypoint x="1720" y="710" />
+        <di:waypoint x="2630" y="710" />
+        <di:waypoint x="2630" y="408" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15wglvo_di" bpmnElement="Flow_15wglvo">
+        <di:waypoint x="1558" y="150" />
+        <di:waypoint x="1790" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ciu4mc_di" bpmnElement="Flow_0ciu4mc">
+        <di:waypoint x="208" y="283" />
+        <di:waypoint x="290" y="283" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0asaw6o" bpmnElement="Flow_0x8b5c8">
+        <di:waypoint x="1270" y="580" />
+        <di:waypoint x="1335" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gkytus_di" bpmnElement="Flow_1gkytus">
+        <di:waypoint x="1220" y="638" />
+        <di:waypoint x="1220" y="751" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_017rq7m" bpmnElement="Flow_0vgpa9h">
+        <di:waypoint x="1385" y="580" />
+        <di:waypoint x="1505" y="580" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1459" y="562" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1d3rrpd_di" bpmnElement="Flow_1d3rrpd">
+        <di:waypoint x="1530" y="555" />
+        <di:waypoint x="1530" y="450" />
+        <di:waypoint x="1570" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cns46h_di" bpmnElement="Flow_0cns46h">
+        <di:waypoint x="1025" y="283" />
+        <di:waypoint x="1058" y="283" />
+        <di:waypoint x="1058" y="220" />
+        <di:waypoint x="1080" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xfxa9i_di" bpmnElement="Flow_0xfxa9i">
+        <di:waypoint x="1530" y="605" />
+        <di:waypoint x="1530" y="710" />
+        <di:waypoint x="1620" y="710" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1de831e_di" bpmnElement="freeze_bad">
+        <di:waypoint x="805" y="283" />
+        <di:waypoint x="975" y="283" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="836" y="254" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rq87d3_di" bpmnElement="Flow_1rq87d3">
+        <di:waypoint x="1025" y="283" />
+        <di:waypoint x="1060" y="283" />
+        <di:waypoint x="1060" y="340" />
+        <di:waypoint x="1090" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u1kvfb_di" bpmnElement="Flow_1u1kvfb">
+        <di:waypoint x="1890" y="150" />
+        <di:waypoint x="1968" y="150" />
+        <di:waypoint x="1968" y="140" />
+        <di:waypoint x="2085" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_14q9l3h" bpmnElement="Flow_112n1jh">
+        <di:waypoint x="1840" y="208" />
+        <di:waypoint x="1840" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a7bp7z_di" bpmnElement="Flow_0a7bp7z">
+        <di:waypoint x="1840" y="500" />
+        <di:waypoint x="1840" y="561" />
+        <di:waypoint x="1940" y="561" />
+        <di:waypoint x="1940" y="592" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06domme_di" bpmnElement="Flow_06domme">
+        <di:waypoint x="1958" y="610" />
+        <di:waypoint x="2110" y="610" />
+        <di:waypoint x="2110" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mes0rf_di" bpmnElement="fraud_detected">
+        <di:waypoint x="2135" y="140" />
+        <di:waypoint x="2332" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2225" y="122" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iw2a87_di" bpmnElement="Flow_0iw2a87">
+        <di:waypoint x="2110" y="165" />
+        <di:waypoint x="2110" y="250" />
+        <di:waypoint x="2332" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02f22xd_di" bpmnElement="Flow_02f22xd">
+        <di:waypoint x="2368" y="140" />
+        <di:waypoint x="2464" y="140" />
+        <di:waypoint x="2464" y="130" />
+        <di:waypoint x="2560" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tmwb8i_di" bpmnElement="Flow_0tmwb8i">
+        <di:waypoint x="590" y="283" />
+        <di:waypoint x="755" y="283" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pdxx3c_di" bpmnElement="Flow_0pdxx3c">
+        <di:waypoint x="540" y="341" />
+        <di:waypoint x="540" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02s5vmj_di" bpmnElement="Flow_02s5vmj">
+        <di:waypoint x="540" y="510" />
+        <di:waypoint x="540" y="546" />
+        <di:waypoint x="550" y="546" />
+        <di:waypoint x="550" y="572" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11b8dep_di" bpmnElement="freeze_good">
+        <di:waypoint x="780" y="308" />
+        <di:waypoint x="780" y="580" />
+        <di:waypoint x="1170" y="580" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="751" y="500" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16wi3eb_di" bpmnElement="Flow_16wi3eb">
+        <di:waypoint x="1670" y="768" />
+        <di:waypoint x="1670" y="850" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05f1vq3_di" bpmnElement="Flow_05f1vq3">
+        <di:waypoint x="2610" y="188" />
+        <di:waypoint x="2610" y="264" />
+        <di:waypoint x="2720" y="264" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1saxaxq_di" bpmnElement="Flow_1saxaxq">
+        <di:waypoint x="390" y="283" />
+        <di:waypoint x="490" y="283" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

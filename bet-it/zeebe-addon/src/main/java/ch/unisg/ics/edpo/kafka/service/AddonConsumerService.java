@@ -23,7 +23,7 @@ public class AddonConsumerService {
         this.client = client;
     }
 
-    @KafkaListener(topics = {"${spring.kafka.camunda}"}, containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
+    @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
     public void consumeCamundaMessage(Map<String, Object> variables) {
         log.info("**** -> Consuming Camunda Variables:: {}", variables);
 

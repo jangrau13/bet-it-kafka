@@ -190,6 +190,17 @@ services:
     depends_on:
       - kafka
 
+  zeebe-addon:
+    build:
+      context: zeebe-addon
+      dockerfile: Dockerfile
+    networks:
+      - bet-it
+    ports:
+      - "8084:8084"
+    depends_on:
+      - kafka
+
 
 volumes:
   zeebe:

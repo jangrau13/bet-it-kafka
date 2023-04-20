@@ -16,7 +16,7 @@ spring:
         two-factor: bet.two-factor-customer
         two-factor-success: bet.two-factor-customer-success
         payment-request: bet.payment-request
-        camunda: (camunda) | (camunda.*)
+        camunda: camunda | camunda.* | *.camunda.* | *.camunda
 
 zeebe:
     client:

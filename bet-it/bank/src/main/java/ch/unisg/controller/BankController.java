@@ -66,40 +66,40 @@ public class BankController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
-
-    @PostMapping(
-            value = "/addMoney",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, Object>> addMoney(@RequestBody HashMap transaction) {
-        log.info("Payment for: " + transaction);
-        if (transaction.containsKey("from") && transaction.containsKey("to") && transaction.containsKey("amount")) {
-            String from = (String) transaction.get("from");
-            String to = (String) transaction.get("to");
-            int amount = (int) transaction.get("amount");
-            //check if transaction is valid
-            if (true) {
-                //add some delay for Camunda to work nice
-                try {
-                    Thread.sleep((long) (Math.random() * 6000));
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                // also for Camunda, maybe it fails :)
-                Random rd = new Random();
-                if (rd.nextBoolean()) {
-                    mapService.sendCamundaMessage(transaction, "bit.user-payment");
-                    return new ResponseEntity<>(transaction, HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            } else {
-                return new ResponseEntity<>(HttpStatus.PAYMENT_REQUIRED);
-            }
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
-    }
+//
+//    @PostMapping(
+//            value = "/addMoney",
+//            consumes = {MediaType.APPLICATION_JSON_VALUE},
+//            produces = {MediaType.APPLICATION_JSON_VALUE})
+//    public ResponseEntity<Map<String, Object>> addMoney(@RequestBody HashMap transaction) {
+//        log.info("Payment for: " + transaction);
+//        if (transaction.containsKey("from") && transaction.containsKey("to") && transaction.containsKey("amount")) {
+//            String from = (String) transaction.get("from");
+//            String to = (String) transaction.get("to");
+//            int amount = (int) transaction.get("amount");
+//            //check if transaction is valid
+//            if (true) {
+//                //add some delay for Camunda to work nice
+//                try {
+//                    Thread.sleep((long) (Math.random() * 6000));
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                // also for Camunda, maybe it fails :)
+//                Random rd = new Random();
+//                if (rd.nextBoolean()) {
+//                    mapService.sendCamundaMessage(transaction, "bit.user-payment");
+//                    return new ResponseEntity<>(transaction, HttpStatus.OK);
+//                } else {
+//                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//                }
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.PAYMENT_REQUIRED);
+//            }
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+//        }
+//    }
 
     @GetMapping(value="/users")
     public List<String> getTransactions() throws ExecutionException, InterruptedException {
