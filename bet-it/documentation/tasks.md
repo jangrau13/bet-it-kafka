@@ -50,3 +50,4 @@
 4. why we chose Camunda v8
 5. add ADR to flexibility and complexity --> JSON
 6. add discussion on differences between Anthology vs Fairy-Tale-Sagas
+7. overall discussion on non-functional properties
