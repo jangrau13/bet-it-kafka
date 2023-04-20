@@ -46,8 +46,11 @@ public class GameManagerController {
         if(gameId.startsWith("error")){
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        if (rd.nextBoolean()) {
-            if (rd.nextBoolean()) {
+        float number = rd.nextFloat();
+        if (number <= 0.9) {
+            number = rd.nextFloat();
+            if (number <= 0.9) {
+                log.info("good case");
                 return new ResponseEntity<>(true, HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(false, HttpStatus.OK);

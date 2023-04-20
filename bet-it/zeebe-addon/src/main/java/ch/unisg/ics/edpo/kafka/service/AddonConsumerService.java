@@ -14,6 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class AddonConsumerService {
+    public static final String CORRELATION_ID = "correlationId";
     private ZeebeClientLifecycle client;
 
     private static final String MESSAGE_NAME = "messageName";
@@ -32,10 +33,10 @@ public class AddonConsumerService {
             return;
         }
 
-        String messageName = variables.get("messageName").toString();
+        String messageName = variables.get(MESSAGE_NAME).toString();
         String uuid = UUID.randomUUID().toString();
-        if (variables.containsKey("correlationId")) {
-            uuid = (String) variables.get("correlationId");
+        if (variables.containsKey(CORRELATION_ID)) {
+            uuid = (String) variables.get(CORRELATION_ID);
         }
         sendToCamunda(messageName, uuid, variables);
     }
