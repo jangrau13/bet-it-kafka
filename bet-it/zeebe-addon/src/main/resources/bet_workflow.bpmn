@@ -11,7 +11,7 @@
       <bpmn:incoming>Flow_1gm3fu8</bpmn:incoming>
       <bpmn:outgoing>Flow_0ficx4x</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:intermediateCatchEvent id="Game_Ended_Listener" name="Game Ended">
+    <bpmn:intermediateCatchEvent id="Bet_Resolver_Issuer" name="Resolve Bet">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:output source="=null" target="url" />
@@ -21,7 +21,7 @@
       <bpmn:outgoing>Flow_15wglvo</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1qbq8ly" messageRef="Message_0pecr2i" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_0ficx4x" sourceRef="BetAcceptedEvent" targetRef="Game_Ended_Listener" />
+    <bpmn:sequenceFlow id="Flow_0ficx4x" sourceRef="BetAcceptedEvent" targetRef="Bet_Resolver_Issuer" />
     <bpmn:serviceTask id="Activity_0xj210d" name="Call Game Manager">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
@@ -240,7 +240,7 @@
     <bpmn:sequenceFlow id="freeze_good" name="freeze worked" sourceRef="check_freeze" targetRef="removeBody">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=body = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_15wglvo" sourceRef="Game_Ended_Listener" targetRef="BankPayCommand" />
+    <bpmn:sequenceFlow id="Flow_15wglvo" sourceRef="Bet_Resolver_Issuer" targetRef="BankPayCommand" />
     <bpmn:serviceTask id="send_unfreeze_command" name="Send Unfreeze">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
@@ -549,10 +549,10 @@
         <dc:Bounds x="1879" y="420" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1l71z0j_di" bpmnElement="Game_Ended_Listener" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+      <bpmndi:BPMNShape id="Event_1l71z0j_di" bpmnElement="Bet_Resolver_Issuer" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
         <dc:Bounds x="2092" y="442" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2081" y="485" width="65" height="14" />
+          <dc:Bounds x="2083" y="485" width="61" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1gvgk9i" bpmnElement="BankPayCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
