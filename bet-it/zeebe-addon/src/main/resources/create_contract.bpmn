@@ -56,7 +56,7 @@
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_06ypld0</bpmn:incoming>
-      <bpmn:outgoing>Flow_0d61uu7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1j2zkl6</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:exclusiveGateway id="APIRiskCheckDecision" name="can we trust the user?" default="user_machine_not_trusted">
       <bpmn:incoming>Flow_1ux6rwa</bpmn:incoming>
@@ -85,12 +85,11 @@
       </bpmn:extensionElements>
       <bpmn:incoming>user_machine_not_trusted</bpmn:incoming>
       <bpmn:incoming>user_personally_not_trusted</bpmn:incoming>
-      <bpmn:outgoing>Flow_0e22jox</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0la5z6v</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:endEvent id="FinishedContractChecking" name="Contract Checked">
-      <bpmn:incoming>Flow_0e22jox</bpmn:incoming>
-      <bpmn:incoming>Flow_0d61uu7</bpmn:incoming>
       <bpmn:incoming>Flow_13q9i2c</bpmn:incoming>
+      <bpmn:incoming>Flow_1xnb8vv</bpmn:incoming>
       <bpmn:terminateEventDefinition id="TerminateEventDefinition_0lhoyeb" />
     </bpmn:endEvent>
     <bpmn:intermediateCatchEvent id="CommandStyleCheck" name="Command Style, was it really sent?">
@@ -98,8 +97,6 @@
       <bpmn:outgoing>Flow_13q9i2c</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1qbq8ly" messageRef="Message_3mnkomi" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_0e22jox" sourceRef="UserNotTrustedEvent" targetRef="FinishedContractChecking" />
-    <bpmn:sequenceFlow id="Flow_0d61uu7" sourceRef="RiskManagementDownEvent" targetRef="FinishedContractChecking" />
     <bpmn:sequenceFlow id="Flow_0ficx4x" sourceRef="ContractAcceptedEvent" targetRef="CommandStyleCheck" />
     <bpmn:serviceTask id="GameMangementCheckCommand" name="Call Game Manager">
       <bpmn:extensionElements>
@@ -127,7 +124,8 @@
           <zeebe:input source="=&#34;Game Management not available, until this is back, the game is over. We are sorry&#34;" target="reason" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0eqf3p0</bpmn:incoming>
+      <bpmn:incoming>Flow_1awfq7e</bpmn:incoming>
+      <bpmn:outgoing>Flow_15u8zq6</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:exclusiveGateway id="Gateway_0fq6xwm" name="is the game still on?" default="game_already_on_or_over">
       <bpmn:incoming>Flow_0x8b5c8</bpmn:incoming>
@@ -143,23 +141,19 @@
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>game_already_on_or_over</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xnb8vv</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:boundaryEvent id="GameManagementError" attachedToRef="GameMangementCheckCommand">
-      <bpmn:outgoing>Flow_0eqf3p0</bpmn:outgoing>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_1qvpz68" errorRef="Error_0q43gf6" />
-    </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0x8b5c8" sourceRef="GameMangementCheckCommand" targetRef="Gateway_0fq6xwm" />
-    <bpmn:sequenceFlow id="Flow_0eqf3p0" sourceRef="GameManagementError" targetRef="GameManagementDownEvent" />
     <bpmn:sequenceFlow id="game_still_betable" name="yes" sourceRef="Gateway_0fq6xwm" targetRef="ContractAcceptedEvent">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=body = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="game_already_on_or_over" name="no" sourceRef="Gateway_0fq6xwm" targetRef="GameAlreadyOverEvent" />
     <bpmn:sequenceFlow id="Flow_13q9i2c" sourceRef="CommandStyleCheck" targetRef="FinishedContractChecking" />
-    <bpmn:boundaryEvent id="Event_0txkzot" attachedToRef="APIRiskCheckCommand">
+    <bpmn:boundaryEvent id="RiskManag" attachedToRef="APIRiskCheckCommand">
       <bpmn:outgoing>Flow_06ypld0</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_058dw3n" errorRef="Error_0q43gf6" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_06ypld0" sourceRef="Event_0txkzot" targetRef="RiskManagementDownEvent" />
+    <bpmn:sequenceFlow id="Flow_06ypld0" sourceRef="RiskManag" targetRef="RiskManagementDownEvent" />
     <bpmn:userTask id="ManualRiskCheckCommand" name="check risk manually">
       <bpmn:extensionElements>
         <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_0m0oisf" />
@@ -213,9 +207,27 @@
       <bpmn:incoming>Flow_09lnqo5</bpmn:incoming>
       <bpmn:outgoing>Flow_03edhct</bpmn:outgoing>
     </bpmn:scriptTask>
-    <bpmn:textAnnotation id="TextAnnotation_1w3mysy">
-      <bpmn:text>Zeebe Worker helper</bpmn:text>
-    </bpmn:textAnnotation>
+    <bpmn:sequenceFlow id="Flow_1j2zkl6" sourceRef="RiskManagementDownEvent" targetRef="RiskManagementDownFinish" />
+    <bpmn:endEvent id="RiskManagementDownFinish">
+      <bpmn:incoming>Flow_1j2zkl6</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_1eq1tav" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0la5z6v" sourceRef="UserNotTrustedEvent" targetRef="NoTrustFinish" />
+    <bpmn:endEvent id="NoTrustFinish">
+      <bpmn:incoming>Flow_0la5z6v</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0jd6e7t" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_15u8zq6" sourceRef="GameManagementDownEvent" targetRef="Event_0xnk0ns" />
+    <bpmn:endEvent id="Event_0xnk0ns">
+      <bpmn:incoming>Flow_15u8zq6</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_1h3q9qu" />
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="GameManagementDownError" attachedToRef="GameMangementCheckCommand">
+      <bpmn:outgoing>Flow_1awfq7e</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0038oga" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1awfq7e" sourceRef="GameManagementDownError" targetRef="GameManagementDownEvent" />
+    <bpmn:sequenceFlow id="Flow_1xnb8vv" sourceRef="GameAlreadyOverEvent" targetRef="FinishedContractChecking" />
   </bpmn:process>
   <bpmn:message id="Message_209plgo" name="CONTRACT_REQUEST" />
   <bpmn:message id="Message_0ksclf7" name="=CONTRACT_ACCEPTED">
@@ -242,215 +254,226 @@
   <bpmn:message id="Message_34trqi4" name="CONTRACT_REQUESTED" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ContractWorkflow">
-      <bpmndi:BPMNShape id="TextAnnotation_1w3mysy_di" bpmnElement="TextAnnotation_1w3mysy">
-        <dc:Bounds x="1240" y="220" width="100" height="41" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="Event_1weu3n6_di" bpmnElement="Contract_Request_Received" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="182" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="415" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0gvuk5c_di" bpmnElement="UserRiskChecks">
+        <dc:Bounds x="445" y="365" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="505" y="383" width="88" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ygioq3_di" bpmnElement="APIRiskCheckCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
-        <dc:Bounds x="690" y="417" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_19ew5nv_di" bpmnElement="RiskManagementDownEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="960" y="540" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_17jnl47_di" bpmnElement="APIRiskCheckDecision" isMarkerVisible="true">
-        <dc:Bounds x="895" y="432" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="884" y="489" width="78" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0buj3im_di" bpmnElement="ContractAcceptedEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="1470" y="280" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0h4s2kw" bpmnElement="UserNotTrustedEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="1140" y="417" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00we54k_di" bpmnElement="FinishedContractChecking">
-        <dc:Bounds x="1692" y="452" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1668" y="422" width="89" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1l71z0j_di" bpmnElement="CommandStyleCheck" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="1692" y="292" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1669" y="335" width="87" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_06c5mbf" bpmnElement="GameMangementCheckCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
-        <dc:Bounds x="1340" y="700" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_11kyozu" bpmnElement="GameManagementDownEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="1690" y="823" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0paopsw" bpmnElement="Gateway_0fq6xwm" isMarkerVisible="true">
-        <dc:Bounds x="1505" y="715" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1495" y="772" width="77" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1uivcd2" bpmnElement="GameAlreadyOverEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="1690" y="700" width="100" height="80" />
+        <dc:Bounds x="580" y="520" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1vfuky4_di" bpmnElement="ManualRiskCheckCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
-        <dc:Bounds x="690" y="280" width="100" height="80" />
+        <dc:Bounds x="580" y="220" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0gvuk5c_di" bpmnElement="UserRiskChecks">
-        <dc:Bounds x="585" y="432" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="567" y="489" width="88" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Activity_19ew5nv_di" bpmnElement="RiskManagementDownEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="580" y="720" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0epk3eg_di" bpmnElement="TwoWayTrustCheck">
-        <dc:Bounds x="1078" y="205" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1146" y="220" width="78" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Event_1slh3wy_di" bpmnElement="RiskManagementDownFinish">
+        <dc:Bounds x="612" y="882" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0jymchc_di" bpmnElement="personalOpinionCheck" isMarkerVisible="true">
-        <dc:Bounds x="895" y="115" width="50" height="50" />
+        <dc:Bounds x="785" y="235" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="882" y="78" width="75" height="27" />
+          <dc:Bounds x="844.5" y="246" width="75" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1weu3n6_di" bpmnElement="Contract_Request_Received" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="182" y="439" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_17jnl47_di" bpmnElement="APIRiskCheckDecision" isMarkerVisible="true">
+        <dc:Bounds x="785" y="535" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="157" y="482" width="87" height="27" />
+          <dc:Bounds x="845" y="546" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_03vgk2o_di" bpmnElement="removeBody" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="1140" y="650" width="100" height="80" />
+      <bpmndi:BPMNShape id="BPMNShape_0h4s2kw" bpmnElement="UserNotTrustedEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1020" y="350" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_06ucooy_di" bpmnElement="Event_0txkzot">
-        <dc:Bounds x="722" y="479" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_0b5skch_di" bpmnElement="NoTrustFinish">
+        <dc:Bounds x="1202" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1a5gx91" bpmnElement="GameManagementError">
-        <dc:Bounds x="1352" y="762" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_0epk3eg_di" bpmnElement="TwoWayTrustCheck">
+        <dc:Bounds x="1345" y="365" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1391" y="422" width="78" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0buj3im_di" bpmnElement="ContractAcceptedEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="2177" y="241" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03vgk2o_di" bpmnElement="removeBody" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="1510" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_06c5mbf" bpmnElement="GameMangementCheckCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1710" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_11kyozu" bpmnElement="GameManagementDownEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1711" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bbv4k2_di" bpmnElement="Event_0xnk0ns">
+        <dc:Bounds x="1743" y="712" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0paopsw" bpmnElement="Gateway_0fq6xwm" isMarkerVisible="true">
+        <dc:Bounds x="1985" y="365" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2044.5" y="376" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1uivcd2" bpmnElement="GameAlreadyOverEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="2190" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1l71z0j_di" bpmnElement="CommandStyleCheck" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="2399" y="263" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2376" y="306" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00we54k_di" bpmnElement="FinishedContractChecking">
+        <dc:Bounds x="2532" y="413" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2432.5" y="424" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06ucooy_di" bpmnElement="RiskManag">
+        <dc:Bounds x="612" y="582" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1t4ncea_di" bpmnElement="GameManagementDownError">
+        <dc:Bounds x="1742" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1sbqat8_di" bpmnElement="Flow_1sbqat8">
+        <di:waypoint x="218" y="390" />
+        <di:waypoint x="445" y="390" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0xfy9dm_di" bpmnElement="Flow_0xfy9dm">
-        <di:waypoint x="635" y="457" />
-        <di:waypoint x="690" y="457" />
+        <di:waypoint x="470" y="415" />
+        <di:waypoint x="470" y="560" />
+        <di:waypoint x="580" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cf3b6n_di" bpmnElement="Flow_1cf3b6n">
+        <di:waypoint x="470" y="365" />
+        <di:waypoint x="470" y="260" />
+        <di:waypoint x="580" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ux6rwa_di" bpmnElement="Flow_1ux6rwa">
-        <di:waypoint x="790" y="457" />
-        <di:waypoint x="895" y="457" />
+        <di:waypoint x="680" y="560" />
+        <di:waypoint x="785" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1194gpm_di" bpmnElement="Flow_1194gpm">
+        <di:waypoint x="680" y="260" />
+        <di:waypoint x="785" y="260" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_06ypld0_di" bpmnElement="Flow_06ypld0">
-        <di:waypoint x="740" y="515" />
-        <di:waypoint x="740" y="580" />
-        <di:waypoint x="960" y="580" />
+        <di:waypoint x="630" y="618" />
+        <di:waypoint x="630" y="720" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0d61uu7_di" bpmnElement="Flow_0d61uu7">
-        <di:waypoint x="1060" y="580" />
-        <di:waypoint x="1710" y="580" />
-        <di:waypoint x="1710" y="488" />
+      <bpmndi:BPMNEdge id="Flow_1j2zkl6_di" bpmnElement="Flow_1j2zkl6">
+        <di:waypoint x="630" y="800" />
+        <di:waypoint x="630" y="882" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b7jcpp_di" bpmnElement="user_personally_trusted">
+        <di:waypoint x="810" y="235" />
+        <di:waypoint x="810" y="120" />
+        <di:waypoint x="1370" y="120" />
+        <di:waypoint x="1370" y="365" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077" y="83" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m0kd7z_di" bpmnElement="user_personally_not_trusted">
+        <di:waypoint x="810" y="285" />
+        <di:waypoint x="810" y="310" />
+        <di:waypoint x="1070" y="310" />
+        <di:waypoint x="1070" y="350" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="904" y="284" width="13" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0wbek15_di" bpmnElement="user_machine_not_trusted">
-        <di:waypoint x="945" y="457" />
-        <di:waypoint x="1140" y="457" />
+        <di:waypoint x="810" y="535" />
+        <di:waypoint x="810" y="490" />
+        <di:waypoint x="1070" y="490" />
+        <di:waypoint x="1070" y="430" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1036" y="439" width="13" height="14" />
+          <dc:Bounds x="933" y="503" width="13" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1x1yxxg_di" bpmnElement="user_machine_trusted">
-        <di:waypoint x="920" y="432" />
-        <di:waypoint x="920" y="230" />
-        <di:waypoint x="1078" y="230" />
+        <di:waypoint x="810" y="585" />
+        <di:waypoint x="810" y="680" />
+        <di:waypoint x="1370" y="680" />
+        <di:waypoint x="1370" y="415" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="927" y="328" width="17" height="14" />
+          <dc:Bounds x="1077" y="689" width="17" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0la5z6v_di" bpmnElement="Flow_0la5z6v">
+        <di:waypoint x="1120" y="390" />
+        <di:waypoint x="1202" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09lnqo5_di" bpmnElement="Flow_09lnqo5">
+        <di:waypoint x="1395" y="390" />
+        <di:waypoint x="1510" y="390" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_1efi0dq" bpmnElement="game_still_betable">
-        <di:waypoint x="1530" y="715" />
-        <di:waypoint x="1530" y="420" />
-        <di:waypoint x="1540" y="360" />
+        <di:waypoint x="2010" y="365" />
+        <di:waypoint x="2010" y="281" />
+        <di:waypoint x="2177" y="281" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1531" y="615" width="17" height="14" />
+          <dc:Bounds x="2011" y="332" width="17" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ficx4x_di" bpmnElement="Flow_0ficx4x">
-        <di:waypoint x="1570" y="320" />
-        <di:waypoint x="1619" y="320" />
-        <di:waypoint x="1619" y="310" />
-        <di:waypoint x="1692" y="310" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1m0kd7z_di" bpmnElement="user_personally_not_trusted">
-        <di:waypoint x="945" y="140" />
-        <di:waypoint x="1010" y="140" />
-        <di:waypoint x="1010" y="430" />
-        <di:waypoint x="1140" y="430" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1019" y="287" width="13" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0e22jox_di" bpmnElement="Flow_0e22jox">
-        <di:waypoint x="1240" y="457" />
-        <di:waypoint x="1466" y="457" />
-        <di:waypoint x="1466" y="470" />
-        <di:waypoint x="1692" y="470" />
+        <di:waypoint x="2277" y="281" />
+        <di:waypoint x="2399" y="281" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13q9i2c_di" bpmnElement="Flow_13q9i2c">
-        <di:waypoint x="1728" y="310" />
-        <di:waypoint x="1790" y="310" />
-        <di:waypoint x="1790" y="470" />
-        <di:waypoint x="1728" y="470" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_09lnqo5_di" bpmnElement="Flow_09lnqo5">
-        <di:waypoint x="1103" y="255" />
-        <di:waypoint x="1103" y="690" />
-        <di:waypoint x="1140" y="690" />
+        <di:waypoint x="2435" y="281" />
+        <di:waypoint x="2550" y="281" />
+        <di:waypoint x="2550" y="413" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0asaw6o" bpmnElement="Flow_0x8b5c8">
-        <di:waypoint x="1440" y="740" />
-        <di:waypoint x="1505" y="740" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_18tk8k1" bpmnElement="Flow_0eqf3p0">
-        <di:waypoint x="1370" y="798" />
-        <di:waypoint x="1370" y="863" />
-        <di:waypoint x="1690" y="863" />
+        <di:waypoint x="1810" y="390" />
+        <di:waypoint x="1985" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_017rq7m" bpmnElement="game_already_on_or_over">
-        <di:waypoint x="1555" y="740" />
-        <di:waypoint x="1690" y="740" />
+        <di:waypoint x="2010" y="415" />
+        <di:waypoint x="2010" y="520" />
+        <di:waypoint x="2190" y="520" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1616" y="722" width="13" height="14" />
+          <dc:Bounds x="2015" y="461" width="13" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1cf3b6n_di" bpmnElement="Flow_1cf3b6n">
-        <di:waypoint x="610" y="432" />
-        <di:waypoint x="610" y="320" />
-        <di:waypoint x="690" y="320" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1194gpm_di" bpmnElement="Flow_1194gpm">
-        <di:waypoint x="790" y="320" />
-        <di:waypoint x="840" y="320" />
-        <di:waypoint x="840" y="140" />
-        <di:waypoint x="895" y="140" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1b7jcpp_di" bpmnElement="user_personally_trusted">
-        <di:waypoint x="925" y="120" />
-        <di:waypoint x="1103" y="120" />
-        <di:waypoint x="1103" y="205" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1006" y="102" width="17" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1sbqat8_di" bpmnElement="Flow_1sbqat8">
-        <di:waypoint x="218" y="457" />
-        <di:waypoint x="585" y="457" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_03edhct_di" bpmnElement="Flow_03edhct">
-        <di:waypoint x="1240" y="690" />
-        <di:waypoint x="1340" y="690" />
+        <di:waypoint x="1610" y="390" />
+        <di:waypoint x="1710" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15u8zq6_di" bpmnElement="Flow_15u8zq6">
+        <di:waypoint x="1761" y="640" />
+        <di:waypoint x="1761" y="712" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1awfq7e_di" bpmnElement="Flow_1awfq7e">
+        <di:waypoint x="1760" y="448" />
+        <di:waypoint x="1760" y="504" />
+        <di:waypoint x="1761" y="504" />
+        <di:waypoint x="1761" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xnb8vv_di" bpmnElement="Flow_1xnb8vv">
+        <di:waypoint x="2290" y="520" />
+        <di:waypoint x="2550" y="520" />
+        <di:waypoint x="2550" y="449" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
