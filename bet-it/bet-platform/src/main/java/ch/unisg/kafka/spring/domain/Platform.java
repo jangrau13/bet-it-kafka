@@ -67,7 +67,7 @@ public class Platform {
      */
     public void putBet(HashMap<String, Object> bets){
         if(bets.containsKey(BET_ID)){
-            bets.put(bets.get(BET_ID).toString(), bets);
+            this.bets.put(bets.get(BET_ID).toString(), bets);
         }
     }
 
@@ -77,28 +77,35 @@ public class Platform {
      * @return
      */
     public HashMap<String, Object> getToBeFreezedBet(String betId){
+        logger.info("to be freezed with id: {}", betId);
+        logger.info("to be freezed with bets: {}", bets);
+        logger.info("to be freezed with games: {}", games);
+        logger.info("to be freezed with contracts: {}", contracts);
         HashMap<String, Object> errorMap = new HashMap<>();
         errorMap.put(AMOUNT_TO, 100);
         errorMap.put(AMOUNT_FROM, 100);
         errorMap.put(CONTRACTOR_NAME, ERROR_USER);
         errorMap.put(BIDDER_NAME, ERROR_USER);
-        if(bets.containsKey(betId)){
+        if(this.bets.containsKey(betId)){
             HashMap<String, Object> bet = (HashMap<String, Object>) bets.get(betId);
+            logger.info("from bets by id: {}", bet);
             int amountContractor = 0;
             int amountBidder = 0;
-            if(bet.containsKey(AMOUNT) && bet.containsKey(BIDDER_NAME) && bet.containsKey(CONTRACT_ID)){
-                if(bet.containsKey(CONTRACT_ID)){
-                    HashMap<String, Object> contract = (HashMap<String, Object>) contracts.get(CONTRACT_ID);
-                    if(contract.containsKey(RATIO)){
+            if(bet != null && bet.containsKey(AMOUNT) && bet.containsKey(BIDDER_NAME) && bet.containsKey(CONTRACT_ID)){
+                String contractId = bet.get(CONTRACT_ID).toString();
+                HashMap<String, Object> contract = (HashMap<String, Object>) contracts.get(contractId);
+                logger.info("from contract by id: {}", contract);
+                    if(contract != null && contract.containsKey(RATIO) && contract.containsKey(CONTRACTOR_NAME)){
                         float ratio = Float.parseFloat(contract.get(RATIO).toString());
                         float amount = Float.parseFloat(bet.get(AMOUNT).toString());
+                        String contractorName = contract.get(CONTRACTOR_NAME).toString();
                         amountContractor = (int) (ratio * amount);
-                        amountBidder = (int) ((1/ratio) * amount);
-                        bet.put(AMOUNT_BIDDER, amountBidder);
-                        bet.put(AMOUNT_CONTRACTOR, amountContractor);
+                        amountBidder = (int) amount;
+                        bet.put(AMOUNT_BIDDER, String.valueOf(amountBidder));
+                        bet.put(AMOUNT_CONTRACTOR, String.valueOf(amountContractor));
+                        bet.put(CONTRACTOR_NAME, contractorName);
                         return bet;
                     }
-                }
             }
         }
         return errorMap;
@@ -119,27 +126,30 @@ public class Platform {
             HashMap<String, Object> bet = (HashMap<String, Object>) bets.get(betId);
             int amountContractor = 0;
             int amountBidder = 0;
-            if(bet.containsKey(AMOUNT) && bet.containsKey(BIDDER_NAME) && bet.containsKey(CONTRACT_ID) ){
+            if(bet != null && bet.containsKey(AMOUNT) && bet.containsKey(BIDDER_NAME) && bet.containsKey(CONTRACT_ID) ){
                 if(bet.containsKey(CONTRACT_ID)){
                     String contractId = bet.get(CONTRACT_ID).toString();
                     HashMap<String, Object> contract = (HashMap<String, Object>) contracts.get(contractId);
-                    if(contract.containsKey(RATIO) && contract.containsKey(HOME_TEAM_WINS_BET) && contract.containsKey(GAME_ID)){
+                    if(contract != null && contract.containsKey(RATIO) && contract.containsKey(HOME_TEAM_WINS_BET) && contract.containsKey(GAME_ID)){
                         String gameId = contract.get(GAME_ID).toString();
-                        if(games.containsKey(gameId)){
+                        logger.info("from contract by id: {}", contract);
+                        if(games != null && games.containsKey(gameId)){
                             HashMap<String, Object> game = (HashMap<String, Object>) games.get(gameId);
+                            logger.info("from game by id: {}", game);
                             float ratio = Float.parseFloat(contract.get(RATIO).toString());
                             float amount = Float.parseFloat(bet.get(AMOUNT).toString());
                             amountContractor = (int) (ratio * amount);
-                            amountBidder = (int) ((1/ratio) * amount);
+                            amountBidder = (int) amount;
                             bet.put(AMOUNT_BIDDER, amountBidder);
                             bet.put(AMOUNT_CONTRACTOR, amountContractor);
-                            boolean homeTeamWon = (boolean) game.get(HOME_TEAM_WINS);
-                            boolean homeTeamWonBet = (boolean) contract.get(HOME_TEAM_WINS_BET);
+                            boolean homeTeamWon = Boolean.getBoolean(game.get(HOME_TEAM_WINS).toString());
+                            boolean homeTeamWonBet = Boolean.getBoolean(contract.get(HOME_TEAM_WINS_BET).toString());
                             if(homeTeamWonBet == homeTeamWon){
                                 bet.put(PAYMENT, amountContractor);
                                 bet.put(PAYER, amountContractor);
                                 bet.put(PAYEE, amountBidder);
                             }
+                            return bet;
                         }
                     }
                 }
@@ -153,15 +163,11 @@ public class Platform {
      * @param game
      */
     public void addContractToGame(String gameId, String contractId){
-
-        if(gamesToContracts.containsKey(gameId)){
-            List<String> listOfContractsForGame = gamesToContracts.get(gameId);
-            listOfContractsForGame.add(gameId);
-        }else{
-            List<String> listOfContractsForGame = new ArrayList<>();
-            listOfContractsForGame.add(contractId);
-        }
+        logger.info("adding contract {} to game {}", contractId, gamesToContracts);
+        addToMap(gameId, contractId, gamesToContracts);
+        logger.info("added contract {} to game {}", contractId, gamesToContracts);
     }
+
 
     /**
      * just a placeholder until KSQL
@@ -193,14 +199,9 @@ public class Platform {
      * @param game
      */
     public void addBetToContract(String contractId, String betId){
-
-        if(contractsToBets.containsKey(contractId)){
-            List<String> listOfBetsForContract = contractsToBets.get(contractId);
-            listOfBetsForContract.add(contractId);
-        }else{
-            List<String> listOfBetsForContract = new ArrayList<>();
-            listOfBetsForContract.add(betId);
-        }
+        logger.info("adding bet {} to contract {}", betId, contractsToBets);
+        addToMap(contractId, betId, contractsToBets);
+        logger.info("added bet {} to contract {}", betId, contractsToBets);
     }
 
     /**
@@ -233,6 +234,7 @@ public class Platform {
      */
     public List<String> betsForGame(String gameId){
         logger.info("getting bets for game {}", gameId);
+        logger.info("in following list: {}", gamesToContracts );
         if(gamesToContracts.containsKey(gameId)){
             List<String> bets = gamesToContracts.get(gameId).stream()
                     .flatMap(contractId -> contractsToBets.containsKey(contractId)
@@ -244,6 +246,19 @@ public class Platform {
         }else{
             logger.info("found nothing");
             return new ArrayList<>();
+        }
+    }
+
+
+    private void addToMap(String gameId, String contractId, HashMap<String, List<String>> gamesToContracts) {
+        if(gamesToContracts.containsKey(gameId)){
+            List<String> listOfContractsForGame = gamesToContracts.get(gameId);
+            listOfContractsForGame.add(gameId);
+            gamesToContracts.put(gameId,listOfContractsForGame);
+        }else{
+            List<String> listOfContractsForGame = new ArrayList<>();
+            listOfContractsForGame.add(contractId);
+            gamesToContracts.put(gameId,listOfContractsForGame);
         }
     }
 

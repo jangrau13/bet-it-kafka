@@ -38,10 +38,8 @@ public class KafkaController {
         //startRandomGame(game);
         String gameId = UUID.randomUUID().toString();
         HttpHeaders responseHeaders = new HttpHeaders();
-        // Construct and advertise the URI of the newly created task; we retrieve the base URI
-        // from the application.properties file
-        responseHeaders.add(HttpHeaders.LOCATION, environment.getProperty("baseuri")
-                + "game/" + gameId);
+
+        responseHeaders.add(GAME_ID, gameId);
 
         HashMap<String, Object> gameMap = new HashMap<>();
         gameMap.put(GAME_ID, gameId);
@@ -61,8 +59,7 @@ public class KafkaController {
         HttpHeaders responseHeaders = new HttpHeaders();
         // Construct and advertise the URI of the newly created task; we retrieve the base URI
         // from the application.properties file
-        responseHeaders.add(HttpHeaders.LOCATION, environment.getProperty("baseuri")
-                + "game/" + gameId);
+        responseHeaders.add(GAME_ID, gameId);
         HashMap<String, Object> gameMap = new HashMap<>();
         gameMap.put(GAME_ID, gameId);
         gameMap.put(STATE, STARTED);
@@ -81,8 +78,7 @@ public class KafkaController {
         HttpHeaders responseHeaders = new HttpHeaders();
         // Construct and advertise the URI of the newly created task; we retrieve the base URI
         // from the application.properties file
-        responseHeaders.add(HttpHeaders.LOCATION, environment.getProperty("baseuri")
-                + "game/" + gameId);
+        responseHeaders.add(GAME_ID, gameId);
         HashMap<String, Object> gameMap = new HashMap<>();
         gameMap.put(GAME_ID, gameId);
         gameMap.put(STATE, ENDED);

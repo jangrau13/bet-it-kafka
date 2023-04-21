@@ -15,6 +15,7 @@ spring:
         reserve-bid: bet.reserve-bid
         two-factor: bet.two-factor-customer
         two-factor-success: bet.two-factor-customer-success
+        fraud-detection: camunda.fraud.detected
         payment-request: bet.payment-request
         camunda: camunda
 

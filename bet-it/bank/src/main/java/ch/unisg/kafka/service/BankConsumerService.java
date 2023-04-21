@@ -43,7 +43,7 @@ public class BankConsumerService {
         this.twoFactorServiceProducer = twoFactorServiceProducer;
     }
 
-    @KafkaListener(topics = {"${spring.kafka.reserve-bid}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bet-platform")
+    @KafkaListener(topics = {"${spring.kafka.reserve-bid}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bank")
     public void consumeReserveBidMessage(ReserveBid reserveBid) {
         logger.info("**** -> Consuming Reserve Bid Update :: {}", reserveBid);
         try {
@@ -59,7 +59,7 @@ public class BankConsumerService {
 
     }
 
-    @KafkaListener(topics = {"${spring.kafka.two-factor}"}, containerFactory = "kafkaListenerTwoFactorFactory", groupId = "bet-platform")
+    @KafkaListener(topics = {"${spring.kafka.two-factor}"}, containerFactory = "kafkaListenerTwoFactorFactory", groupId = "bank")
     public void consumeTwoFactorMessage(String json) {
         logger.info("**** -> Consuming Two Factor :: {}", json);
         Pattern pattern = Pattern.compile("(?<!\\\\)=(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
@@ -87,7 +87,7 @@ public class BankConsumerService {
         }
     }
 
-    @KafkaListener(topics = {"${spring.kafka.two-factor-success}"}, containerFactory = "kafkaListenerTwoFactorSuccessFactory", groupId = "bet-platform")
+    @KafkaListener(topics = {"${spring.kafka.two-factor-success}"}, containerFactory = "kafkaListenerTwoFactorSuccessFactory", groupId = "bank")
     public void consumeTwoFactorSuccessMessage(TwoFactor twoFactor) {
         logger.info("**** -> Consuming Two Factor Success:: {}", twoFactor);
         try {

@@ -28,4 +28,8 @@ public class Keys {
     public static final String AWAY_GOALS = "awayGoals";
     public static final String CONTRACT_REQUESTED = "CONTRACT_REQUESTED";
     public static final String MESSAGE_NAME = "messageName";
+    public static final String FRAUD_DETECTED = "FRAUD_DETECTED";
+    public static final String GAME_ENDED = "GAME_ENDED";
+
+    public static final String CORRELATION_ID = "correlationId";
 }

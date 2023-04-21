@@ -8,6 +8,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static ch.unisg.ics.edpo.shared.Keys.*;
 
@@ -43,14 +44,21 @@ public class ProducerService<T> {
     public void sendRequestedBet(T bet) {
         logger.info("#### -> Publishing Bet :: {}", bet);
         HashMap<String, Object> betMap = (HashMap<String, Object>) bet;
-        kafkaTemplateData.send(betRequestedTopic, betMap.get(BET_ID).toString(), bet);
+        //for camunda
+        betMap.put(MESSAGE_NAME, "BET_REQUEST");
+        int amount = (int) ((HashMap<?, ?>) bet).get(AMOUNT);
+        betMap.put(AMOUNT, String.valueOf(amount));
+        if(betMap.containsKey(BET_ID)) {
+            kafkaTemplateData.send(betRequestedTopic, betMap.get(BET_ID).toString(), (T) betMap);
+        }
     }
 
     public void sendGameEndedEvent(T betPimped) {
         logger.info("#### -> Sending Game Ended Event for Bet :: {}", betPimped);
         HashMap<String, Object> payload = (HashMap<String, Object>) betPimped;
         if(payload.containsKey(BET_ID)){
-            kafkaTemplateData.send(contractRequestedTopic, payload.get(BET_ID).toString(), (T) payload);
+
+            kafkaTemplateData.send(gameEndedCamundaTopic, payload.get(BET_ID).toString(), (T) payload);
         }
     }
 }

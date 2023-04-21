@@ -24,24 +24,25 @@ public class AddonConsumerService {
         this.client = client;
     }
 
-    @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
+    @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "addon")
     public void consumeCamundaMessage(Map<String, Object> variables) {
         log.info("**** -> Consuming Camunda Variables:: {}", variables);
 
-        if (!variables.containsKey(MESSAGE_NAME)) {
+        if (!variables.containsKey(MESSAGE_NAME) || variables.get(MESSAGE_NAME) == null) {
             log.info("The camunda message did not contain a messageName");
             return;
         }
-
         String messageName = variables.get(MESSAGE_NAME).toString();
         String uuid = UUID.randomUUID().toString();
         if (variables.containsKey(CORRELATION_ID)) {
             uuid = (String) variables.get(CORRELATION_ID);
+            log.info("found set correlationId: {}", uuid);
         }
         sendToCamunda(messageName, uuid, variables);
     }
 
     private void sendToCamunda(String messageName, String uuid, Map<String, Object> variables) {
+        log.info("starting Camunda process with messageName {}, correlationId {} and variables {}", messageName,uuid,variables);
         client.newPublishMessageCommand()
                 .messageName(messageName)
                 .correlationKey(uuid)

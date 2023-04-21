@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0bnwgm1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:process id="ContractWorkflow" name="Create Contract Workflow" isExecutable="true">
+    <bpmn:extensionElements />
+    <bpmn:sequenceFlow id="Flow_1sbqat8" sourceRef="Contract_Request_Received" targetRef="UserRiskChecks" />
+    <bpmn:serviceTask id="APIRiskCheckCommand" name="Check risk via API">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="get" target="method" />
+          <zeebe:input source="=&#34;http://bank:8081/riskmanagement/check?user=&#34; + contractorName" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="test" />
+          <zeebe:header key="resultExpression" value="=response" />
+          <zeebe:header key="errorExpression" value="=if error.code = &#34;500&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else if error.code = &#34;404&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else null" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xfy9dm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ux6rwa</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="RiskManagementDownEvent" name="Send Risk Management Down">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;contract.rejected.camunda&#34;" target="topic" />
+          <zeebe:input source="=&#34;Risk Management not available, we cannot trust anyone&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_06ypld0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0d61uu7</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="APIRiskCheckDecision" name="can we trust the user?" default="user_machine_not_trusted">
+      <bpmn:incoming>Flow_1ux6rwa</bpmn:incoming>
+      <bpmn:outgoing>user_machine_not_trusted</bpmn:outgoing>
+      <bpmn:outgoing>user_machine_trusted</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1ux6rwa" sourceRef="APIRiskCheckCommand" targetRef="APIRiskCheckDecision" />
+    <bpmn:sendTask id="ContractAcceptedEvent" name="Send Contract Accepted to Kafka">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;camunda.contract.accepted&#34;" target="topic" />
+          <zeebe:input source="=&#34;CONTRACT_ACCEPTED&#34;" target="messageName" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nmeapt</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ficx4x</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="UserNotTrustedEvent" name="We don&#39;t trust you">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;contract.rejected.camunda&#34;" target="topic" />
+          <zeebe:input source="=&#34;Risk Management does not trust you&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>user_machine_not_trusted</bpmn:incoming>
+      <bpmn:outgoing>Flow_0e22jox</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="FinishedContractChecking" name="Contract Checked">
+      <bpmn:incoming>Flow_0e22jox</bpmn:incoming>
+      <bpmn:incoming>Flow_0d61uu7</bpmn:incoming>
+      <bpmn:incoming>Flow_13q9i2c</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0lhoyeb" />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="CommandStyleCheck" name="Command Style, was it really sent?">
+      <bpmn:incoming>Flow_0ficx4x</bpmn:incoming>
+      <bpmn:outgoing>Flow_13q9i2c</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1qbq8ly" messageRef="Message_3mnkomi" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0e22jox" sourceRef="UserNotTrustedEvent" targetRef="FinishedContractChecking" />
+    <bpmn:sequenceFlow id="Flow_0d61uu7" sourceRef="RiskManagementDownEvent" targetRef="FinishedContractChecking" />
+    <bpmn:sequenceFlow id="Flow_0ficx4x" sourceRef="ContractAcceptedEvent" targetRef="CommandStyleCheck" />
+    <bpmn:serviceTask id="GameMangementCheckCommand" name="Call Game Manager">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="get" target="method" />
+          <zeebe:input source="=&#34;http://game-master:8083/gamemanagement/check?gameId=&#34; + gameId" target="url" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="test" />
+          <zeebe:header key="resultExpression" value="=response" />
+          <zeebe:header key="errorExpression" value="=if error.code = &#34;500&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else if error.code = &#34;404&#34; then bpmnError(&#34;500&#34;, &#34;no more retries&#34;) else null" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03edhct</bpmn:incoming>
+      <bpmn:outgoing>Flow_0x8b5c8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="GameManagementDownEvent" name="Send Game Management Down">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;contract.rejected.camunda&#34;" target="topic" />
+          <zeebe:input source="=&#34;Game Management not available, until this is back, the game is over. We are sorry&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0eqf3p0</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="Gateway_0fq6xwm" name="is the game still on?" default="game_already_on_or_over">
+      <bpmn:incoming>Flow_0x8b5c8</bpmn:incoming>
+      <bpmn:outgoing>game_still_betable</bpmn:outgoing>
+      <bpmn:outgoing>game_already_on_or_over</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="GameAlreadyOverEvent" name="Game is already over">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;contract.rejected.camunda&#34;" target="topic" />
+          <zeebe:input source="=&#34;Game is already over. We are sorry&#34;" target="reason" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>game_already_on_or_over</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:boundaryEvent id="GameManagementError" attachedToRef="GameMangementCheckCommand">
+      <bpmn:outgoing>Flow_0eqf3p0</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1qvpz68" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0x8b5c8" sourceRef="GameMangementCheckCommand" targetRef="Gateway_0fq6xwm" />
+    <bpmn:sequenceFlow id="Flow_0eqf3p0" sourceRef="GameManagementError" targetRef="GameManagementDownEvent" />
+    <bpmn:sequenceFlow id="game_still_betable" name="yes" sourceRef="Gateway_0fq6xwm" targetRef="Activity_06g9s6s">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=body = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="game_already_on_or_over" name="no" sourceRef="Gateway_0fq6xwm" targetRef="GameAlreadyOverEvent" />
+    <bpmn:sequenceFlow id="Flow_13q9i2c" sourceRef="CommandStyleCheck" targetRef="FinishedContractChecking" />
+    <bpmn:boundaryEvent id="Event_0txkzot" attachedToRef="APIRiskCheckCommand">
+      <bpmn:outgoing>Flow_06ypld0</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_058dw3n" errorRef="Error_0q43gf6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_06ypld0" sourceRef="Event_0txkzot" targetRef="RiskManagementDownEvent" />
+    <bpmn:sequenceFlow id="Flow_0xfy9dm" sourceRef="UserRiskChecks" targetRef="APIRiskCheckCommand" />
+    <bpmn:parallelGateway id="UserRiskChecks" name="User Risk Checks">
+      <bpmn:incoming>Flow_1sbqat8</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xfy9dm</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="user_machine_not_trusted" name="no" sourceRef="APIRiskCheckDecision" targetRef="UserNotTrustedEvent" />
+    <bpmn:sequenceFlow id="user_machine_trusted" name="yes" sourceRef="APIRiskCheckDecision" targetRef="removeBody">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=body = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:startEvent id="Contract_Request_Received" name="Contract Request Received">
+      <bpmn:extensionElements />
+      <bpmn:outgoing>Flow_1sbqat8</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_15o9z83" messageRef="Message_34trqi4" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_03edhct" sourceRef="removeBody" targetRef="GameMangementCheckCommand" />
+    <bpmn:scriptTask id="removeBody" name="remove Body">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=null" resultVariable="body" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=contractId" target="correlationId" />
+          <zeebe:output source="=null" target="body" />
+          <zeebe:output source="=null" target="topic" />
+          <zeebe:output source="=null" target="messageName" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>user_machine_trusted</bpmn:incoming>
+      <bpmn:outgoing>Flow_03edhct</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_06g9s6s" name="remove Body">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=null" resultVariable="body" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=contractId" target="correlationId" />
+          <zeebe:output source="=null" target="body" />
+          <zeebe:output source="=null" target="topic" />
+          <zeebe:output source="=null" target="messageName" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>game_still_betable</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nmeapt</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0nmeapt" sourceRef="Activity_06g9s6s" targetRef="ContractAcceptedEvent" />
+  </bpmn:process>
+  <bpmn:message id="Message_209plgo" name="CONTRACT_REQUEST" />
+  <bpmn:message id="Message_0ksclf7" name="=CONTRACT_ACCEPTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3u62evr" name="=&#34;CONTRACT_ACCEPTED&#34;">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_11ih5m1" name="=CONTRACT_ACCEPTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3mnkomi" name="CONTRACT_ACCEPTED">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=correlationId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:error id="Error_0q43gf6" name="no more retries" errorCode="500" />
+  <bpmn:message id="Message_34trqi4" name="CONTRACT_REQUESTED" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ContractWorkflow">
+      <bpmndi:BPMNShape id="Activity_0ygioq3_di" bpmnElement="APIRiskCheckCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="690" y="217" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19ew5nv_di" bpmnElement="RiskManagementDownEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="960" y="340" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_17jnl47_di" bpmnElement="APIRiskCheckDecision" isMarkerVisible="true">
+        <dc:Bounds x="895" y="232" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="881" y="194.5" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0buj3im_di" bpmnElement="ContractAcceptedEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1470" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0h4s2kw" bpmnElement="UserNotTrustedEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1140" y="217" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00we54k_di" bpmnElement="FinishedContractChecking">
+        <dc:Bounds x="1692" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1668" y="222" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1l71z0j_di" bpmnElement="CommandStyleCheck" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1692" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1669" y="135" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_06c5mbf" bpmnElement="GameMangementCheckCommand" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1340" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_11kyozu" bpmnElement="GameManagementDownEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1690" y="623" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0paopsw" bpmnElement="Gateway_0fq6xwm" isMarkerVisible="true">
+        <dc:Bounds x="1505" y="515" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1495" y="572" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1uivcd2" bpmnElement="GameAlreadyOverEvent" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1690" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0gvuk5c_di" bpmnElement="UserRiskChecks">
+        <dc:Bounds x="585" y="232" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="567" y="289" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1weu3n6_di" bpmnElement="Contract_Request_Received" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="182" y="239" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="282" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03vgk2o_di" bpmnElement="removeBody" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="1140" y="450" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0f6gou9" bpmnElement="Activity_06g9s6s" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="1480" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06ucooy_di" bpmnElement="Event_0txkzot">
+        <dc:Bounds x="722" y="279" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1a5gx91" bpmnElement="GameManagementError">
+        <dc:Bounds x="1352" y="562" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1sbqat8_di" bpmnElement="Flow_1sbqat8">
+        <di:waypoint x="218" y="257" />
+        <di:waypoint x="585" y="257" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ux6rwa_di" bpmnElement="Flow_1ux6rwa">
+        <di:waypoint x="790" y="257" />
+        <di:waypoint x="895" y="257" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e22jox_di" bpmnElement="Flow_0e22jox">
+        <di:waypoint x="1240" y="257" />
+        <di:waypoint x="1466" y="257" />
+        <di:waypoint x="1466" y="270" />
+        <di:waypoint x="1692" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d61uu7_di" bpmnElement="Flow_0d61uu7">
+        <di:waypoint x="1060" y="380" />
+        <di:waypoint x="1710" y="380" />
+        <di:waypoint x="1710" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ficx4x_di" bpmnElement="Flow_0ficx4x">
+        <di:waypoint x="1570" y="120" />
+        <di:waypoint x="1619" y="120" />
+        <di:waypoint x="1619" y="110" />
+        <di:waypoint x="1692" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0asaw6o" bpmnElement="Flow_0x8b5c8">
+        <di:waypoint x="1440" y="540" />
+        <di:waypoint x="1505" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_18tk8k1" bpmnElement="Flow_0eqf3p0">
+        <di:waypoint x="1370" y="598" />
+        <di:waypoint x="1370" y="663" />
+        <di:waypoint x="1690" y="663" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1efi0dq" bpmnElement="game_still_betable">
+        <di:waypoint x="1530" y="515" />
+        <di:waypoint x="1530" y="360" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1531" y="434" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_017rq7m" bpmnElement="game_already_on_or_over">
+        <di:waypoint x="1555" y="540" />
+        <di:waypoint x="1690" y="540" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1616" y="522" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13q9i2c_di" bpmnElement="Flow_13q9i2c">
+        <di:waypoint x="1728" y="110" />
+        <di:waypoint x="1790" y="110" />
+        <di:waypoint x="1790" y="270" />
+        <di:waypoint x="1728" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06ypld0_di" bpmnElement="Flow_06ypld0">
+        <di:waypoint x="740" y="315" />
+        <di:waypoint x="740" y="380" />
+        <di:waypoint x="960" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xfy9dm_di" bpmnElement="Flow_0xfy9dm">
+        <di:waypoint x="635" y="257" />
+        <di:waypoint x="690" y="257" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wbek15_di" bpmnElement="user_machine_not_trusted">
+        <di:waypoint x="945" y="257" />
+        <di:waypoint x="1140" y="257" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1036" y="239" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x1yxxg_di" bpmnElement="user_machine_trusted">
+        <di:waypoint x="920" y="282" />
+        <di:waypoint x="920" y="510" />
+        <di:waypoint x="1140" y="510" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="896" y="384" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03edhct_di" bpmnElement="Flow_03edhct">
+        <di:waypoint x="1240" y="490" />
+        <di:waypoint x="1340" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nmeapt_di" bpmnElement="Flow_0nmeapt">
+        <di:waypoint x="1530" y="280" />
+        <di:waypoint x="1530" y="220" />
+        <di:waypoint x="1540" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -60,8 +60,8 @@ public class PlatformController {
         HttpHeaders responseHeaders = new HttpHeaders();
         // Construct and advertise the URI of the newly created task; we retrieve the base URI
         // from the application.properties file
-        responseHeaders.add(HttpHeaders.LOCATION, environment.getProperty("baseuri")
-                + "contract/" + contractId);
+        responseHeaders.add(GAME_ID,gameId);
+        responseHeaders.add(CONTRACT_ID, contractId);
 
         platform.putContract(contract);
 
@@ -85,17 +85,25 @@ public class PlatformController {
         //Game game = new Game(UUID.randomUUID().toString(), bet, new Score(0, 0), false);
         //startRandomGame(game);
         String betId = UUID.randomUUID().toString();
+        String gameId = bet.get(GAME_ID).toString();
+        String contractId = bet.get(CONTRACT_ID).toString();
+
         bet.put(BET_ID, betId);
+
+        platform.putBet(bet);
+        platform.addBetToContract(betId, contractId);
+
+        HashMap<String, Object> toBeFreezedMap = platform.getToBeFreezedBet(betId);
+
 
         HttpHeaders responseHeaders = new HttpHeaders();
         // Construct and advertise the URI of the newly created task; we retrieve the base URI
         // from the application.properties file
-        responseHeaders.add(HttpHeaders.LOCATION, environment.getProperty("baseuri")
-                + "bet/" + betId);
+        responseHeaders.add(GAME_ID,gameId);
+        responseHeaders.add(CONTRACT_ID, contractId);
+        responseHeaders.add(BET_ID,  betId);
 
-        platform.putBet(bet);
-
-        producerService.sendRequestedBet(bet);
+        producerService.sendRequestedBet(toBeFreezedMap);
 
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     }

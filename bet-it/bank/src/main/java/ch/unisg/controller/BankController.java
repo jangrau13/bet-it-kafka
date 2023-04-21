@@ -121,7 +121,7 @@ public class BankController {
      */
 
     @GetMapping(value="/freeze", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> freeze(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+    public ResponseEntity<Boolean> freeze(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo, @RequestParam int amountFrom ,@RequestParam String betId) {
         return fakeBooleanResponse(from);
     }
 
@@ -131,7 +131,7 @@ public class BankController {
      */
 
     @GetMapping(value="/unfreeze", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> unfreeze(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+    public ResponseEntity<Boolean> unfreeze(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo,  @RequestParam int amountFrom,@RequestParam String betId) {
         return fakeBooleanResponse(from);
     }
 
@@ -141,7 +141,7 @@ public class BankController {
      */
 
     @GetMapping(value="/payment", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> payment(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+    public ResponseEntity<Boolean> payment(@RequestParam String from, @RequestParam String to, @RequestParam int amount,@RequestParam String betId ) {
         return fakeBooleanResponse(from);
     }
 
@@ -151,7 +151,7 @@ public class BankController {
      */
 
     @GetMapping(value="/paymentReverse", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> reversePayment(@RequestParam String from, @RequestParam String to, @RequestParam int amount) {
+    public ResponseEntity<Boolean> reversePayment(@RequestParam String from, @RequestParam String to, @RequestParam int amount,@RequestParam String betId) {
         return fakeBooleanResponse(from);
     }
 
@@ -166,8 +166,10 @@ public class BankController {
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }else {
             Random rd = new Random();
-            if (rd.nextBoolean()) {
-                if (rd.nextBoolean()) {
+            float number = rd.nextFloat();
+            if (number <= 0.9) {
+                number = rd.nextFloat();
+                if (number <= 0.9) {
                     return new ResponseEntity<>(true, HttpStatus.OK);
                 }else{
                     return new ResponseEntity<>(false, HttpStatus.OK);

@@ -14,16 +14,23 @@ public class BankProducerService<T> {
     @Value("${spring.kafka.two-factor-success}")
     private String twoFactorSuccessTopic;
 
+    @Value("${spring.kafka.fraud-detection}")
+    private String fraudDetectionTopic;
+
     private final KafkaTemplate<String, T> kafkaTemplateTwoFactor;
 
     public BankProducerService(KafkaTemplate<String, T> kafkaTemplateTwoFactor) {
         this.kafkaTemplateTwoFactor = kafkaTemplateTwoFactor;
     }
 
-
     public void sendTwoFactorResponse(T twoFactor) {
         logger.info("#### -> Publishing Two Factor Successful:: {}", twoFactor);
         kafkaTemplateTwoFactor.send(twoFactorSuccessTopic, twoFactor);
+    }
+
+    public void publishFraudDetection(T fraudDetection) {
+        logger.info("#### -> Publishing Fraud Detecton:: {}", fraudDetection);
+        kafkaTemplateTwoFactor.send(fraudDetectionTopic, fraudDetection);
     }
 
 
