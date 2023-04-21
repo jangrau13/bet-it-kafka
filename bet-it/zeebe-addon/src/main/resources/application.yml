@@ -1,5 +1,5 @@
 server:
-    port: 8081  # Tomcat default port
+    port: 8084  # Tomcat default port
 
 
 spring:
@@ -15,9 +15,8 @@ spring:
         reserve-bid: bet.reserve-bid
         two-factor: bet.two-factor-customer
         two-factor-success: bet.two-factor-customer-success
-        fraud-detection: camunda.fraud.detected
         payment-request: bet.payment-request
-        camunda: camunda
+        camunda: camunda | camunda.* | *.camunda.* | *.camunda
 
 zeebe:
     client:

@@ -66,40 +66,40 @@ public class BankController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
-
-    @PostMapping(
-            value = "/addMoney",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Map<String, Object>> addMoney(@RequestBody HashMap transaction) {
-        log.info("Payment for: " + transaction);
-        if (transaction.containsKey("from") && transaction.containsKey("to") && transaction.containsKey("amount")) {
-            String from = (String) transaction.get("from");
-            String to = (String) transaction.get("to");
-            int amount = (int) transaction.get("amount");
-            //check if transaction is valid
-            if (true) {
-                //add some delay for Camunda to work nice
-                try {
-                    Thread.sleep((long) (Math.random() * 6000));
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                // also for Camunda, maybe it fails :)
-                Random rd = new Random();
-                if (rd.nextBoolean()) {
-                    mapService.sendCamundaMessage(transaction, "bit.user-payment");
-                    return new ResponseEntity<>(transaction, HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            } else {
-                return new ResponseEntity<>(HttpStatus.PAYMENT_REQUIRED);
-            }
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
-    }
+//
+//    @PostMapping(
+//            value = "/addMoney",
+//            consumes = {MediaType.APPLICATION_JSON_VALUE},
+//            produces = {MediaType.APPLICATION_JSON_VALUE})
+//    public ResponseEntity<Map<String, Object>> addMoney(@RequestBody HashMap transaction) {
+//        log.info("Payment for: " + transaction);
+//        if (transaction.containsKey("from") && transaction.containsKey("to") && transaction.containsKey("amount")) {
+//            String from = (String) transaction.get("from");
+//            String to = (String) transaction.get("to");
+//            int amount = (int) transaction.get("amount");
+//            //check if transaction is valid
+//            if (true) {
+//                //add some delay for Camunda to work nice
+//                try {
+//                    Thread.sleep((long) (Math.random() * 6000));
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                // also for Camunda, maybe it fails :)
+//                Random rd = new Random();
+//                if (rd.nextBoolean()) {
+//                    mapService.sendCamundaMessage(transaction, "bit.user-payment");
+//                    return new ResponseEntity<>(transaction, HttpStatus.OK);
+//                } else {
+//                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//                }
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.PAYMENT_REQUIRED);
+//            }
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+//        }
+//    }
 
     @GetMapping(value="/users")
     public List<String> getTransactions() throws ExecutionException, InterruptedException {
@@ -121,7 +121,7 @@ public class BankController {
      */
 
     @GetMapping(value="/freeze", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> freeze(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo,  @RequestParam int amountFrom) {
+    public ResponseEntity<Boolean> freeze(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo, @RequestParam int amountFrom ,@RequestParam String betId) {
         return fakeBooleanResponse(from);
     }
 
@@ -131,7 +131,7 @@ public class BankController {
      */
 
     @GetMapping(value="/unfreeze", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> unfreeze(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo,  @RequestParam int amountFrom) {
+    public ResponseEntity<Boolean> unfreeze(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo,  @RequestParam int amountFrom,@RequestParam String betId) {
         return fakeBooleanResponse(from);
     }
 
@@ -141,7 +141,7 @@ public class BankController {
      */
 
     @GetMapping(value="/payment", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> payment(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo,  @RequestParam int amountFrom) {
+    public ResponseEntity<Boolean> payment(@RequestParam String from, @RequestParam String to, @RequestParam int amount,@RequestParam String betId ) {
         return fakeBooleanResponse(from);
     }
 
@@ -151,7 +151,7 @@ public class BankController {
      */
 
     @GetMapping(value="/paymentReverse", produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<Boolean> reversePayment(@RequestParam String from, @RequestParam String to, @RequestParam int amountTo, @RequestParam int amountFrom) {
+    public ResponseEntity<Boolean> reversePayment(@RequestParam String from, @RequestParam String to, @RequestParam int amount,@RequestParam String betId) {
         return fakeBooleanResponse(from);
     }
 
@@ -166,8 +166,10 @@ public class BankController {
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }else {
             Random rd = new Random();
-            if (rd.nextBoolean()) {
-                if (rd.nextBoolean()) {
+            float number = rd.nextFloat();
+            if (number <= 0.9) {
+                number = rd.nextFloat();
+                if (number <= 0.9) {
                     return new ResponseEntity<>(true, HttpStatus.OK);
                 }else{
                     return new ResponseEntity<>(false, HttpStatus.OK);

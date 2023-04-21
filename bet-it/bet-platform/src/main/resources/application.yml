@@ -11,21 +11,17 @@ spring:
         producer:
             bootstrap-servers: kafka:9092
 
-        game-topic: bet.game-topic
-        bank-response: bet.bank-response
-        bad-bank-response: bet.bad-bank-response
-        reserve-bid: bet.reserve-bid
-        check-successful: bit.validity_check_successful
-        check-negative: bit.validity_check_failed
+        game-topic-published: game.published
+        game-topic-started: game.started
+        game-topic-ended: game.ended
+        game-topic-ended-camunda: camunda.game.ended
+        contract-requested: camunda.contract.requested
+        contract-rejected: camunda.contract.rejected
+        contract-accepted: camunda.contract.accepted
+        bet-requested: camunda.bet.requested.camunda
+        bet-rejected: camunda.bet.rejected
+        bet-accepted: camunda.bet.accepted
 
-camunda.bpm:
-    admin-user:
-        id: demo
-        password: demo
-    filter.create: All Tasks
-    deployment-resource-pattern:
-        - classpath*:**/*.bpmn
-        - classpath*:**/*.bpmn20.xml
-        - classpath*:**/*.dmn
-        - classpath*:**/*.dmn11.xml
-        - classpath*:**/*.form
+
+
+

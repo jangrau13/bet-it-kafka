@@ -19,6 +19,7 @@
         <module>game-master</module>
         <module>shared-domain</module>
         <module>bank</module>
+        <module>zeebe-addon</module>
     </modules>
 
     <properties>

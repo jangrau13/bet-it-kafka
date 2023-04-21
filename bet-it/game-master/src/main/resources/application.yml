@@ -1,6 +1,8 @@
 server:
     port: 8083  # Tomcat default port
 
+baseuri: http://localhost:8083
+
 
 spring:
     kafka:
@@ -15,4 +17,6 @@ spring:
             key-serializer: org.apache.kafka.common.serialization.StringSerializer
             value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-        game-topic: bet.game-topic
+        game-topic-published: game.published
+        game-topic-started: game.started
+        game-topic-ended: game.ended
