@@ -8,12 +8,21 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+We need to decide on the architectural properties of the bet-workflow that needs to be highly scalable.
+For our workflows we are using the camunda workflow engine which results in a rather orchestrated environment.
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We decided to use the parallel saga as we need a scalability is the most crucial in this workflow.
+Also, the nature of waiting for a game to end is very much asynchronous anyway.
+
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+### Positive
+- Scalability
+- More fault-tolerant if a service is unavailable for a short period of time
+
+### Negative
+- Consistency: the state is only saved within the camunda workflow engine process
+- Hard to debug: the processes are harder to debug as in synchronous communication 

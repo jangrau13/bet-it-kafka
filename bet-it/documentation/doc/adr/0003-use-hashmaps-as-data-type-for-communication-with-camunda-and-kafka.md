@@ -8,12 +8,22 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+We needed to decide on dataypes for the contracts between microservices that are being connected by kafka with the json format.
+The microservices are written in java, we are however using a workflow engine that handles variables as json, which is in a way a hashmap.
+
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We have decided to use the hashmap datatype to communicate between the services and the workflow engine.
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+### Positive
+- general development with easy datatypes is in the beginning very fast
+- We don't need to refactor contracts, if the workflow engine should all of a sudden have access to a certain service.
+- very easy to serialize and flexible
+
+### Negative
+- weak typing can lead to error
+- only store data
+

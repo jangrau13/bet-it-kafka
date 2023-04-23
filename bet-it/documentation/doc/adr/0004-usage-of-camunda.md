@@ -8,12 +8,18 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+Our event-driven bet-platform contains some workflows that are hard to track in an event-driven architecture.
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We decided on using camunda as a workflow engine to make the more complex workflows more controllable and observable.
+Furthermore, we decided to use camunda as it was requested by the lecture.
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+### Positive
+- camunda bpm is very scalable which is important for our platform
+- the workflow engine creates increased visibility of our processes
+### Negative
+- it takes a lot of time to implement a workflow engine
+- by using a workflow engine we are getting pushed towards an orchestration architecture inside workflows, as we are using an orchestrator

@@ -8,12 +8,24 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+In our event-driven bet-platform we needed to decide on the architecture of our create-customer workflow.
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We have decided to again use the fairy tale saga pattern for the following reasons:
+- orchestration: we want to model the workflow in camunda for increased visibility
+- eventual: we are still in an event-driven architecture with eventual consistency
+- synchronous: we have synchronous checks (password check for example)
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+### Positive
+
+### Positive
+- Orchestration is more visible and easier to debug
+- As it follows a linear sequence it is easier to follow and understand
+- The user data is more consistent (potential undo events are not needed)
+
+### Negative
+- Because of the nature of synchronous communication the workflow will be less scalable
+

@@ -8,12 +8,20 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+In our bet-platform user data of customers that want to use the platform need to be saved.
+
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+As we are in an event-driven architecture we decided to save the customer state also as an event processing system (EPS).
+Mainly because we are using event-carried state transfer and thus we have already all the data in the events.
+
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+### Positive
+- It will be more complex to implement and handle user data changes
+- It will scale very well
+
+### Negative
+- Increased complexity because of the characteristics of an event processing system 

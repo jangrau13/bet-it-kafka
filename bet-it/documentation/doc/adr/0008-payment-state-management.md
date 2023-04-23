@@ -8,12 +8,18 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+The bank needs to do payments between different customers. The balances of each customer needs to be saved.
+The balance of a customer is very critical data. Furthermore, balance data needs to be very durable.
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We decided to save the balances in a database as the data is highly important and needs to be atomic.
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+### Positive
+- Atomic data and more consistency
+- Easier to implement and very durable data
+
+###
+- Less scalable as an event-driven approach
