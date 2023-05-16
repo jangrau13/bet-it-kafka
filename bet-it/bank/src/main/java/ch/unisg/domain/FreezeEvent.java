@@ -1,5 +1,6 @@
 package ch.unisg.domain;
 
+import ch.unisg.ics.edpo.shared.Keys;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +9,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ch.unisg.domain.utils.ParseUtils.parseObject;
+
 
 @Slf4j
 public class FreezeEvent {
+
 
     @Getter
     private final String[] users;
@@ -26,34 +30,24 @@ public class FreezeEvent {
 
 
     public FreezeEvent(Map<String, Object> map) {
-        this.users = parseObject(map, "users", String[].class);
-        this.amounts = parseObject(map, "amounts", double[].class);
-        this.correlationId = parseObject(map, "correlationId", String.class);
+        this.users = parseObject(map, Keys.FreezeEventKeys.USERS, String[].class);
+        this.amounts = parseObject(map, Keys.FreezeEventKeys.AMOUNTS, double[].class);
+        this.correlationId = parseObject(map, Keys.FreezeEventKeys.CORRELATION_ID, String.class);
         this.status = parseStatus(map);
     }
 
 
     private STATUS parseStatus(Map<String, Object> map){
-        String status = parseObject(map, "status", String.class);
+        String status = parseObject(map, Keys.FreezeEventKeys.STATUS_FIELD, String.class);
         return STATUS.valueOf(status);
-    }
-
-    private <T> T parseObject(Map<String, Object> map, String key, Class<T> clazz) {
-        Object usersObj = map.get(key);
-        if (clazz.isInstance(usersObj)) {
-            return clazz.cast(usersObj);
-        } else {
-            throw new RuntimeException(key + " was not of type " + clazz.getName() + " " + usersObj + map);
-        }
-
     }
 
     public Map<String, Object> toMap(){
         Map<String, Object> map = new HashMap<>();
-        map.put("correlationId", this.correlationId);
-        map.put("users", this.users);
-        map.put("amounts", this.amounts);
-        map.put("status", this.status.toString());
+        map.put(Keys.FreezeEventKeys.CORRELATION_ID, this.correlationId);
+        map.put(Keys.FreezeEventKeys.USERS, this.users);
+        map.put(Keys.FreezeEventKeys.AMOUNTS, this.amounts);
+        map.put(Keys.FreezeEventKeys.STATUS_FIELD, this.status.toString());
         return map;
     }
 
@@ -68,7 +62,7 @@ public class FreezeEvent {
     }
 
 
-    public enum STATUS {
-        REQUESTED, FAILED, APPROVED
+    private enum STATUS {
+        FREEZE_REQUESTED, FREEZE_FAILED, FREEZE_DONE, UNFREEZE_REQUESTED, UNFREEZE_DONE
     }
 }

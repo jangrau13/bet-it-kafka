@@ -26,65 +26,11 @@ import java.util.regex.Pattern;
 @Slf4j
 public class BankConsumerService {
 
-    private final BankProducerService<TwoFactor> twoFactorServiceProducer;
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private final static String CHECK_REQUEST = "Check_Contract";
-
-    private final static String TWO_FACTOR_SUCCESS = "Two_Factor_Success";
-
-    private ZeebeClientLifecycle client;
-
-    @Autowired
-    public BankConsumerService(ZeebeClientLifecycle client, BankProducerService<TwoFactor> twoFactorServiceProducer) {
-        this.client = client;
-        this.twoFactorServiceProducer = twoFactorServiceProducer;
-    }
 
 
 
-    @KafkaListener(topics = {"${spring.kafka.two-factor}"}, containerFactory = "kafkaListenerTwoFactorFactory", groupId = "bank")
-    public void consumeTwoFactorMessage(String json) {
-        logger.info("**** -> Consuming Two Factor :: {}", json);
-        Pattern pattern = Pattern.compile("(?<!\\\\)=(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-        Matcher matcher = pattern.matcher(json);
-        //todo why is this matcher not used? why is it here
-        json = json.replaceAll("([a-zA-Z0-9]+)\\s*=\\s*([a-zA-Z0-9\\s]+)", "\"$1\":\"$2\"");
-        logger.info("transformed JSON: "+ json);
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            Map variables = mapper.readValue(json, Map.class);
-            if(variables.containsKey("correlationId") && variables.containsKey("name")){
-                String correlationId = (String) variables.get("correlationId");
-                String user = (String) variables.get("name");
-                logger.info("user = " + user);
-                logger.info("correlationId = " + correlationId);
-                TwoFactor twoFactorData = new TwoFactor(user,correlationId);
-                twoFactorServiceProducer.sendTwoFactorResponse(twoFactorData);
-            }else{
-                logger.warn("Job did not contain name and correlationId, did not continue with the process");
-            }
 
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @KafkaListener(topics = {"${spring.kafka.two-factor-success}"}, containerFactory = "kafkaListenerTwoFactorSuccessFactory", groupId = "bank")
-    public void consumeTwoFactorSuccessMessage(TwoFactor twoFactor) {
-        logger.info("**** -> Consuming Two Factor Success:: {}", twoFactor);
-        try {
-            client.newPublishMessageCommand()
-                    .messageName(TWO_FACTOR_SUCCESS)
-                    .correlationKey(twoFactor.getCorrelationId())
-                    .variables(VariablesUtil.toVariableMap(twoFactor))
-                    .send()
-                    .exceptionally(throwable -> {throw new RuntimeException("Could not publish message " + twoFactor, throwable);});
-        } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 }

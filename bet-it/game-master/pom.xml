@@ -49,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>ch.unisg.ics.edpo</groupId>
-            <artifactId>shared-domain</artifactId>
+            <artifactId>shared</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
