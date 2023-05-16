@@ -26,6 +26,7 @@ public class KafkaConsumerFactoryHashMap {
     private String bootstrapServers;
 
 
+    @Bean
     public ConsumerFactory<String, Map<String, Object>> consumerHashMapFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -33,7 +34,6 @@ public class KafkaConsumerFactoryHashMap {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(Map.class));
-
     }
 
     @Bean

@@ -7,7 +7,7 @@ install the following software:
 select Camunda Platform Version 8.2 (alpha) for all the documents created and creating.
 
 ## Build
-mvn clean install -DskipTests
+mvn clean install -DskipTests </br>
 docker-compose up --build -d
 
 ## Monitor Kafka

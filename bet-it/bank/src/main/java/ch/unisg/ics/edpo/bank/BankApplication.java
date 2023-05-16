@@ -11,13 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"ch.unisg.ics.edpo.shared", "ch.unisg.ics.edpo.bank"})
 public class BankApplication {
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(BankApplication.class, args);
 	}
-
-
-
 
 
 }

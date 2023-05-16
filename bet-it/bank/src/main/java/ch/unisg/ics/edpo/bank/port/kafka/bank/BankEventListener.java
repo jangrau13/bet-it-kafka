@@ -23,7 +23,7 @@ public class BankEventListener {
     /**
      * This consumes the transaction requests to the bank
      */
-    @KafkaListener(topics = {"${spring.kafka.transaction.request}"}, containerFactory = "kafkaListenerMapFactory", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = {"${spring.kafka.transaction.request}"}, containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
     public void consumeTransactionRequest(Map<String, Object> eventData) {
         log.info("**** -> Consuming Transaction Request:: {}", eventData);
         try {
@@ -34,7 +34,7 @@ public class BankEventListener {
         }
     }
 
-    @KafkaListener(topics = {"${spring.kafka.freeze.request}"}, containerFactory = "kafkaListenerMapFactory", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = {"${spring.kafka.freeze.request}"}, containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
     public void consumeFreezeRequest(Map<String, Object> eventData) {
         log.info("**** -> Consuming Freeze Request:: {}", eventData);
         try {

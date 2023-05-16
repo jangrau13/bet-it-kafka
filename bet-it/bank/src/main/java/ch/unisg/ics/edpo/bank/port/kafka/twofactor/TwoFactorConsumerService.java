@@ -10,12 +10,6 @@ import org.springframework.stereotype.Component;
 public class TwoFactorConsumerService {
 
 
-    private final static String TWO_FACTOR_SUCCESS_MESSAGE_NAME = "Two_Factor_Success";
-    private final TwoFactorProducerService<TwoFactor> twoFactorProducerService;
-
-    public TwoFactorConsumerService(TwoFactorProducerService<TwoFactor> twoFactorProducerService) {
-        this.twoFactorProducerService = twoFactorProducerService;
-    }
 
 //    @KafkaListener(topics = {"${spring.kafka.two-factor}"}, containerFactory = "kafkaListenerTwoFactorFactory", groupId = "bank")
 //    public void consumeTwoFactorMessage(String json) {

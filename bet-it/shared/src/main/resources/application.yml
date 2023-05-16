@@ -19,9 +19,3 @@ spring:
         payment-request: bet.payment-request
         camunda: camunda
 
-zeebe:
-    client:
-        broker:
-            gateway-address: zeebe:26500
-        security:
-            plaintext: true
