@@ -1,4 +1,4 @@
-package ch.unisg.ksql;
+package ch.unisg.port.ksql;
 
 import io.confluent.ksql.api.client.Client;
 import io.confluent.ksql.api.client.ExecuteStatementResult;

@@ -1,4 +1,4 @@
-package ch.unisg.kafka.config;
+package ch.unisg.port.kafka.config;
 
 import ch.unisg.ics.edpo.shared.bank.TwoFactor;
 import ch.unisg.ics.edpo.shared.bidding.ReserveBid;
@@ -33,29 +33,7 @@ public class BankConsumerConfig {
     private String groupId;
 
 
-    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // Bet-It-Bid Consumer
-    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    @Bean
-    public ConsumerFactory<String, ReserveBid> consumerReserveBidFactory() {
-       Map<String, Object> config = new HashMap<>();
 
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
-        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-
-        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(ReserveBid.class));
-    }
-
-    @Bean
-    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerReserveBidFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, ReserveBid> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerReserveBidFactory());
-        factory.setMessageConverter(new StringJsonMessageConverter());
-        factory.setBatchListener(true);
-        return factory;
-    }
 
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Bet-It-Two Factor
@@ -118,7 +96,7 @@ public class BankConsumerConfig {
     }
 
     @Bean
-    public <T> ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerMapFactory() {
+    public ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerMapFactory() {
         ConcurrentKafkaListenerContainerFactory<String, HashMap> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerHashMapFactory());
         factory.setMessageConverter(new StringJsonMessageConverter());
