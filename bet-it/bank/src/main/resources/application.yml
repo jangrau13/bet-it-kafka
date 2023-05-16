@@ -18,9 +18,12 @@ spring:
         fraud-detection: camunda.fraud.detected
         payment-request: bet.payment-request
         camunda: camunda
+        freeze:
+            request: bank.freeze-request
+            result: camunda.freeze-result
         transaction:
             result: camunda.transaction-result
-            request: bet.transaction-request
+            request: bank.transaction-request
 
 zeebe:
     client:

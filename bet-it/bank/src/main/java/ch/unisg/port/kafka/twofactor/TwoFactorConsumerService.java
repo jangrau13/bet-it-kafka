@@ -1,7 +1,7 @@
 package ch.unisg.port.kafka.twofactor;
 
 import ch.unisg.ics.edpo.shared.bank.TwoFactor;
-import ch.unisg.util.VariablesUtil;
+import ch.unisg.port.kafka.twofactor.util.VariablesUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.camunda.zeebe.spring.client.ZeebeClientLifecycle;

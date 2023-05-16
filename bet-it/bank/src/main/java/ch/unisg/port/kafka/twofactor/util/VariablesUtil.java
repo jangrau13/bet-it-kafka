@@ -1,4 +1,4 @@
-package ch.unisg.util;
+package ch.unisg.port.kafka.twofactor.util;
 
 import lombok.experimental.UtilityClass;
 

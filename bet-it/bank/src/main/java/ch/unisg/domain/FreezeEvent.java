@@ -29,13 +29,29 @@ public class FreezeEvent {
     private STATUS status;
 
 
+    public FreezeEvent(String[] users, double[] amounts, String correlationId, STATUS status){
+        this.users = users;
+        this.amounts = amounts;
+        this.correlationId = correlationId;
+        this.status = status;
+    }
+
     public FreezeEvent(Map<String, Object> map) {
         this.users = parseObject(map, Keys.FreezeEventKeys.USERS, String[].class);
         this.amounts = parseObject(map, Keys.FreezeEventKeys.AMOUNTS, double[].class);
         this.correlationId = parseObject(map, Keys.FreezeEventKeys.CORRELATION_ID, String.class);
         this.status = parseStatus(map);
+        validate();
     }
 
+    private void validate(){
+        if(users.length != amounts.length){
+            throw new RuntimeException("The amount of users need to be the same as the amount of amounts");
+        }
+        if (users.length == 0) {
+            throw new RuntimeException("There is no actual user");
+        }
+    }
 
     private STATUS parseStatus(Map<String, Object> map){
         String status = parseObject(map, Keys.FreezeEventKeys.STATUS_FIELD, String.class);

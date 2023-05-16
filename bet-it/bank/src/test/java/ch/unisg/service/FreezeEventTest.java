@@ -1,4 +1,4 @@
-package ch.unisg.services;
+package ch.unisg.service;
 
 import ch.unisg.domain.FreezeEvent;
 import org.junit.Test;

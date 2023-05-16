@@ -1,24 +1,33 @@
-package ch.unisg.zeebe;
+package ch.unisg.port.zeebe.servicetasks;
 
-import io.camunda.zeebe.spring.client.EnableZeebeClient;
-import io.camunda.zeebe.spring.client.annotation.ZeebeWorker;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
+import io.camunda.zeebe.spring.client.EnableZeebeClient;
+import io.camunda.zeebe.spring.client.annotation.ZeebeWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 @EnableZeebeClient
-public class EmailWorker {
+public class CustomerExistenceChecker {
 
-  private final static Logger LOG = LoggerFactory.getLogger(EmailWorker.class);
+  private final static Logger LOG = LoggerFactory.getLogger(CustomerExistenceChecker.class);
 
-  @ZeebeWorker(type = "email")
-  public void sendEmail(final JobClient client, final ActivatedJob job) {
-    final String message_content = (String) job.getVariablesAsMap().get("message_content");
+  @ZeebeWorker(type = "customer-existence")
+  public void checkExistence(final JobClient client, final ActivatedJob job) {
+    final Map content_map = job.getVariablesAsMap();
 
-    LOG.info("Sending email with message content: {}", message_content);
+    LOG.info("Received the following content: {}", content_map);
+
+    final Map bidMap = (Map) content_map.get("bid");
+    LOG.info("bid = " + bidMap);
+    final String bidderName = (String) bidMap.get("buyerName");
+    LOG.info("bidderName = " + bidderName);
+
+
 
     client.newCompleteCommand(job.getKey()).send()
       // join(); <-- This would block for the result. While this is easier-to-read code, it has limitations for parallel work.

@@ -1,5 +1,6 @@
 package ch.unisg.domain;
 
+import ch.unisg.domain.utils.BankException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -11,9 +12,9 @@ import java.util.Map;
 @Slf4j
 public class Bank {
 
-    private Map<String, Double> moneyBalances;
+    private final Map<String, Double> moneyBalances;
 
-    private Map<String, Double> frozenBalance;
+    private final Map<String, Double> frozenBalance;
     private static final Bank instance = new Bank();
 
 
@@ -23,22 +24,67 @@ public class Bank {
         this.frozenBalance = new HashMap<>();
     }
 
-    public void freeze(FreezeEvent freezeEvent) {
+
+    public void pay(String from, String to, double amount) throws BankException {
+        if(amount <= 0){
+            throw new BankException("Nice try, trying to pay a negative amount" + amount);
+        }
+        if(!moneyBalances.containsKey(from)){
+            throw new BankException("Man this user is not in the balance sheets, how should we get money from him? " + from);
+        }
+        double fromAmount = moneyBalances.get(from);
+        if (fromAmount < amount) {
+            throw new BankException("We can not take more from this user as he has!" + from + " he only had: " + fromAmount + " but needed to pay " + amount);
+        }
+        double toAmount = 0;
+        if (moneyBalances.containsKey(to)) {
+            toAmount = moneyBalances.get(to);
+        }
+        moneyBalances.put(from, fromAmount - amount);
+        moneyBalances.put(to, toAmount + amount);
+    }
+
+    public void unfreeze(FreezeEvent event) {
+        for (int i=0; i<= event.getUsers().length; i ++){
+            String user = event.getUsers()[i];
+            double amount = event.getAmounts()[i];
+            try {
+                unfreezeOneAccount(user, amount);
+            } catch (BankException e) {
+                log.error("Unfreezing error", e);
+            }
+        }
+    }
+
+    public void freeze(FreezeEvent freezeEvent) throws BankException {
         for (int i = 0; i <= freezeEvent.getUsers().length; i++) {
             String user = freezeEvent.getUsers()[i];
             double amount = freezeEvent.getAmounts()[i];
             try {
                 freezeOneAccount(user, amount);
-            } catch (RuntimeException e){
+            } catch (BankException e){
                 rollback(i, freezeEvent);
                 throw e;
             }
         }
     }
-    private void freezeOneAccount(String user, double amount) throws RuntimeException {
+
+    private void unfreezeOneAccount(String user, double amount) throws BankException{
+        if(!frozenBalance.containsKey(user)){
+            throw new BankException("Well no frozen money for the user " + user + " what should we unfreeze here?");
+        }
+        double frozen = frozenBalance.get(user);
+        double newFrozen = frozen - amount;
+        if (newFrozen < 0) {
+            log.error("We tried to freeze under 0 this is weird, but this should never happen, new amount was: " + newFrozen);
+            newFrozen = 0;
+        }
+        frozenBalance.put(user,newFrozen);
+    }
+    private void freezeOneAccount(String user, double amount) throws BankException {
         double frozen = 0;
         if (!moneyBalances.containsKey(user)) {
-            throw new RuntimeException("This user does not exist in the bank " + user);
+            throw new BankException("This user does not exist in the bank " + user);
         }
         double money = moneyBalances.get(user);
         if (frozenBalance.containsKey(user)) {
@@ -47,7 +93,7 @@ public class Bank {
         if (money - frozen >= amount) {
             this.frozenBalance.put(user, frozen + amount);
         } else {
-            throw new RuntimeException("User with name: " + user + " did not have enough money");
+            throw new BankException("User with name: " + user + " did not have enough money");
         }
     }
     private void rollback(int untilIndex, FreezeEvent freezeEvent) {

@@ -47,5 +47,7 @@ public class Keys {
         public static final String TO_FIELD = "to";
         public static final String AMOUNT_FIELD = "amount";
         public static final String STATUS_FIELD = "status";
+
+        public static final String WITH_UNFREEZE_FIELD = "with-unfreeze";
     }
 }

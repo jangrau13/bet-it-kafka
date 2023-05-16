@@ -25,6 +25,9 @@ public class TransactionEvent {
     private final double amount;
 
     @Getter
+    private final boolean withUnfreeze;
+
+    @Getter
     @Setter
     private TRANSACTION_STATUS status;
 
@@ -33,6 +36,7 @@ public class TransactionEvent {
         this.from = ParseUtils.parseObject(map, FROM_FIELD, String.class);
         this.to = ParseUtils.parseObject(map, Keys.TransactionEventKeys.TO_FIELD, String.class);
         this.amount = ParseUtils.parseObject(map, Keys.TransactionEventKeys.AMOUNT_FIELD, double.class);
+        this.withUnfreeze = ParseUtils.parseObject(map, Keys.TransactionEventKeys.WITH_UNFREEZE_FIELD, boolean.class);
         this.status = parseStatus(map);
     }
 
@@ -48,12 +52,14 @@ public class TransactionEvent {
     private TRANSACTION_STATUS parseStatus(Map<String, Object> map) {
         String status = parseObject(map, Keys.TransactionEventKeys.STATUS_FIELD, String.class);
         return TRANSACTION_STATUS.valueOf(status);
-
-
     }
 
-    private enum TRANSACTION_STATUS {
-        REQUESTED, DONE, FAILED, ROLLBACK, ROLLBACK_FAILED
+    /**
+     * FAILED is when the bank failed the transaction
+     * ROLLBACK is not needed, because we could just do a new request in opposite direction
+     */
+    public enum TRANSACTION_STATUS {
+        REQUESTED, DONE, FAILED
     }
 
 }
