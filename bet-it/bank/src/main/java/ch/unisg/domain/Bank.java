@@ -1,7 +1,6 @@
 package ch.unisg.domain;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,35 +18,49 @@ public class Bank {
 
 
     // private constructor to avoid client applications using the constructor
-    private Bank(){
+    private Bank() {
         this.moneyBalances = new HashMap<>();
         this.frozenBalance = new HashMap<>();
     }
+
     public void freeze(FreezeEvent freezeEvent) {
-        for (int i = 0; i <= freezeEvent.getUsers().length; i++ ) {
+        for (int i = 0; i <= freezeEvent.getUsers().length; i++) {
             String user = freezeEvent.getUsers()[i];
             double amount = freezeEvent.getAmounts()[i];
-            boolean success = freezeOneAccount(user, amount);
-            if(!success){
-                rollbackAndThrow(i, freezeEvent);
-                break;
+            try {
+                freezeOneAccount(user, amount);
+            } catch (RuntimeException e){
+                rollback(i, freezeEvent);
+                throw e;
             }
         }
     }
-    private void rollbackAndThrow(int untilIndex, FreezeEvent freezeEvent){
-        log.error("Freezing failed trying to rollback because could not freeze for user " + freezeEvent.getUsers()[untilIndex]);
-        for (int i=0; i<untilIndex; i++){
-            // we just freeze them with negative -
-            freezeOneAccount(freezeEvent.getUsers()[i], -freezeEvent.getAmounts()[i]);
+    private void freezeOneAccount(String user, double amount) throws RuntimeException {
+        double frozen = 0;
+        if (!moneyBalances.containsKey(user)) {
+            throw new RuntimeException("This user does not exist in the bank " + user);
         }
-        throw new RuntimeException("Could not freeze for user: " + freezeEvent.getUsers()[untilIndex]);
+        double money = moneyBalances.get(user);
+        if (frozenBalance.containsKey(user)) {
+            frozen = frozenBalance.get(user);
+        }
+        if (money - frozen >= amount) {
+            this.frozenBalance.put(user, frozen + amount);
+        } else {
+            throw new RuntimeException("User with name: " + user + " did not have enough money");
+        }
     }
-
-    private boolean freezeOneAccount(String user, double amount){
-        throw new NotImplementedException();
+    private void rollback(int untilIndex, FreezeEvent freezeEvent) {
+        log.error("Freezing failed trying to rollback because could not freeze for user " + freezeEvent.getUsers()[untilIndex]);
+        for (int i = 0; i < untilIndex; i++) {
+            // we just freeze them with negative -
+            try {
+                freezeOneAccount(freezeEvent.getUsers()[i], -freezeEvent.getAmounts()[i]);
+            } catch (Exception e){
+                log.error("Damn the rollback failed, now we have a real problem", e);
+            }
+        }
     }
-
-
     public static Bank getInstance() {
         return instance;
     }
