@@ -20,7 +20,7 @@ public class FreezeEvent {
     private final String[] users;
 
     @Getter
-    private final double[] amounts;
+    private final Double[] amounts;
 
     @Getter
     private final String correlationId;
@@ -29,7 +29,7 @@ public class FreezeEvent {
     private STATUS status;
 
 
-    public FreezeEvent(String[] users, double[] amounts, String correlationId, STATUS status){
+    public FreezeEvent(String[] users, Double[] amounts, String correlationId, STATUS status){
         this.users = users;
         this.amounts = amounts;
         this.correlationId = correlationId;
@@ -38,7 +38,7 @@ public class FreezeEvent {
 
     public FreezeEvent(Map<String, Object> map) {
         this.users = parseObject(map, Keys.FreezeEventKeys.USERS, String[].class);
-        this.amounts = parseObject(map, Keys.FreezeEventKeys.AMOUNTS, double[].class);
+        this.amounts = parseObject(map, Keys.FreezeEventKeys.AMOUNTS, Double[].class);
         this.correlationId = parseObject(map, Keys.FreezeEventKeys.CORRELATION_ID, String.class);
         this.status = parseStatus(map);
         validate();

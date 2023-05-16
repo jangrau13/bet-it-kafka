@@ -9,8 +9,9 @@ public class ParseUtils {
         if (clazz.isInstance(usersObj)) {
             return clazz.cast(usersObj);
         } else {
-            throw new RuntimeException(key + " was not of type " + clazz.getName() + " " + usersObj + map);
+            throw new RuntimeException(key + " was not of type " + clazz.getName() + " " + usersObj + map + "it was type: " + usersObj.getClass().getName());
         }
 
     }
+
 }

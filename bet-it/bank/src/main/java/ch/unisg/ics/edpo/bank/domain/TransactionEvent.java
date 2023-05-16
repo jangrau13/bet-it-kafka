@@ -22,7 +22,7 @@ public class TransactionEvent {
     private final String to;
 
     @Getter
-    private final double amount;
+    private final Double amount;
 
     @Getter
     @Setter
@@ -30,7 +30,7 @@ public class TransactionEvent {
 
 
 
-    public TransactionEvent(String from, String to, double amount, TRANSACTION_STATUS status){
+    public TransactionEvent(String from, String to, Double amount, TRANSACTION_STATUS status){
         this.from = from;
         this.to = to;
         this.amount = amount;
@@ -40,7 +40,7 @@ public class TransactionEvent {
     public TransactionEvent(Map<String, Object> map) {
         this.from = ParseUtils.parseObject(map, FROM_FIELD, String.class);
         this.to = ParseUtils.parseObject(map, Keys.TransactionEventKeys.TO_FIELD, String.class);
-        this.amount = ParseUtils.parseObject(map, Keys.TransactionEventKeys.AMOUNT_FIELD, double.class);
+        this.amount = ParseUtils.parseObject(map, Keys.TransactionEventKeys.AMOUNT_FIELD, Double.class);
         this.status = parseStatus(map);
     }
 

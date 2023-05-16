@@ -46,12 +46,4 @@ public class KafkaConsumerFactoryHashMap {
 
     }
 
-    @Bean
-    public KafkaListenerErrorHandler myTopicErrorHandler() {
-        return (m, e) -> {
-            log.error("Got an error {}", e.getMessage());
-            return "some info about the failure";
-        };
-
-    }
 }

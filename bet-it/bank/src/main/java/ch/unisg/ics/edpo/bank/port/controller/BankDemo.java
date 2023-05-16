@@ -29,7 +29,7 @@ public class BankDemo {
     public ResponseEntity<String> createUser(@RequestBody String user) {
 
         System.out.println("Received username: " + user);
-        TransactionEvent event = new TransactionEvent("bank", user, 2000, TransactionEvent.TRANSACTION_STATUS.REQUESTED);
+        TransactionEvent event = new TransactionEvent("bank", user, 2000.0, TransactionEvent.TRANSACTION_STATUS.REQUESTED);
         kafkaMapProducer.sendMessage(event.toMap(), transactionTopic, "key");
         return ResponseEntity.status(HttpStatus.OK).body("Blub");
     }
