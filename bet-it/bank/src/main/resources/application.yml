@@ -17,7 +17,6 @@ spring:
         two-factor-success: bet.two-factor-customer-success
         fraud-detection: camunda.fraud.detected
         payment-request: bet.payment-request
-        camunda: camunda
         freeze:
             request: bank.freeze-request
             result: camunda.freeze-result
@@ -25,9 +24,4 @@ spring:
             result: camunda.transaction-result
             request: bank.transaction-request
 
-zeebe:
-    client:
-        broker:
-            gateway-address: zeebe:26500
-        security:
-            plaintext: true
+
