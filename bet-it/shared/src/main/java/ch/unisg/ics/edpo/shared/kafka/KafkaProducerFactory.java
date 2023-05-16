@@ -1,4 +1,4 @@
-package ch.unisg.port.kafka.config;
+package ch.unisg.ics.edpo.shared.kafka;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -15,16 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class BankProducerConfig {
-
-
+public class KafkaProducerFactory {
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String bootstrapServers;
 
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Json Producer
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    @Bean
     public <T> ProducerFactory<String, T> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
 
@@ -33,16 +30,11 @@ public class BankProducerConfig {
         configProps.put(ProducerConfig.RETRIES_CONFIG, 3);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-
         return new DefaultKafkaProducerFactory<>(configProps);
     }
-
-
     @Primary
     @Bean
     public <T> KafkaTemplate<String, T> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-
-
 }

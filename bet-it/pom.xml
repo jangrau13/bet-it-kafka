@@ -17,7 +17,7 @@
     <modules>
         <module>bet-platform</module>
         <module>game-master</module>
-        <module>shared-domain</module>
+        <module>shared</module>
         <module>bank</module>
         <module>zeebe-addon</module>
     </modules>
