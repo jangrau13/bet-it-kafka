@@ -29,12 +29,4 @@ public class VariablesUtil {
         return  variables;
     }
 
-//    public <T> CamundaMessageDto buildCamundaMessageDto(String businessKey, Map<String, Object> variablesMap){
-//        return CamundaMessageDto.builder().correlationId(businessKey)
-//                .dto(MessageProcessDto.builder().requester((String) variablesMap.get("requester"))
-//                        .amount((Double) variablesMap.get("amount"))
-//                        .preApproved((Boolean) variablesMap.get("preApproved"))
-//                        .processed((Boolean) variablesMap.get("processed"))
-//                        .build()).build();
-//    }
 }

@@ -1,8 +1,7 @@
-package ch.unisg.kafka.service;
+package ch.unisg.port.kafka.service;
 
 
 import ch.unisg.ics.edpo.shared.bank.TwoFactor;
-import ch.unisg.ics.edpo.shared.bidding.ReserveBid;
 import ch.unisg.util.VariablesUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,21 +42,7 @@ public class BankConsumerService {
         this.twoFactorServiceProducer = twoFactorServiceProducer;
     }
 
-    @KafkaListener(topics = {"${spring.kafka.reserve-bid}"}, containerFactory = "kafkaListenerReserveBidFactory", groupId = "bank")
-    public void consumeReserveBidMessage(ReserveBid reserveBid) {
-        logger.info("**** -> Consuming Reserve Bid Update :: {}", reserveBid);
-        try {
-            client.newPublishMessageCommand()
-                            .messageName(CHECK_REQUEST)
-                            .correlationKey(reserveBid.getBid().getBidId())
-                            .variables(VariablesUtil.toVariableMap(reserveBid))
-                            .send()
-                            .exceptionally(throwable -> {throw new RuntimeException("Could not publish message " + reserveBid, throwable);});
-        } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
 
-    }
 
     @KafkaListener(topics = {"${spring.kafka.two-factor}"}, containerFactory = "kafkaListenerTwoFactorFactory", groupId = "bank")
     public void consumeTwoFactorMessage(String json) {

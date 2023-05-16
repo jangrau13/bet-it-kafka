@@ -1,12 +1,9 @@
-package ch.unisg.controller;
+package ch.unisg.port.controller;
 
-import ch.unisg.kafka.service.BankProducerService;
-import ch.unisg.services.BankService;
-import io.camunda.zeebe.spring.client.ZeebeClientLifecycle;
+import ch.unisg.port.kafka.service.BankProducerService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 import static ch.unisg.ics.edpo.shared.Keys.*;
 
@@ -71,7 +66,6 @@ public class RiskManagementController {
 
     /**
      * should contain gameId, ratio, contractorName and homeTeamWins
-     * @param contract
      * @return
      */
     @PostMapping(value= "/fraudDetection")
@@ -79,8 +73,6 @@ public class RiskManagementController {
         log.info("Publishing Fraud detection for Bet: " + betId);
 
 
-        //Game game = new Game(UUID.randomUUID().toString(), contract, new Score(0, 0), false);
-        //startRandomGame(game);
 
 
         HttpHeaders responseHeaders = new HttpHeaders();
