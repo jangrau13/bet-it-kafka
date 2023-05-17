@@ -55,7 +55,7 @@ public class BankDemo {
         return response;
     }
 
-    @GetMapping("/wipe_state")
+    @GetMapping("/wipe")
     public Map<String, Object> wipe(){
         Bank bank = Bank.getInstance();
         bank.wipe();
