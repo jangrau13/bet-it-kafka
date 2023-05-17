@@ -1,6 +1,7 @@
 package ch.unisg.ics.edpo.bank.domain;
 
 import ch.unisg.ics.edpo.bank.domain.utils.BankException;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -12,8 +13,10 @@ import java.util.Map;
 @Slf4j
 public class Bank {
 
+    @Getter
     private final Map<String, Double> moneyBalances;
 
+    @Getter
     private final Map<String, Double> frozenBalance;
     private static final Bank instance = new Bank();
 
@@ -22,9 +25,21 @@ public class Bank {
     private Bank() {
         this.moneyBalances = new HashMap<>();
         this.frozenBalance = new HashMap<>();
-        this.moneyBalances.put("bank", 1000000.0);
+        initBankMoney();
     }
 
+    /**
+     * Careful this wipes state
+     */
+    public void wipe(){
+        instance.moneyBalances.clear();
+        instance.frozenBalance.clear();
+        initBankMoney();
+    }
+
+    private void initBankMoney(){
+        this.moneyBalances.put("bank", 1000000.0);
+    }
 
     public void pay(String from, String to, double amount) throws BankException {
         if (amount <= 0) {
