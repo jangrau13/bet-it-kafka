@@ -68,7 +68,7 @@ public class Keys {
     public static class UserCheckKeys {
         public static final String USER_FIELD = "user";
 
-        public static final String RESULT = "user-check-result";
+        public static final String RESULT = "userResult";
 
         public static final String CORRELATION_ID = Keys.CORRELATION_ID;
 
@@ -78,7 +78,7 @@ public class Keys {
 
         public static final String GAME_ID_FIELD = "game-id";
 
-        public static final String RESULT = "game-check-result";
+        public static final String RESULT = "gameCheckResult";
 
         public static final String CORRELATION_ID = Keys.CORRELATION_ID;
     }
