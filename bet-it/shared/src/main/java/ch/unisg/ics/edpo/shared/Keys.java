@@ -7,7 +7,7 @@ public class Keys {
     public static final String PAYEE = "payee";
     public static final String HOME_TEAM_WINS = "homeTeamWins";
     public static final String AMOUNT_CONTRACTOR = "amountContractor";
-    public static final String RATIO = "ratio";
+
     public static final String HOME_TEAM_WINS_BET = "homeTeamWinsBet";
     public static final String GAME_ID = "gameId";
     public static final String AMOUNT_TO = "amountTo";
@@ -33,6 +33,20 @@ public class Keys {
 
     public static final String CORRELATION_ID = "correlationId";
 
+    public static class ContractDataKeys {
+
+        public static final String CONTRACT_RATIO_FIELD = "ratio";
+
+        public static final String GAME_ID_FIELD = "gameId";
+
+        public static final String CONTRACTOR_NAME_FIELD = "contractorName";
+
+        public static final String HOME_TEAM_WINS_FIELD = "homeTeamWins";
+
+        public static final String CONTRACT_ID_FIELD = "contractId";
+
+
+    }
 
     public static class FreezeEventKeys {
 

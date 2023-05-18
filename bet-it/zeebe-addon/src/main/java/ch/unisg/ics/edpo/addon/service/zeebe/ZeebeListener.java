@@ -1,6 +1,6 @@
-package ch.unisg.ics.edpo.zeebe;
+package ch.unisg.ics.edpo.addon.service.zeebe;
 
-import ch.unisg.ics.edpo.kafka.service.AddonProducerService;
+import ch.unisg.ics.edpo.addon.service.AddonProducerService;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.EnableZeebeClient;

@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.kafka.service;
+package ch.unisg.ics.edpo.addon.service;
 
 import io.camunda.zeebe.spring.client.ZeebeClientLifecycle;
 import lombok.RequiredArgsConstructor;

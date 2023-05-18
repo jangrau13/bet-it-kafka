@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.kafka.service;
+package ch.unisg.ics.edpo.addon.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

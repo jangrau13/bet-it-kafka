@@ -28,8 +28,6 @@ public class TransactionEvent {
     @Setter
     private TRANSACTION_STATUS status;
 
-
-
     public TransactionEvent(String from, String to, Double amount, TRANSACTION_STATUS status){
         this.from = from;
         this.to = to;

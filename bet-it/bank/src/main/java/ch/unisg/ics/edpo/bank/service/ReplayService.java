@@ -38,20 +38,11 @@ public class ReplayService {
     public void replay() {
         bank.wipe();
         log.info("We are trying to create a replay consumer here");
-        Properties props = new Properties();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "bank");
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); // Start from the beginning
 
-        // Create Kafka consumer
-        KafkaConsumer<String, Map<String, Object>> consumer = new KafkaConsumer<>(props);
-
+        KafkaConsumer<String, Map<String, Object>> consumer = getConsumer();
         TopicPartition topicPartition1 = new TopicPartition(transactionResultTopic, 0);
         TopicPartition topicPartition2 = new TopicPartition(freezeResultTopic, 0);
         consumer.assign(Arrays.asList(topicPartition1, topicPartition2));
-
         consumer.seekToBeginning(Arrays.asList(topicPartition1, topicPartition2));
 
         try {
@@ -76,6 +67,17 @@ public class ReplayService {
             consumer.close();
         }
 
+    }
+
+
+    private KafkaConsumer<String, Map<String, Object>> getConsumer(){
+        Properties props = new Properties();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "bank");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); // Start from the beginning
+        return new KafkaConsumer<>(props);
     }
 
     /**
