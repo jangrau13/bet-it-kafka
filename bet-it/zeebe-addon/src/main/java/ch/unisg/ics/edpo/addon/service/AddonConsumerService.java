@@ -1,9 +1,7 @@
 package ch.unisg.ics.edpo.addon.service;
 
-import io.camunda.zeebe.spring.client.ZeebeClientLifecycle;
-import lombok.RequiredArgsConstructor;
+import io.camunda.zeebe.spring.client.lifecycle.ZeebeClientLifecycle;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -11,15 +9,13 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class AddonConsumerService {
     public static final String CORRELATION_ID = "correlationId";
-    private ZeebeClientLifecycle client;
+    private final ZeebeClientLifecycle client;
 
     private static final String MESSAGE_NAME = "messageName";
 
-    @Autowired
     public AddonConsumerService(ZeebeClientLifecycle client) {
         this.client = client;
     }
@@ -51,6 +47,7 @@ public class AddonConsumerService {
                 .exceptionally(throwable -> {
                     throw new RuntimeException("Could not publish message " + variables, throwable);
                 });
+
     }
 
 }

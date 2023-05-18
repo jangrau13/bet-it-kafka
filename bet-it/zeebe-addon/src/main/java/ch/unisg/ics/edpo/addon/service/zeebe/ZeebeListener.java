@@ -1,11 +1,11 @@
 package ch.unisg.ics.edpo.addon.service.zeebe;
 
-import ch.unisg.ics.edpo.addon.service.AddonProducerService;
+import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.EnableZeebeClient;
+import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import io.camunda.zeebe.spring.client.annotation.ZeebeWorker;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,6 @@ import java.util.Map;
  * This is the zeebe worker, that allows zeebe to produce kafka messages
  */
 @Component
-@EnableZeebeClient
-@RequiredArgsConstructor
 @Slf4j
 public class ZeebeListener {
 
@@ -25,8 +23,15 @@ public class ZeebeListener {
 
     private static final String ERROR_NO_TOPIC = "There was no topic specified in the variables received";
 
-    private final AddonProducerService<Map<String, Object>> kafkaProducer;
+    private final KafkaMapProducer kafkaMapProducer;
 
+    public ZeebeListener(KafkaMapProducer kafkaMapProducer) {
+        this.kafkaMapProducer = kafkaMapProducer;
+    }
+
+    /**
+     * This will send the map from zeebe to kafka with the topic variable as topic
+     */
     @ZeebeWorker(type = "send-to-kafka")
     public void sendToKafka(final JobClient client, final ActivatedJob job) {
 
@@ -39,10 +44,7 @@ public class ZeebeListener {
         }
         String topic = (String) map.get(TOPIC_VARIABLE);
         map.remove(topic);
-
-        kafkaProducer.sendMessage(map, topic);
-            log.info("sending Message to Camunda Kafka Interface");
-
+        kafkaMapProducer.sendMessage(map, topic, "send-to-kafka-key");
         tellZeebeWeDidIt(client, job);
     }
 

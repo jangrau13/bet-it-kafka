@@ -11,12 +11,9 @@ spring:
         producer:
             bootstrap-servers: kafka:9092
 
-        bank-response: bet.bank-response
-        reserve-bid: bet.reserve-bid
-        two-factor: bet.two-factor-customer
-        two-factor-success: bet.two-factor-customer-success
-        fraud-detection: camunda.fraud.detected
-        payment-request: bet.payment-request
+        user:
+            request: user.check-request
+            result: camunda.user.check-result
         freeze:
             request: bank.freeze-request
             result: camunda.freeze-result

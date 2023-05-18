@@ -25,7 +25,6 @@ public class KafkaConsumerFactoryHashMap {
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Bean
     public ConsumerFactory<String, Map<String, Object>> consumerHashMapFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
