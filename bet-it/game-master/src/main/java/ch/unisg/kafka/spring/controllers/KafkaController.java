@@ -1,7 +1,5 @@
 package ch.unisg.kafka.spring.controllers;
 
-import ch.unisg.ics.edpo.shared.game.Game;
-import ch.unisg.ics.edpo.shared.game.Score;
 import ch.unisg.kafka.spring.service.ProducerService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -25,7 +23,6 @@ public class KafkaController {
     @Autowired
     private Environment environment;
 
-    private final ProducerService<Game> producerService;
 
     private final ProducerService<HashMap<String, Object>> producerHashMapService;
 

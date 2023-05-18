@@ -3,6 +3,7 @@ package ch.unisg.ics.edpo.bank.service;
 import ch.unisg.ics.edpo.bank.domain.Bank;
 import ch.unisg.ics.edpo.bank.domain.FreezeEvent;
 import ch.unisg.ics.edpo.bank.domain.utils.BankException;
+import ch.unisg.ics.edpo.shared.Topics;
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -10,12 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FreezeService {
 
-
     private final KafkaMapProducer kafkaMapProducer;
-
-    @Value("${spring.kafka.freeze.result}")
-    private String freezeResultTopic;
-
 
     public FreezeService(KafkaMapProducer kafkaMapProducer) {
         this.kafkaMapProducer = kafkaMapProducer;
@@ -38,6 +34,6 @@ public class FreezeService {
     }
 
     private void sendMessage(FreezeEvent event){
-        kafkaMapProducer.sendMessage(event.toMap(), freezeResultTopic,"key" );
+        kafkaMapProducer.sendMessage(event.toMap(), Topics.Bank.Freeze.FREEZE_RESULT,"key" );
     }
 }

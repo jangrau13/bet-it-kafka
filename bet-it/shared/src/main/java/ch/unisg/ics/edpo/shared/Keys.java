@@ -33,6 +33,16 @@ public class Keys {
 
     public static final String CORRELATION_ID = "correlationId";
 
+    public static class BetDataKeys {
+
+        public static final String BET_ID_FIELD = "betId";
+
+        public static final String BUYER_FIELD = "buyer";
+
+        public static final String AMOUNT_BOUGHT = "amountBought";
+
+        public static final String BET_CREATION_TIMESTAMP = "betCreationTimeStamp";
+    }
     public static class ContractDataKeys {
 
         public static final String CONTRACT_RATIO_FIELD = "ratio";

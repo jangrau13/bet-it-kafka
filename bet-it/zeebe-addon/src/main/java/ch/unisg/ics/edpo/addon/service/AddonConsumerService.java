@@ -1,9 +1,9 @@
 package ch.unisg.ics.edpo.addon.service;
 
 import ch.unisg.ics.edpo.shared.Keys;
+import ch.unisg.ics.edpo.shared.Topics;
 import io.camunda.zeebe.spring.client.lifecycle.ZeebeClientLifecycle;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.stereotype.Component;
@@ -18,14 +18,11 @@ import java.util.UUID;
 public class AddonConsumerService {
     private final ZeebeClientLifecycle client;
 
-    @Value("${spring.kafka.contract.contract-requested}")
-    private String requestContractTopic;
-
     private final List<String> startTopics;
 
     public AddonConsumerService(ZeebeClientLifecycle client) {
         this.client = client;
-        this.startTopics = List.of(new String[]{requestContractTopic});
+        this.startTopics = List.of(new String[]{Topics.Contract.CONTRACT_REQUESTED, Topics.Bet.BET_REQUESTED});
     }
 
     @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "addon")

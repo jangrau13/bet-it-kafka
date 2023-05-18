@@ -1,16 +1,11 @@
 package ch.unisg.kafka.spring.service;
 
 import ch.unisg.kafka.spring.domain.Platform;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-
-import java.util.Map;
 
 import static ch.unisg.ics.edpo.shared.Keys.*;
 
@@ -19,26 +14,7 @@ import static ch.unisg.ics.edpo.shared.Keys.*;
 @Slf4j
 public class ConsumerService {
 
-
-
     private final Platform platform = Platform.getInstance();
-    @Value("${spring.kafka.contract-requested}")
-    private String contractRequestedTopic;
-
-    @Value("${spring.kafka.contract-rejected}")
-    private String contractRejectedTopic;
-
-    @Value("${spring.kafka.contract-accepted}")
-    private String contractAcceptedTopic;
-
-    @Value("${spring.kafka.bet-requested}")
-    private String betRequestedTopic;
-
-    @Value("${spring.kafka.bet-rejected}")
-    private String betRejectedTopic;
-
-    @Value("${spring.kafka.bet-accepted}")
-    private String betAcceptedTopic;
 
     /**
      * listens to game ended and sends it to the relevant topics to camunda-bets

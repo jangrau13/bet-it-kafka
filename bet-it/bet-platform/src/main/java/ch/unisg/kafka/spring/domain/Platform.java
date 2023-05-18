@@ -1,20 +1,17 @@
 package ch.unisg.kafka.spring.domain;
 
-import ch.unisg.ics.edpo.shared.contract.ContractData;
+import ch.unisg.ics.edpo.shared.transfer.ContractData;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 
-import static ch.unisg.ics.edpo.shared.Keys.BET_ID;
 import static ch.unisg.ics.edpo.shared.Keys.GAME_ID;
 
 @Slf4j
 public class Platform {
     private static final Platform instance = new Platform();
     private final HashMap<String, ContractData> contracts = new HashMap<>();
-    private final HashMap<String, Object> bets = new HashMap<>();
     private final HashMap<String, Object> games = new HashMap<>();
-
 
     private Platform(){}
 
@@ -32,26 +29,15 @@ public class Platform {
     }
 
     /**
-     * just a placeholder until KSQL
+     * put it after listening to the contract event from the workflow
      */
     public void putContract(ContractData contract){
         this.contracts.put(contract.getContractId(), contract);
     }
 
-    /**
-     * just a placeholder until KSQL
-     */
-    public void putBet(HashMap<String, Object> bets){
-        if(bets.containsKey(BET_ID)){
-            this.bets.put(bets.get(BET_ID).toString(), bets);
-        }
+    public ContractData getContract(String contractId) {
+        return contracts.get(contractId);
     }
-
-
-
-
-
-
 
 }
 

@@ -4,6 +4,7 @@ import ch.unisg.ics.edpo.bank.domain.Bank;
 import ch.unisg.ics.edpo.bank.domain.FreezeEvent;
 import ch.unisg.ics.edpo.bank.domain.TransactionEvent;
 import ch.unisg.ics.edpo.bank.domain.utils.BankException;
+import ch.unisg.ics.edpo.shared.Topics;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -11,7 +12,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.stereotype.Component;
 
@@ -24,11 +24,9 @@ import java.util.Properties;
 @Component
 public class ReplayService {
 
-    @Value("${spring.kafka.transaction.result}")
-    private String transactionResultTopic;
+    private final String transactionResultTopic = Topics.Bank.Transaction.TRANSACTION_RESULT;
 
-    @Value("${spring.kafka.freeze.result}")
-    private String freezeResultTopic;
+    private final String freezeResultTopic = Topics.Bank.Freeze.FREEZE_RESULT;
 
     private final Bank bank = Bank.getInstance();
 

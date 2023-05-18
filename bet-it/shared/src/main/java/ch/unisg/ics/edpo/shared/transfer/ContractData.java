@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.shared.contract;
+package ch.unisg.ics.edpo.shared.transfer;
 
 import ch.unisg.ics.edpo.shared.Keys;
 import lombok.Getter;
@@ -51,21 +51,21 @@ public class ContractData {
     // Generate a Map<String, Object> representation of the object
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("gameId", gameId);
-        map.put("ratio", ratio);
-        map.put("contractorName", contractorName);
-        map.put("homeTeamWins", homeTeamWins);
-        map.put("contractId", contractId);
+        map.put(Keys.ContractDataKeys.GAME_ID_FIELD, gameId);
+        map.put(Keys.ContractDataKeys.CONTRACT_RATIO_FIELD, ratio);
+        map.put(Keys.ContractDataKeys.CONTRACTOR_NAME_FIELD, contractorName);
+        map.put(Keys.ContractDataKeys.HOME_TEAM_WINS_FIELD, homeTeamWins);
+        map.put(Keys.ContractDataKeys.CONTRACT_ID_FIELD, contractId);
         return map;
     }
 
     // Populate the object from a Map<String, Object>
 
     private void validateMap(Map<String, Object> map) {
-        Object gameIdObj = map.get("gameId");
-        Object ratioObj = map.get("ratio");
-        Object contractorNameObj = map.get("contractorName");
-        Object homeTeamWinsObj = map.get("homeTeamWins");
+        Object gameIdObj = map.get(Keys.ContractDataKeys.GAME_ID_FIELD);
+        Object ratioObj = map.get(Keys.ContractDataKeys.CONTRACT_RATIO_FIELD);
+        Object contractorNameObj = map.get(Keys.ContractDataKeys.CONTRACTOR_NAME_FIELD);
+        Object homeTeamWinsObj = map.get(Keys.ContractDataKeys.HOME_TEAM_WINS_FIELD);
 
         if (gameIdObj == null) {
             throw new IllegalArgumentException("gameId cannot be null");

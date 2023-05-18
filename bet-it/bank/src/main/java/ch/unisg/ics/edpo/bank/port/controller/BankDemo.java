@@ -3,9 +3,9 @@ package ch.unisg.ics.edpo.bank.port.controller;
 import ch.unisg.ics.edpo.bank.domain.Bank;
 import ch.unisg.ics.edpo.bank.domain.TransactionEvent;
 import ch.unisg.ics.edpo.bank.service.ReplayService;
+import ch.unisg.ics.edpo.shared.Topics;
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +17,6 @@ import java.util.Map;
 @RequestMapping(value = "/demo")
 @Slf4j
 public class BankDemo {
-
-    @Value("${spring.kafka.transaction.request}")
-    private String transactionTopic;
 
     private final KafkaMapProducer kafkaMapProducer;
 
@@ -36,7 +33,7 @@ public class BankDemo {
 
         System.out.println("Received username: " + user);
         TransactionEvent event = new TransactionEvent("bank", user, 2000.0, TransactionEvent.TRANSACTION_STATUS.REQUESTED);
-        kafkaMapProducer.sendMessage(event.toMap(), transactionTopic, "key");
+        kafkaMapProducer.sendMessage(event.toMap(), Topics.Bank.Transaction.TRANSACTION_REQUEST, "key");
         return ResponseEntity.status(HttpStatus.OK).body("Blub");
     }
 

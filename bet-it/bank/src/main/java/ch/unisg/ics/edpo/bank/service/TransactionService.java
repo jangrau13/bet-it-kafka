@@ -3,17 +3,14 @@ package ch.unisg.ics.edpo.bank.service;
 import ch.unisg.ics.edpo.bank.domain.Bank;
 import ch.unisg.ics.edpo.bank.domain.TransactionEvent;
 import ch.unisg.ics.edpo.bank.domain.utils.BankException;
+import ch.unisg.ics.edpo.shared.Topics;
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionService {
 
     private final KafkaMapProducer kafkaMapProducer;
-
-    @Value("${spring.kafka.transaction.result}")
-    private String transactionResultTopic;
 
     public TransactionService(KafkaMapProducer kafkaMapProducer) {
         this.kafkaMapProducer = kafkaMapProducer;
@@ -33,6 +30,6 @@ public class TransactionService {
     }
 
     private void sendMessage(TransactionEvent event){
-        kafkaMapProducer.sendMessage(event.toMap(), transactionResultTopic, "key");
+        kafkaMapProducer.sendMessage(event.toMap(), Topics.Bank.Transaction.TRANSACTION_RESULT, "key");
     }
 }

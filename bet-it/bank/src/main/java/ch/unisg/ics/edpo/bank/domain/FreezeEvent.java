@@ -15,7 +15,6 @@ import static ch.unisg.ics.edpo.bank.domain.utils.ParseUtils.parseObject;
 @Slf4j
 public class FreezeEvent {
 
-
     @Getter
     private final String[] users;
 
@@ -27,7 +26,6 @@ public class FreezeEvent {
 
     @Getter @Setter
     private STATUS status;
-
 
     public FreezeEvent(String[] users, Double[] amounts, String correlationId, STATUS status){
         this.users = users;

@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.shared.bank;
+package ch.unisg.ics.edpo.shared.transfer;
 
 import ch.unisg.ics.edpo.shared.Keys;
 import lombok.Getter;

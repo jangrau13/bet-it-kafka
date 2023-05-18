@@ -2,9 +2,10 @@ package ch.unisg.ics.edpo.addon;
 
 import ch.unisg.ics.edpo.addon.service.AddonConsumerService;
 import ch.unisg.ics.edpo.shared.Topics;
-import ch.unisg.ics.edpo.shared.bank.UserCheck;
-import ch.unisg.ics.edpo.shared.contract.ContractData;
-import ch.unisg.ics.edpo.shared.game.GameValidCheck;
+import ch.unisg.ics.edpo.shared.transfer.Bet;
+import ch.unisg.ics.edpo.shared.transfer.UserCheck;
+import ch.unisg.ics.edpo.shared.transfer.ContractData;
+import ch.unisg.ics.edpo.shared.transfer.GameValidCheck;
 import ch.unisg.ics.edpo.shared.kafka.KafkaConsumerFactoryHashMap;
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
 import io.camunda.zeebe.client.ZeebeClient;
@@ -13,15 +14,14 @@ import io.camunda.zeebe.client.api.response.PublishMessageResponse;
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
 import io.camunda.zeebe.process.test.filters.RecordStream;
 import io.camunda.zeebe.spring.test.ZeebeSpringTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static io.camunda.zeebe.process.test.assertions.BpmnAssert.assertThat;
@@ -36,6 +36,9 @@ public class TestContractProcess {
 
     private ZeebeTestEngine engine;
 
+    /**
+     * Ignore this zeebe error
+     */
     @Autowired
     private ZeebeClient zeebe;
     private RecordStream recordStream;
@@ -124,12 +127,13 @@ public class TestContractProcess {
         verify(kafkaMapProducer, times(3)).sendMessage(captorMessage.capture(), captorTopic.capture(), captorKey.capture());
         System.out.println(captorTopic.getAllValues());
         System.out.println(captorMessage.getAllValues());
-
         assertThat(instance).
                 hasNoIncidents()
                 .isCompleted();
 
     }
+
+
 
     private void verifyCamundaSendsCheckUserRequest(ContractData contractData) {
         Map<String, Object> map = contractData.toMap();
