@@ -28,5 +28,12 @@ public class Topics {
         public static String CONTRACT_ACCEPTED = "contract.accepted";
         public static String CONTRACT_EXPIRED = "contract.expired";
     }
+
+    public static class Game {
+
+        public static String GAME_VALID_FOR_CONTRACT_REQUEST = "game.valid-for-contract-request";
+
+        public static String GAME_VALID_FOR_CONTRACT_RESULT = "camunda.game.valid-for-contract-result";
+    }
 }
 

@@ -69,7 +69,6 @@ public class TestContractProcess {
         assertThat(instance).hasPassedElement("BankValidityCheckToKafka");
 
         verify(kafkaMapProducer, times(2)).sendMessage(captorMessage.capture(), captorTopic.capture(), captorKey.capture());
-
         Assertions.assertEquals(captorTopic.getAllValues().get(0), Topics.Bank.User.CHECK_REQUEST);
         Assertions.assertEquals(captorTopic.getAllValues().get(1), Topics.Contract.CONTRACT_REJECTED);
 

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1rz0jnw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.10.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
   <bpmn:process id="camunda.contract.requested" name="CONTRACT_REQUESTED" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:properties>
+        <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#34;&#34;gameId&#34;: &#34;123&#34;, &#34;&#34;contractorName&#34;: &#34;lukas&#34;, &#34;contractId&#34;:&#34;123&#34;,&#10;&#34;ratio&#34;: &#34;1.2&#34;&#10;}" />
+      </zeebe:properties>
+    </bpmn:extensionElements>
     <bpmn:sendTask id="BankValidityCheckToKafka" name="Bank Validity User Check">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-kafka" />
@@ -13,12 +18,14 @@
       <bpmn:outgoing>Flow_1wma38a</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:intermediateCatchEvent id="Wait_User_Check_Element" name="User Check Done ">
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_1wma38a</bpmn:incoming>
       <bpmn:outgoing>Flow_0iat6qo</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0j9c63m" messageRef="Message_2es3js5" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1wma38a" sourceRef="BankValidityCheckToKafka" targetRef="Wait_User_Check_Element" />
     <bpmn:startEvent id="Start_Contract_Requested" name="Start Contract Requested">
+      <bpmn:extensionElements />
       <bpmn:outgoing>Flow_0a5hbrj</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0a5hbrj" sourceRef="Start_Contract_Requested" targetRef="BankValidityCheckToKafka" />
@@ -36,10 +43,10 @@
         </zeebe:ioMapping>
         <zeebe:properties />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_05tlqc2</bpmn:incoming>
-      <bpmn:outgoing>Flow_1w9s63h</bpmn:outgoing>
+      <bpmn:incoming>Flow_1s8lwp2</bpmn:incoming>
+      <bpmn:outgoing>Flow_07hw2vs</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_05tlqc2" name="user ok" sourceRef="Gateway_1itu4f1" targetRef="SendContractAccepted">
+    <bpmn:sequenceFlow id="Flow_05tlqc2" name="user ok" sourceRef="Gateway_1itu4f1" targetRef="Activity_1a8aj74">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=user-check-result = APPROVED</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sendTask id="send_contract_rejected" name="Send contract rejected">
@@ -50,23 +57,69 @@
         </zeebe:ioMapping>
         <zeebe:properties />
       </bpmn:extensionElements>
-      <bpmn:incoming>user_not_ok_decision</bpmn:incoming>
-      <bpmn:outgoing>Flow_115vrl3</bpmn:outgoing>
+      <bpmn:incoming>Flow_0wtlsfa</bpmn:incoming>
+      <bpmn:outgoing>Flow_05sr3r4</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sequenceFlow id="user_not_ok_decision" name="user not ok" sourceRef="Gateway_1itu4f1" targetRef="send_contract_rejected">
+    <bpmn:sequenceFlow id="user_not_ok_decision" name="user not ok" sourceRef="Gateway_1itu4f1" targetRef="Gateway_1crkg36">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=user-check-result = REJECTED</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:exclusiveGateway id="Gateway_0lqy2en">
-      <bpmn:incoming>Flow_1w9s63h</bpmn:incoming>
-      <bpmn:incoming>Flow_115vrl3</bpmn:incoming>
-      <bpmn:outgoing>Flow_1r38ag5</bpmn:outgoing>
+    <bpmn:sendTask id="game-validity-check-send" name="Game validity Check">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-to-kafka" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=&#34;game.valid-for-contract-request&#34;" target="topic" />
+        </zeebe:ioMapping>
+        <zeebe:properties />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dskloo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wylep7</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:scriptTask id="Activity_1a8aj74" name="remove body">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=null" resultVariable="body" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=null" target="topic" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_05tlqc2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dskloo</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0dskloo" sourceRef="Activity_1a8aj74" targetRef="game-validity-check-send" />
+    <bpmn:intermediateCatchEvent id="game_check_received" name="Game Check Done">
+      <bpmn:incoming>Flow_1wylep7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oxudus</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1adpimm" messageRef="Message_3fglbb1" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1wylep7" sourceRef="game-validity-check-send" targetRef="game_check_received" />
+    <bpmn:exclusiveGateway id="Gateway_0pvckxi">
+      <bpmn:incoming>Flow_0oxudus</bpmn:incoming>
+      <bpmn:outgoing>Flow_1s8lwp2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_02tort4</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1w9s63h" sourceRef="SendContractAccepted" targetRef="Gateway_0lqy2en" />
-    <bpmn:sequenceFlow id="Flow_115vrl3" sourceRef="send_contract_rejected" targetRef="Gateway_0lqy2en" />
-    <bpmn:endEvent id="Event_0a72wfs">
-      <bpmn:incoming>Flow_1r38ag5</bpmn:incoming>
+    <bpmn:sequenceFlow id="Flow_0oxudus" sourceRef="game_check_received" targetRef="Gateway_0pvckxi" />
+    <bpmn:sequenceFlow id="Flow_1s8lwp2" name="Game is valid&#10;" sourceRef="Gateway_0pvckxi" targetRef="SendContractAccepted">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=game-check-result = APPROVED</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_1crkg36">
+      <bpmn:incoming>user_not_ok_decision</bpmn:incoming>
+      <bpmn:incoming>Flow_02tort4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wtlsfa</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_02tort4" name="Game is not valid" sourceRef="Gateway_0pvckxi" targetRef="Gateway_1crkg36">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=game-check-result = REJECTED</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0wtlsfa" sourceRef="Gateway_1crkg36" targetRef="send_contract_rejected" />
+    <bpmn:exclusiveGateway id="Gateway_15kk2b4">
+      <bpmn:incoming>Flow_05sr3r4</bpmn:incoming>
+      <bpmn:incoming>Flow_07hw2vs</bpmn:incoming>
+      <bpmn:outgoing>Flow_08vnr68</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_05sr3r4" sourceRef="send_contract_rejected" targetRef="Gateway_15kk2b4" />
+    <bpmn:sequenceFlow id="Flow_07hw2vs" sourceRef="SendContractAccepted" targetRef="Gateway_15kk2b4" />
+    <bpmn:endEvent id="Event_0vcjpm6">
+      <bpmn:incoming>Flow_08vnr68</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1r38ag5" sourceRef="Gateway_0lqy2en" targetRef="Event_0a72wfs" />
+    <bpmn:sequenceFlow id="Flow_08vnr68" sourceRef="Gateway_15kk2b4" targetRef="Event_0vcjpm6" />
   </bpmn:process>
   <bpmn:message id="Message_34trqi4" name="CONTRACT_REQUESTED" />
   <bpmn:message id="Message_10lopma" name="PAYMENT_DONE">
@@ -77,6 +130,11 @@
   <bpmn:message id="Message_2es3js5" name="camunda.user.check-result">
     <bpmn:extensionElements>
       <zeebe:subscription correlationKey="=contractorName&#10;" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3fglbb1" name="camunda.game.valid-for-contract-result">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=gameId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -100,19 +158,39 @@
       <bpmndi:BPMNShape id="Gateway_1itu4f1_di" bpmnElement="Gateway_1itu4f1" isMarkerVisible="true">
         <dc:Bounds x="565" y="235" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1e8zsrz" bpmnElement="SendContractAccepted" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="690" y="80" width="100" height="80" />
+      <bpmndi:BPMNShape id="BPMNShape_04499ep" bpmnElement="game-validity-check-send" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="850" y="70" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0oij0hw" bpmnElement="Activity_1a8aj74" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="670" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1nr4wph" bpmnElement="game_check_received" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1022" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1012" y="135" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1jgdlhy" bpmnElement="Gateway_0pvckxi" isMarkerVisible="true">
+        <dc:Bounds x="1145" y="85" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1e8zsrz" bpmnElement="SendContractAccepted" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1320" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0xjtv92" bpmnElement="Gateway_1crkg36" isMarkerVisible="true">
+        <dc:Bounds x="1145" y="285" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0vwt8v3" bpmnElement="send_contract_rejected" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="690" y="300" width="100" height="80" />
+        <dc:Bounds x="1320" y="270" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0lqy2en_di" bpmnElement="Gateway_0lqy2en" isMarkerVisible="true">
-        <dc:Bounds x="885" y="215" width="50" height="50" />
+      <bpmndi:BPMNShape id="BPMNShape_0o0k6nf" bpmnElement="Gateway_15kk2b4" isMarkerVisible="true">
+        <dc:Bounds x="1525" y="185" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0a72wfs_di" bpmnElement="Event_0a72wfs">
-        <dc:Bounds x="1002" y="222" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_0vcjpm6_di" bpmnElement="Event_0vcjpm6">
+        <dc:Bounds x="1642" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0a5hbrj_di" bpmnElement="Flow_0a5hbrj">
         <di:waypoint x="178" y="260" />
@@ -128,33 +206,63 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_05tlqc2_di" bpmnElement="Flow_05tlqc2">
         <di:waypoint x="590" y="235" />
-        <di:waypoint x="590" y="120" />
-        <di:waypoint x="690" y="120" />
+        <di:waypoint x="590" y="110" />
+        <di:waypoint x="670" y="110" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="588" y="175" width="37" height="14" />
+          <dc:Bounds x="588" y="171" width="37" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0rmkrus_di" bpmnElement="user_not_ok_decision">
         <di:waypoint x="590" y="285" />
-        <di:waypoint x="590" y="340" />
-        <di:waypoint x="690" y="340" />
+        <di:waypoint x="590" y="310" />
+        <di:waypoint x="1145" y="310" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="578" y="310" width="55" height="14" />
+          <dc:Bounds x="587" y="288" width="55" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1w9s63h_di" bpmnElement="Flow_1w9s63h">
-        <di:waypoint x="790" y="120" />
-        <di:waypoint x="910" y="120" />
-        <di:waypoint x="910" y="215" />
+      <bpmndi:BPMNEdge id="Flow_0dskloo_di" bpmnElement="Flow_0dskloo">
+        <di:waypoint x="770" y="110" />
+        <di:waypoint x="850" y="110" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_115vrl3_di" bpmnElement="Flow_115vrl3">
-        <di:waypoint x="790" y="340" />
-        <di:waypoint x="910" y="340" />
-        <di:waypoint x="910" y="265" />
+      <bpmndi:BPMNEdge id="Flow_1wylep7_di" bpmnElement="Flow_1wylep7">
+        <di:waypoint x="950" y="110" />
+        <di:waypoint x="1022" y="110" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1r38ag5_di" bpmnElement="Flow_1r38ag5">
-        <di:waypoint x="935" y="240" />
-        <di:waypoint x="1002" y="240" />
+      <bpmndi:BPMNEdge id="Flow_0oxudus_di" bpmnElement="Flow_0oxudus">
+        <di:waypoint x="1058" y="110" />
+        <di:waypoint x="1145" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s8lwp2_di" bpmnElement="Flow_1s8lwp2">
+        <di:waypoint x="1195" y="110" />
+        <di:waypoint x="1320" y="110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1226" y="92" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02tort4_di" bpmnElement="Flow_02tort4">
+        <di:waypoint x="1170" y="135" />
+        <di:waypoint x="1170" y="285" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1144" y="207" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wtlsfa_di" bpmnElement="Flow_0wtlsfa">
+        <di:waypoint x="1195" y="310" />
+        <di:waypoint x="1320" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05sr3r4_di" bpmnElement="Flow_05sr3r4">
+        <di:waypoint x="1420" y="310" />
+        <di:waypoint x="1550" y="310" />
+        <di:waypoint x="1550" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07hw2vs_di" bpmnElement="Flow_07hw2vs">
+        <di:waypoint x="1420" y="110" />
+        <di:waypoint x="1550" y="110" />
+        <di:waypoint x="1550" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08vnr68_di" bpmnElement="Flow_08vnr68">
+        <di:waypoint x="1575" y="210" />
+        <di:waypoint x="1642" y="210" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

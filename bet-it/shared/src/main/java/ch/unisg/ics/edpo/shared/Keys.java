@@ -74,6 +74,15 @@ public class Keys {
 
     }
 
+    public static class GameValidCheckKeys {
+
+        public static final String GAME_ID_FIELD = "game-id";
+
+        public static final String RESULT = "game-check-result";
+
+        public static final String CORRELATION_ID = Keys.CORRELATION_ID;
+    }
+
 
 
 }
