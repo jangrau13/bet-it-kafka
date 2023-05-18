@@ -64,11 +64,12 @@ public class TestContractProcess {
         ContractData contractData = new ContractData("gameid123", 2.0, "lukas", true, "123345");
         ProcessInstanceEvent instance = startCamunda(Topics.Contract.CONTRACT_REQUESTED, contractData.toMap());
         waitForProcessInstanceHasPassedElement(instance, "BankValidityCheckToKafka");
-        waitForProcessInstanceHasPassedElement(instance, "game-validity-check-send");
         UserCheck userCheck = new UserCheck("lukas", UserCheck.UserCheckResult.APPROVED);
+        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap());
+        waitForProcessInstanceHasPassedElement(instance, "Wait_User_Check_Element");
+        waitForProcessInstanceHasPassedElement(instance, "game-validity-check-send");
         GameValidCheck gameValidCheck = new GameValidCheck(contractData.getGameId(), GameValidCheck.GameValidStatus.APPROVED);
 
-        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap());
         sendToCamunda(Topics.Game.GAME_VALID_FOR_CONTRACT_RESULT, gameValidCheck.getCorrelationKey(), gameValidCheck.toMap());
         waitForProcessInstanceHasPassedElement(instance, "Wait_User_Check_Element");
         waitForProcessInstanceHasPassedElement(instance, "game_check_received");
