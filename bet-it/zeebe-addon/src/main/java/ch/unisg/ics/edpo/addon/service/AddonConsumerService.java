@@ -1,47 +1,67 @@
 package ch.unisg.ics.edpo.addon.service;
 
+import ch.unisg.ics.edpo.shared.Keys;
 import io.camunda.zeebe.spring.client.lifecycle.ZeebeClientLifecycle;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.messaging.handler.annotation.Header;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Component
 @Slf4j
 public class AddonConsumerService {
-    public static final String CORRELATION_ID = "correlationId";
     private final ZeebeClientLifecycle client;
 
-    private static final String MESSAGE_NAME = "messageName";
+    @Value("${spring.kafka.contract.contract-requested}")
+    private String requestContractTopic;
+
+    private final List<String> startTopics;
 
     public AddonConsumerService(ZeebeClientLifecycle client) {
         this.client = client;
+        this.startTopics = List.of(new String[]{requestContractTopic});
     }
 
     @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "addon")
-    public void consumeCamundaMessage(Map<String, Object> variables) {
-        log.info("**** -> Consuming Camunda Variables:: {}", variables);
-
-        if (!variables.containsKey(MESSAGE_NAME) || variables.get(MESSAGE_NAME) == null) {
-            log.info("The camunda message did not contain a messageName");
-            return;
+    public void consumeCamundaMessage(Map<String, Object> variables, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+        log.info("**** -> Consuming Camunda Variables:: {} from topic {}", variables, topic);
+        String correlationId = getCorrelationId(variables);
+        if (startTopics.contains(topic)) {
+            startCamundaProcess(topic, variables);
+        } else {
+            sendToCamunda(topic, correlationId, variables);
         }
-        String messageName = variables.get(MESSAGE_NAME).toString();
-        String uuid = UUID.randomUUID().toString();
-        if (variables.containsKey(CORRELATION_ID)) {
-            uuid = (String) variables.get(CORRELATION_ID);
-            log.info("found set correlationId: {}", uuid);
-        }
-        sendToCamunda(messageName, uuid, variables);
     }
 
-    private void sendToCamunda(String messageName, String uuid, Map<String, Object> variables) {
-        log.info("starting Camunda process with messageName {}, correlationId {} and variables {}", messageName,uuid,variables);
+    private String getCorrelationId(Map<String, Object> map){
+        String uuid = UUID.randomUUID().toString();
+        if (map.containsKey(Keys.CORRELATION_ID)) {
+            uuid = (String) map.get(Keys.CORRELATION_ID);
+            log.info("found set correlationId: {}", uuid);
+        }
+        return uuid;
+    }
+    private void startCamundaProcess(String bpmnProcessId, Map<String, Object> variables){
+        log.info("Start a camunda process with process id: {}, and variables {}", bpmnProcessId, variables);
+        client.newCreateInstanceCommand()
+                .bpmnProcessId(bpmnProcessId).latestVersion()
+                .variables(variables)
+                .send()
+                .exceptionally(throwable -> {
+                    throw new RuntimeException("Could not publish message " + variables, throwable);
+                });
+    }
+    private void sendToCamunda(String messageName, String correlationKey, Map<String, Object> variables) {
+        log.info("Sending camunda a message with messageName {}, correlationId {} and variables {}", messageName,correlationKey,variables);
         client.newPublishMessageCommand()
                 .messageName(messageName)
-                .correlationKey(uuid)
+                .correlationKey(correlationKey)
                 .variables(variables)
                 .send()
                 .exceptionally(throwable -> {
@@ -49,5 +69,4 @@ public class AddonConsumerService {
                 });
 
     }
-
 }

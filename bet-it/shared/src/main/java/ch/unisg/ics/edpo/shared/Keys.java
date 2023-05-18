@@ -64,4 +64,16 @@ public class Keys {
 
         public static final String WITH_UNFREEZE_FIELD = "with-unfreeze";
     }
+
+    public static class UserCheckKeys {
+        public static final String USER_FIELD = "user";
+
+        public static final String RESULT = "user-check-result";
+
+        public static final String CORRELATION_ID = Keys.CORRELATION_ID;
+
+    }
+
+
+
 }

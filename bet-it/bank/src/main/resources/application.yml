@@ -17,8 +17,6 @@ spring:
         freeze:
             request: bank.freeze-request
             result: camunda.freeze-result
-        transaction:
-            result: camunda.transaction-result
-            request: bank.transaction-request
+
 
 

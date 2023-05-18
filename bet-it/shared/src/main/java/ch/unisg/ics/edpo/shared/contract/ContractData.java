@@ -1,4 +1,4 @@
-package ch.unisg.kafka.spring.domain;
+package ch.unisg.ics.edpo.shared.contract;
 
 import ch.unisg.ics.edpo.shared.Keys;
 import lombok.Getter;

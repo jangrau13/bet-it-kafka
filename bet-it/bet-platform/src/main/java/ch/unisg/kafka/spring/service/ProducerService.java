@@ -1,13 +1,11 @@
 package ch.unisg.kafka.spring.service;
 
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
-import ch.unisg.kafka.spring.domain.ContractData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static ch.unisg.ics.edpo.shared.Keys.*;
 

@@ -15,6 +15,7 @@ docker-compose up --build -d
 Run frontend in docker
 docker-compose -f /home/lub/Projects/bet-it-kafka/bet-it/docker-compose.yml up fraud-frontend --build </br>
 docker-compose -f /home/lub/Projects/bet-it-kafka/bet-it/docker-compose.yml up fraud-backend --build
+docker-compose -f /home/lub/Projects/bet-it-kafka/bet-it/docker-compose.yml up bank --build
 
 
 

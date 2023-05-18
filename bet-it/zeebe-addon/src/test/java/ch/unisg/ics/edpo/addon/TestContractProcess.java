@@ -1,29 +1,30 @@
 package ch.unisg.ics.edpo.addon;
 
 import ch.unisg.ics.edpo.addon.service.AddonConsumerService;
-import ch.unisg.ics.edpo.addon.service.zeebe.ZeebeListener;
+import ch.unisg.ics.edpo.shared.Topics;
+import ch.unisg.ics.edpo.shared.bank.UserCheck;
+import ch.unisg.ics.edpo.shared.contract.ContractData;
 import ch.unisg.ics.edpo.shared.kafka.KafkaConsumerFactoryHashMap;
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
 import io.camunda.zeebe.client.ZeebeClient;
+import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.client.api.response.PublishMessageResponse;
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
 import io.camunda.zeebe.process.test.filters.RecordStream;
-import io.camunda.zeebe.process.test.inspections.InspectionUtility;
-import io.camunda.zeebe.process.test.inspections.model.InspectedProcessInstance;
-import io.camunda.zeebe.spring.client.lifecycle.ZeebeClientLifecycle;
 import io.camunda.zeebe.spring.test.ZeebeSpringTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.Map;
 
 import static io.camunda.zeebe.process.test.assertions.BpmnAssert.assertThat;
-import static io.camunda.zeebe.spring.test.ZeebeTestThreadSupport.waitForProcessInstanceCompleted;
+import static io.camunda.zeebe.spring.test.ZeebeTestThreadSupport.waitForProcessInstanceHasPassedElement;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
@@ -46,28 +47,58 @@ public class TestContractProcess {
     @MockBean
     AddonConsumerService addonConsumerService;
 
+    @Captor
+    private ArgumentCaptor<String> captorTopic;
+
+    @Captor
+    private ArgumentCaptor<Map<String, Object>> captorMessage;
+
+    @Captor
+    ArgumentCaptor<String> captorKey;
+
     @Test
-    public void testIt(){
-        String uuid = UUID.randomUUID().toString();
+    public void testFailedUserCheck() throws Exception {
+
+        ContractData contractData = new ContractData("gameid123", 2.0, "lukas", true, "123345");
+        ProcessInstanceEvent instance = startCamunda(Topics.Contract.CONTRACT_REQUESTED, contractData.toMap());
+        waitForProcessInstanceHasPassedElement(instance, "BankValidityCheckToKafka");
+        UserCheck userCheck = new UserCheck("lukas", UserCheck.UserCheckResult.REJECTED);
+        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap());
+        waitForProcessInstanceHasPassedElement(instance, "Wait_User_Check_Element");
+        waitForProcessInstanceHasPassedElement(instance, "send_contract_rejected");
+        assertThat(instance).hasPassedElement("BankValidityCheckToKafka");
+
+        verify(kafkaMapProducer, times(2)).sendMessage(captorMessage.capture(), captorTopic.capture(), captorKey.capture());
+
+        Assertions.assertEquals(captorTopic.getAllValues().get(0), Topics.Bank.User.CHECK_REQUEST);
+        Assertions.assertEquals(captorTopic.getAllValues().get(1), Topics.Contract.CONTRACT_REJECTED);
 
 
-        PublishMessageResponse response = zeebe
-                .newPublishMessageCommand()
-                .messageName("CONTRACT_REQUESTED")
-                .correlationKey(uuid)
-                .send()
-                .join();
-        Optional<InspectedProcessInstance> firstProcessInstance = InspectionUtility.findProcessInstances().findFirstProcessInstance();
-        if (firstProcessInstance.isPresent()) {
-            InspectedProcessInstance instance = firstProcessInstance.get();
-            waitForProcessInstanceCompleted(instance);
-            assertThat(instance).hasPassedElement("BankValidityCheckToKafka");
-        }
-
-
-        System.out.println(firstProcessInstance.get());
-        Mockito.verify(kafkaMapProducer).sendMessage(Mockito.any(), Mockito.any(), Mockito.any());
-
+        assertThat(instance).
+                hasNoIncidents()
+                .isCompleted();
     }
 
+    private void verifyCamundaSendsCheckUserRequest(ContractData contractData) {
+        Map<String, Object> map = contractData.toMap();
+        map.put("topic", "user.check-request");
+        verify(kafkaMapProducer).sendMessage(map, Topics.Bank.User.CHECK_REQUEST, "send-to-kafka-key");
+    }
+
+
+    private ProcessInstanceEvent startCamunda(String messageName, Map<String, Object> variables) {
+        return zeebe.newCreateInstanceCommand()
+                .bpmnProcessId(messageName).latestVersion()
+                .variables(variables)
+                .send().join();
+    }
+
+    private void sendToCamunda(String messageName, String correlationKey, Map<String, Object> variables) {
+        PublishMessageResponse join = zeebe.newPublishMessageCommand()
+                .messageName(messageName)
+                .correlationKey(correlationKey)
+                .variables(variables)
+                .send()
+                .join();
+    }
 }

@@ -6,6 +6,8 @@ import ch.unisg.ics.edpo.bank.service.FreezeService;
 import ch.unisg.ics.edpo.bank.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import java.util.Map;
 
@@ -24,13 +26,14 @@ public class BankEventListener {
      * This consumes the transaction requests to the bank
      */
     @KafkaListener(topics = {"${spring.kafka.transaction.request}"}, containerFactory = "kafkaListenerMapFactory", groupId = "bank")
-    public void consumeTransactionRequest(Map<String, Object> eventData) {
-        log.info("**** -> Consuming Transaction Request:: {}", eventData);
+    public void consumeTransactionRequest(Map<String, Object> eventData, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+        log.info("**** -> Consuming Transaction Request:: {} in topic {}", eventData, topic);
         try {
             TransactionEvent event = new TransactionEvent(eventData);
             transactionService.handleEvent(event);
         } catch (Exception e) {
             log.error("Failed to handle the transaction event", e);
+
         }
     }
 

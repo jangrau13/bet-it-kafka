@@ -1,12 +1,9 @@
 package ch.unisg.kafka.spring.port.controllers;
 
-import ch.unisg.kafka.spring.domain.ContractData;
+import ch.unisg.ics.edpo.shared.contract.ContractData;
 import ch.unisg.kafka.spring.domain.Platform;
-import ch.unisg.kafka.spring.service.ProducerService;
 import ch.unisg.kafka.spring.service.RequestContractService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

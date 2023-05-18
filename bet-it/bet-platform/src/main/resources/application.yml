@@ -16,10 +16,7 @@ spring:
             game-topic-started: game.started
             game-topic-ended: game.ended
             game-topic-ended-camunda: camunda.game.ended
-        contract:
-            contract-requested: camunda.contract.requested
-            contract-rejected: camunda.contract.rejected
-            contract-accepted: camunda.contract.accepted
+
         bet:
             bet-requested: camunda.bet.requested.camunda
             bet-rejected: camunda.bet.rejected

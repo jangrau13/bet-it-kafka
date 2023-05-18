@@ -1,6 +1,7 @@
 package ch.unisg.ics.edpo.bank.domain;
 
 import ch.unisg.ics.edpo.bank.domain.utils.BankException;
+import ch.unisg.ics.edpo.shared.Topics;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
