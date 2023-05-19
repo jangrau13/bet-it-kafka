@@ -2,7 +2,6 @@ package ch.unisg.ics.edpo.addon;
 
 import ch.unisg.ics.edpo.addon.service.AddonConsumerService;
 import ch.unisg.ics.edpo.shared.Topics;
-import ch.unisg.ics.edpo.shared.transfer.Bet;
 import ch.unisg.ics.edpo.shared.transfer.UserCheck;
 import ch.unisg.ics.edpo.shared.transfer.ContractData;
 import ch.unisg.ics.edpo.shared.transfer.GameValidCheck;
@@ -10,7 +9,6 @@ import ch.unisg.ics.edpo.shared.kafka.KafkaConsumerFactoryHashMap;
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
-import io.camunda.zeebe.client.api.response.PublishMessageResponse;
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
 import io.camunda.zeebe.process.test.filters.RecordStream;
 import io.camunda.zeebe.spring.test.ZeebeSpringTest;
@@ -21,9 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import static ch.unisg.ics.edpo.addon.testUtils.Utils.sendToCamunda;
+import static ch.unisg.ics.edpo.addon.testUtils.Utils.startCamunda;
 import static io.camunda.zeebe.process.test.assertions.BpmnAssert.assertThat;
 import static io.camunda.zeebe.spring.test.ZeebeTestThreadSupport.waitForProcessInstanceHasPassedElement;
 import static org.mockito.Mockito.times;
@@ -65,15 +64,15 @@ public class TestContractProcess {
     public void testHappyPath() throws Exception {
 
         ContractData contractData = new ContractData("gameid123", 2.0, "lukas", true, "123345");
-        ProcessInstanceEvent instance = startCamunda(Topics.Contract.CONTRACT_REQUESTED, contractData.toMap());
+        ProcessInstanceEvent instance = startCamunda(Topics.Contract.CONTRACT_REQUESTED, contractData.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "BankValidityCheckToKafka");
         UserCheck userCheck = new UserCheck("lukas", UserCheck.UserCheckResult.APPROVED);
-        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap());
+        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "Wait_User_Check_Element");
         waitForProcessInstanceHasPassedElement(instance, "game-validity-check-send");
         GameValidCheck gameValidCheck = new GameValidCheck(contractData.getGameId(), GameValidCheck.GameValidStatus.APPROVED);
 
-        sendToCamunda(Topics.Game.GAME_VALID_FOR_CONTRACT_RESULT, gameValidCheck.getCorrelationKey(), gameValidCheck.toMap());
+        sendToCamunda(Topics.Game.GAME_VALID_FOR_CONTRACT_RESULT, gameValidCheck.getCorrelationKey(), gameValidCheck.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "game_check_received");
         waitForProcessInstanceHasPassedElement(instance,"SendContractAccepted");
         assertThat(instance).hasPassedElement("SendContractAccepted");
@@ -91,10 +90,10 @@ public class TestContractProcess {
     public void testUserFails() throws Exception {
 
         ContractData contractData = new ContractData("gameid123", 2.0, "lukas", true, "123345");
-        ProcessInstanceEvent instance = startCamunda(Topics.Contract.CONTRACT_REQUESTED, contractData.toMap());
+        ProcessInstanceEvent instance = startCamunda(Topics.Contract.CONTRACT_REQUESTED, contractData.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "BankValidityCheckToKafka");
         UserCheck userCheck = new UserCheck("lukas", UserCheck.UserCheckResult.REJECTED);
-        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap());
+        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "Wait_User_Check_Element");
         waitForProcessInstanceHasPassedElement(instance,"send_contract_rejected");
         assertThat(instance).hasPassedElement("send_contract_rejected");
@@ -111,15 +110,15 @@ public class TestContractProcess {
     @Test
     public void testGameFails() throws Exception {
         ContractData contractData = new ContractData("gameid123", 2.0, "lukas", true, "123345");
-        ProcessInstanceEvent instance = startCamunda(Topics.Contract.CONTRACT_REQUESTED, contractData.toMap());
+        ProcessInstanceEvent instance = startCamunda(Topics.Contract.CONTRACT_REQUESTED, contractData.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "BankValidityCheckToKafka");
         UserCheck userCheck = new UserCheck("lukas", UserCheck.UserCheckResult.APPROVED);
-        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap());
+        sendToCamunda(Topics.Bank.User.CHECK_RESULT, userCheck.getCorrelationKey(), userCheck.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "Wait_User_Check_Element");
         waitForProcessInstanceHasPassedElement(instance, "game-validity-check-send");
         GameValidCheck gameValidCheck = new GameValidCheck(contractData.getGameId(), GameValidCheck.GameValidStatus.REJECTED);
 
-        sendToCamunda(Topics.Game.GAME_VALID_FOR_CONTRACT_RESULT, gameValidCheck.getCorrelationKey(), gameValidCheck.toMap());
+        sendToCamunda(Topics.Game.GAME_VALID_FOR_CONTRACT_RESULT, gameValidCheck.getCorrelationKey(), gameValidCheck.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "game_check_received");
         waitForProcessInstanceHasPassedElement(instance,"send_contract_rejected");
         assertThat(instance).hasPassedElement("send_contract_rejected");
@@ -142,19 +141,5 @@ public class TestContractProcess {
     }
 
 
-    private ProcessInstanceEvent startCamunda(String messageName, Map<String, Object> variables) {
-        return zeebe.newCreateInstanceCommand()
-                .bpmnProcessId(messageName).latestVersion()
-                .variables(variables)
-                .send().join();
-    }
 
-    private void sendToCamunda(String messageName, String correlationKey, Map<String, Object> variables) {
-        PublishMessageResponse join = zeebe.newPublishMessageCommand()
-                .messageName(messageName)
-                .correlationKey(correlationKey)
-                .variables(variables)
-                .send()
-                .join();
-    }
 }

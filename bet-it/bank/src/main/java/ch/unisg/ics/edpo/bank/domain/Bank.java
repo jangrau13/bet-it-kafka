@@ -1,7 +1,7 @@
 package ch.unisg.ics.edpo.bank.domain;
 
-import ch.unisg.ics.edpo.bank.domain.utils.BankException;
-import ch.unisg.ics.edpo.shared.Topics;
+import ch.unisg.ics.edpo.shared.bank.BankException;
+import ch.unisg.ics.edpo.shared.bank.FreezeEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,29 +64,12 @@ public class Bank {
     /**
      * amount should still be positive
      */
-    public void unfreeze(FreezeEvent event) {
-        for (int i = 0; i <= event.getUsers().length; i++) {
-            String user = event.getUsers()[i];
-            double amount = event.getAmounts()[i];
-            try {
-                unfreezeOneAccount(user, amount);
-            } catch (BankException e) {
-                log.error("Unfreezing error", e);
-            }
-        }
+    public void unfreeze(FreezeEvent event) throws BankException {
+        unfreezeOneAccount(event.getUser(), event.getAmount());
     }
 
     public void freeze(FreezeEvent freezeEvent) throws BankException {
-        for (int i = 0; i <= freezeEvent.getUsers().length; i++) {
-            String user = freezeEvent.getUsers()[i];
-            double amount = freezeEvent.getAmounts()[i];
-            try {
-                freezeOneAccount(user, amount);
-            } catch (BankException e) {
-                rollback(i, freezeEvent);
-                throw e;
-            }
-        }
+        freezeOneAccount(freezeEvent.getUser(), freezeEvent.getAmount());
     }
 
     private void unfreezeOneAccount(String user, double amount) throws BankException {
@@ -115,18 +98,6 @@ public class Bank {
             this.frozenBalance.put(user, frozen + amount);
         } else {
             throw new BankException("User with name: " + user + " did not have enough money");
-        }
-    }
-
-    private void rollback(int untilIndex, FreezeEvent freezeEvent) {
-        log.error("Freezing failed trying to rollback because could not freeze for user " + freezeEvent.getUsers()[untilIndex]);
-        for (int i = 0; i < untilIndex; i++) {
-            // we just freeze them with negative -
-            try {
-                freezeOneAccount(freezeEvent.getUsers()[i], -freezeEvent.getAmounts()[i]);
-            } catch (Exception e) {
-                log.error("Damn the rollback failed, now we have a real problem", e);
-            }
         }
     }
 

@@ -37,7 +37,7 @@ public class Keys {
 
         public static final String BET_ID_FIELD = "betId";
 
-        public static final String BUYER_FIELD = "buyer";
+        public static final String BUYER_FIELD = "buyerName";
 
         public static final String AMOUNT_BOUGHT = "amountBought";
 
@@ -51,19 +51,18 @@ public class Keys {
 
         public static final String CONTRACTOR_NAME_FIELD = "contractorName";
 
-        public static final String HOME_TEAM_WINS_FIELD = "homeTeamWins";
+        public static final String TEAM_ONE_WINNS = "teamOneWinns";
 
         public static final String CONTRACT_ID_FIELD = "contractId";
-
 
     }
 
     public static class FreezeEventKeys {
 
-        public static final String USERS = "users";
-        public static final String AMOUNTS = "amounts";
-        public static final String STATUS_FIELD = "status";
-        public static final String CORRELATION_ID = "correlationId";
+        public static final String CORRELATION_ID = Keys.CORRELATION_ID;
+        public static final String USER = "freezeUser";
+        public static final String AMOUNT = "freezeAmount";
+        public static final String STATUS_FIELD = "freezeStatus";
     }
 
     public static class TransactionEventKeys {
@@ -72,7 +71,6 @@ public class Keys {
         public static final String AMOUNT_FIELD = "amount";
         public static final String STATUS_FIELD = "status";
 
-        public static final String WITH_UNFREEZE_FIELD = "with-unfreeze";
     }
 
     public static class UserCheckKeys {
@@ -86,13 +84,19 @@ public class Keys {
 
     public static class GameValidCheckKeys {
 
-        public static final String GAME_ID_FIELD = "game-id";
+        public static final String GAME_ID_FIELD = "gameId";
 
         public static final String RESULT = "gameCheckResult";
 
         public static final String CORRELATION_ID = Keys.CORRELATION_ID;
     }
 
+    public static class GameObjectFields {
 
-
+        public static final String GAME_ID = "gameId";
+        public static final String TEAM_1 = "team1";
+        public static final String TEAM_2 = "team2";
+        public static final String GAME_STATE = "gameState";
+        public static final String TEAM_1_WINS = "team1Wins";
+    }
 }

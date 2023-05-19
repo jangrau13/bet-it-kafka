@@ -1,6 +1,6 @@
 package ch.unisg.ics.edpo.bank.domain;
 
-import ch.unisg.ics.edpo.bank.domain.utils.ParseUtils;
+import ch.unisg.ics.edpo.shared.util.ParseUtils;
 import ch.unisg.ics.edpo.shared.Keys;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ch.unisg.ics.edpo.bank.domain.utils.ParseUtils.parseObject;
+import static ch.unisg.ics.edpo.shared.util.ParseUtils.parseObject;
 import static ch.unisg.ics.edpo.shared.Keys.TransactionEventKeys.FROM_FIELD;
 
 @Slf4j
