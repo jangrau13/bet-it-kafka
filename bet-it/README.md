@@ -7,17 +7,16 @@ install the following software:
 select Camunda Platform Version 8.2 (alpha) for all the documents created and creating.
 
 ## Build
-mvn clean install -DskipTests </br>
+mvn clean install -DskipTests
 docker-compose up --build -d
-
 
 ## Development
 Run frontend in docker
-docker-compose -f /home/lub/Projects/bet-it-kafka/bet-it/docker-compose.yml up fraud-frontend --build </br>
-docker-compose -f /home/lub/Projects/bet-it-kafka/bet-it/docker-compose.yml up fraud-backend --build
-docker-compose -f /home/lub/Projects/bet-it-kafka/bet-it/docker-compose.yml up bank --build
-
-
+```shell
+docker-compose -f bet-it/docker-compose.yml up fraud-frontend --build 
+docker-compose -f bet-it/docker-compose.yml up fraud-backend --build
+docker-compose -f bet-it/docker-compose.yml up bank --build
+```
 
 ## Monitor Kafka
 open [kafdrop](http://localhost:9000) and have a look at the topics

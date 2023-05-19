@@ -189,6 +189,8 @@ services:
       - "8083:8083"
     depends_on:
       - kafka
+      - ksqldb-cli
+      - ksqldb-server
 
   zeebe-addon:
     build:
