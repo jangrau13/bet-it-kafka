@@ -18,6 +18,8 @@ spring:
         payment-request: bet.payment-request
         camunda: camunda | camunda.* | *.camunda.* | *.camunda
 
+
+
 zeebe:
     client:
         broker:

@@ -11,16 +11,16 @@ spring:
         producer:
             bootstrap-servers: kafka:9092
 
-        game-topic-published: game.published
-        game-topic-started: game.started
-        game-topic-ended: game.ended
-        game-topic-ended-camunda: camunda.game.ended
-        contract-requested: camunda.contract.requested
-        contract-rejected: camunda.contract.rejected
-        contract-accepted: camunda.contract.accepted
-        bet-requested: camunda.bet.requested.camunda
-        bet-rejected: camunda.bet.rejected
-        bet-accepted: camunda.bet.accepted
+        game:
+            game-topic-published: game.published
+            game-topic-started: game.started
+            game-topic-ended: game.ended
+            game-topic-ended-camunda: camunda.game.ended
+
+        bet:
+            bet-requested: camunda.bet.requested.camunda
+            bet-rejected: camunda.bet.rejected
+            bet-accepted: camunda.bet.accepted
 
 
 

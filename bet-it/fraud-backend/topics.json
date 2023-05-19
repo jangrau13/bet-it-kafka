@@ -1,0 +1,8 @@
+{
+  "topics": [
+    "camunda.transaction-result",
+    "bank.transaction-request",
+    "bank.freeze-request",
+    "camunda.freeze-result"
+  ]
+}

@@ -1,0 +1,21 @@
+server:
+    port: 8081  # Tomcat default port
+
+
+spring:
+    kafka:
+        consumer:
+            bootstrap-servers: kafka:9092
+            group-id: betPlatform
+            auto-offset-reset: earliest
+        producer:
+            bootstrap-servers: kafka:9092
+
+        bank-response: bet.bank-response
+        reserve-bid: bet.reserve-bid
+        two-factor: bet.two-factor-customer
+        two-factor-success: bet.two-factor-customer-success
+        fraud-detection: camunda.fraud.detected
+        payment-request: bet.payment-request
+        camunda: camunda
+

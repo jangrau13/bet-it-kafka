@@ -13,12 +13,9 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <log4j.version>2.17.1</log4j.version>
-        <main.class>io.camunda.getstarted.DeployAndStartInstance</main.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring-zeebe.version>1.3.4</spring-zeebe.version>
-        <zeebe.version>1.3.4</zeebe.version>
     </properties>
 
 
@@ -32,7 +29,7 @@
 
         <dependency>
             <groupId>ch.unisg.ics.edpo</groupId>
-            <artifactId>shared-domain</artifactId>
+            <artifactId>shared</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -50,28 +47,10 @@
         </dependency>
 
         <dependency>
-            <groupId>io.camunda</groupId>
-            <artifactId>zeebe-client-java</artifactId>
-            <version>${zeebe.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.camunda</groupId>
-            <artifactId>spring-zeebe-starter</artifactId>
-            <version>${spring-zeebe.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.zeebe/kafka-connect-zeebe -->
-        <dependency>
-            <groupId>io.zeebe</groupId>
-            <artifactId>kafka-connect-zeebe</artifactId>
-            <version>0.4.0</version>
-        </dependency>
 
         <dependency>
             <groupId>io.confluent.ksql</groupId>
@@ -88,7 +67,10 @@
             <artifactId>ksqldb-common</artifactId>
             <version>0.26.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
 
     </dependencies>
