@@ -1,54 +1,83 @@
-const express = require('express');
-const { Kafka } = require('kafkajs');
-const {Server} = require('ws');
-const topics = require('./topics.json');
-const app = express();
+const cors = require('cors');
 
-const server = app.listen(3001, () => {
-    console.log('Backend server is listening on port 3001');
-});
+const express = require('express')
+const enableWs = require('express-ws')
+const { Kafka } = require('kafkajs')
 
 const kafka = new Kafka({
-    clientId: 'backend-consumer',
+    clientId: 'backend-producer',
     brokers: ['kafka:9092'],
 });
-const wss = new Server({ server });
-console.log("ADRESS", wss.address())
-const consumer = kafka.consumer({ groupId: 'fraud-backend2' });
 
-all_messages = [];
-wss.on('connection', (ws) => {
-    console.log('New client connected!');
-    all_messages.forEach((message) => {
-        ws.send(message)
+const app = express()
+enableWs(app)
+
+const producer = kafka.producer()
+
+const testID = '';
+
+//if a dot has been hit
+app.ws('/hit', (ws, req) => {
+    handleWebSocketRequest(ws, 'game.dot.hit' + testID);
+})
+
+app.ws('/miss', (ws, req) => {
+    handleWebSocketRequest(ws, 'game.dot.miss' + testID);
+})
+
+app.ws('/spawn', (ws, req) => {
+    handleWebSocketRequest(ws, 'game.dot.spawn'+ testID);
+})
+
+app.ws('/publish', (ws, req) => {
+    handleWebSocketRequest(ws, 'game.published'+ testID);
+})
+
+app.ws('/start', (ws, req) => {
+    handleWebSocketRequest(ws, 'game.started'+ testID);
+})
+
+app.ws('/end', (ws, req) => {
+    handleWebSocketRequest(ws, 'game.dot.ended' + testID);
+})
+
+
+function handleWebSocketRequest(ws, topic) {
+    ws.on('message', msg => {
+        dotObject = JSON.parse(msg);
+        key = dotObject.gameId;
+        producer.send({
+            topic: topic,
+            messages: [
+                {
+                    key: key,
+                    value: msg
+                }
+            ],
+        })
     })
-    ws.on('close', () => console.log('Client has disconnected!'));
-});
 
-
-async function run() {
-    await consumer.connect();
-    for (const topic of topics.topics) {
-        console.log("Subscribing to", topic);
-        await consumer.subscribe({ topic, fromBeginning: true });
-    }
-
-    await consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
-            const value = message.value.toString();
-            const value2 = JSON.parse(value);
-            console.log(value2)
-            console.log(`Received message from topic ${topic}, partition ${partition}: ${value}`);
-            const sending = JSON.stringify({topic: topic, message: value2})
-            console.log("SENDING", sending)
-            all_messages.push(sending)
-            wss.clients.forEach((client) => {
-                    client.send(sending);
-            });
-        },
-    });
+    ws.on('close', () => {
+        console.log('WebSocket was closed')
+    })
 }
 
-run().catch((error) => {
-    console.error('Error consuming messages:', error);
+
+app.use(cors()); // Enable CORS for all routes
+
+app.listen(3001, () => {
+    console.log("Server started");
+    producer.connect()
+
+    // Additional code to execute on server start up
+});
+
+process.on("SIGINT", () => {
+    server.close(() => {
+        console.log("Server shut down");
+
+        // Additional code to execute on server shutdown
+
+        producer.disconnect()
+    });
 });
