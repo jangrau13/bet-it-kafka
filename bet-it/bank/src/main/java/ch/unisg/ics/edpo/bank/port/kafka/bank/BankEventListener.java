@@ -1,7 +1,7 @@
 package ch.unisg.ics.edpo.bank.port.kafka.bank;
 
 import ch.unisg.ics.edpo.shared.bank.FreezeEvent;
-import ch.unisg.ics.edpo.bank.domain.TransactionEvent;
+import ch.unisg.ics.edpo.shared.bank.TransactionEvent;
 import ch.unisg.ics.edpo.bank.service.FreezeService;
 import ch.unisg.ics.edpo.bank.service.TransactionService;
 import ch.unisg.ics.edpo.shared.Topics;

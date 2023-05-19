@@ -1,7 +1,7 @@
 package ch.unisg.ics.edpo.bank.port.controller;
 
 import ch.unisg.ics.edpo.bank.domain.Bank;
-import ch.unisg.ics.edpo.bank.domain.TransactionEvent;
+import ch.unisg.ics.edpo.shared.bank.TransactionEvent;
 import ch.unisg.ics.edpo.bank.service.ReplayService;
 import ch.unisg.ics.edpo.shared.Topics;
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;

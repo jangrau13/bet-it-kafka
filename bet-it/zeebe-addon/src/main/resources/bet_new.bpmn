@@ -79,24 +79,24 @@
       <bpmn:outgoing>Flow_1ai5v4h</bpmn:outgoing>
       <bpmn:outgoing>Flow_16pdeky</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="game_started_element" name="Game Ended">
+    <bpmn:intermediateCatchEvent id="game_ended_element" name="Game Ended">
       <bpmn:incoming>Flow_1ai5v4h</bpmn:incoming>
       <bpmn:outgoing>Flow_0n4tv0o</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_08e2c12" messageRef="Message_0s9jbg7" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_1ai5v4h" sourceRef="Gateway_050miqg" targetRef="game_started_element" />
+    <bpmn:sequenceFlow id="Flow_1ai5v4h" sourceRef="Gateway_050miqg" targetRef="game_ended_element" />
     <bpmn:intermediateCatchEvent id="timer_game_ended" name="5 minute">
       <bpmn:incoming>Flow_16pdeky</bpmn:incoming>
       <bpmn:outgoing>Flow_1s91qqt</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0ay18r3">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_16pdeky" sourceRef="Gateway_050miqg" targetRef="timer_game_ended" />
     <bpmn:endEvent id="Event_07c8q6a">
       <bpmn:incoming>Flow_1nc2qrx</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1s91qqt" sourceRef="timer_game_ended" targetRef="Activity_0eky5pq" />
+    <bpmn:sequenceFlow id="Flow_1s91qqt" sourceRef="timer_game_ended" targetRef="timer_game_start_gone" />
     <bpmn:callActivity id="freeze_buyer" name="Freeze Buyer">
       <bpmn:extensionElements>
         <zeebe:calledElement processId="freeze_process" propagateAllChildVariables="true" />
@@ -140,8 +140,8 @@
       <bpmn:outgoing>contractor_wins</bpmn:outgoing>
       <bpmn:outgoing>Flow_15znm5v</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0n4tv0o" sourceRef="game_started_element" targetRef="Gateway_0zh032z" />
-    <bpmn:sendTask id="Activity_0eky5pq" name="Reject Bet Message">
+    <bpmn:sequenceFlow id="Flow_0n4tv0o" sourceRef="game_ended_element" targetRef="Gateway_0zh032z" />
+    <bpmn:sendTask id="timer_game_start_gone" name="Reject Bet Message">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-to-kafka" />
         <zeebe:ioMapping>
@@ -152,7 +152,7 @@
       <bpmn:incoming>Flow_1s91qqt</bpmn:incoming>
       <bpmn:outgoing>Flow_1nc2qrx</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_1nc2qrx" sourceRef="Activity_0eky5pq" targetRef="Event_07c8q6a" />
+    <bpmn:sequenceFlow id="Flow_1nc2qrx" sourceRef="timer_game_start_gone" targetRef="Event_07c8q6a" />
     <bpmn:sequenceFlow id="contractor_wins" name="Contractor Wins" sourceRef="Gateway_0zh032z" targetRef="pay_contractor">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=(team1Wins and teamOneWinsContract) or (not(team1Wins) and not(teamOneWinsContract)) </bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -164,7 +164,7 @@
           <zeebe:input source="=contractorName" target="to" />
           <zeebe:input source="=buyerAmount" target="amount" />
           <zeebe:input source="=&#34;REQUESTED&#34;" target="transactionStatus" />
-          <zeebe:input source="=from + to + time()" target="correlationId" />
+          <zeebe:input source="=from + to" target="correlationId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>contractor_wins</bpmn:incoming>
@@ -207,7 +207,9 @@
       <bpmn:incoming>Flow_15znm5v</bpmn:incoming>
       <bpmn:outgoing>Flow_0azmvqd</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_15znm5v" name="contractor does not win" sourceRef="Gateway_0zh032z" targetRef="Activity_1kxnl1n" />
+    <bpmn:sequenceFlow id="Flow_15znm5v" name="contractor does not win" sourceRef="Gateway_0zh032z" targetRef="Activity_1kxnl1n">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=(not(team1Wins) and teamOneWinsContract) or (team1Wins and not(teamOneWinsContract)) </bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_0js7di9">
       <bpmn:incoming>Flow_0azmvqd</bpmn:incoming>
       <bpmn:incoming>Flow_0pz6c10</bpmn:incoming>
@@ -272,7 +274,7 @@
       <bpmndi:BPMNShape id="Gateway_050miqg_di" bpmnElement="Gateway_050miqg">
         <dc:Bounds x="1315" y="485" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0v1ofcf_di" bpmnElement="game_started_element">
+      <bpmndi:BPMNShape id="Event_0v1ofcf_di" bpmnElement="game_ended_element">
         <dc:Bounds x="1212" y="492" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1198" y="535" width="65" height="14" />
@@ -299,7 +301,7 @@
       <bpmndi:BPMNShape id="Gateway_0zh032z_di" bpmnElement="Gateway_0zh032z" isMarkerVisible="true">
         <dc:Bounds x="1015" y="485" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0fh0es1" bpmnElement="Activity_0eky5pq" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+      <bpmndi:BPMNShape id="BPMNShape_0fh0es1" bpmnElement="timer_game_start_gone" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
         <dc:Bounds x="1079" y="570" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>

@@ -3,6 +3,8 @@ package ch.unisg.ics.edpo.addon;
 import ch.unisg.ics.edpo.addon.service.AddonConsumerService;
 import ch.unisg.ics.edpo.shared.Topics;
 import ch.unisg.ics.edpo.shared.bank.FreezeEvent;
+import ch.unisg.ics.edpo.shared.bank.TransactionEvent;
+import ch.unisg.ics.edpo.shared.game.GameObject;
 import ch.unisg.ics.edpo.shared.kafka.KafkaConsumerFactoryHashMap;
 import ch.unisg.ics.edpo.shared.kafka.KafkaMapProducer;
 import ch.unisg.ics.edpo.shared.transfer.Bet;
@@ -74,9 +76,16 @@ public class TestBetProcess {
         sendToCamunda(Topics.Bank.Freeze.FREEZE_RESULT, bet.getContractorName(), secondFreezeResponse.toMap(), zeebe);
         waitForProcessInstanceHasPassedElement(instance, "freeze_contractor");
         waitForProcessInstanceHasPassedElement(instance, "accept_bet_send");
+        GameObject gameObject = new GameObject(contractData.getGameId(), "team1", "team2", GameObject.GameState.ENDED, true);
+        sendToCamunda(Topics.Game.GAME_ENDED, gameObject.getGameId(), gameObject.toMap(), zeebe);
 
+        TransactionEvent transactionEvent = new TransactionEvent(bet.getBuyerName(), bet.getContractorName(),
+                bet.getRatio() * bet.getAmountBought(), TransactionEvent.TRANSACTION_STATUS.DONE, bet.getBuyerName() + bet.getContractorName());
+        // this is too early
+        sendToCamunda(Topics.Bank.Transaction.TRANSACTION_RESULT, transactionEvent.getCorrelationId(), transactionEvent.toMap(), zeebe);
+        waitForProcessInstanceHasPassedElement(instance, "pay_contractor");
+        waitForProcessInstanceHasPassedElement(instance, "game_ended_element");
         verify(kafkaMapProducer, times(3)).sendMessage(captorMessage.capture(), captorTopic.capture(), captorKey.capture());
-
 
         List<Map<String, Object>> allMsg = captorMessage.getAllValues();
 

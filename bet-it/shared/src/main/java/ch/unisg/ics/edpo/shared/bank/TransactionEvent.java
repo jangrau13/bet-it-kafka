@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.bank.domain;
+package ch.unisg.ics.edpo.shared.bank;
 
 import ch.unisg.ics.edpo.shared.util.ParseUtils;
 import ch.unisg.ics.edpo.shared.Keys;
