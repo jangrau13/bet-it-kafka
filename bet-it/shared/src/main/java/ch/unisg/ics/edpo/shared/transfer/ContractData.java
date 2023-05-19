@@ -15,18 +15,21 @@ public class ContractData {
     private final double ratio;
     @Getter
     private final String contractorName;
+    /**
+     * If team1 Winns = True the contractor winns in that case
+     */
     @Getter
-    private final boolean homeTeamWins;
+    private final boolean team1Winns;
     @Getter
     private final String contractId;
 
 
     // Constructor to initialize all parameters
-    public ContractData(String gameId, double ratio, String contractorName, boolean homeTeamWins, String contractId) {
+    public ContractData(String gameId, double ratio, String contractorName, boolean team1Winns, String contractId) {
         this.gameId = gameId;
         this.ratio = ratio;
         this.contractorName = contractorName;
-        this.homeTeamWins = homeTeamWins;
+        this.team1Winns = team1Winns;
         this.contractId = (contractId != null && !contractId.isEmpty()) ? contractId : UUID.randomUUID().toString();
     }
 
@@ -35,7 +38,7 @@ public class ContractData {
         this.gameId = (String) map.get(Keys.ContractDataKeys.GAME_ID_FIELD);
         this.ratio = (Double) map.get(Keys.ContractDataKeys.CONTRACT_RATIO_FIELD);
         this.contractorName = (String) map.get(Keys.ContractDataKeys.CONTRACTOR_NAME_FIELD);
-        this.homeTeamWins = (Boolean) map.get(Keys.ContractDataKeys.HOME_TEAM_WINS_FIELD);
+        this.team1Winns = (Boolean) map.get(Keys.ContractDataKeys.TEAM_ONE_WINNS);
         this.contractId = getContractId(map);
     }
 
@@ -54,7 +57,7 @@ public class ContractData {
         map.put(Keys.ContractDataKeys.GAME_ID_FIELD, gameId);
         map.put(Keys.ContractDataKeys.CONTRACT_RATIO_FIELD, ratio);
         map.put(Keys.ContractDataKeys.CONTRACTOR_NAME_FIELD, contractorName);
-        map.put(Keys.ContractDataKeys.HOME_TEAM_WINS_FIELD, homeTeamWins);
+        map.put(Keys.ContractDataKeys.TEAM_ONE_WINNS, team1Winns);
         map.put(Keys.ContractDataKeys.CONTRACT_ID_FIELD, contractId);
         return map;
     }
@@ -65,7 +68,7 @@ public class ContractData {
         Object gameIdObj = map.get(Keys.ContractDataKeys.GAME_ID_FIELD);
         Object ratioObj = map.get(Keys.ContractDataKeys.CONTRACT_RATIO_FIELD);
         Object contractorNameObj = map.get(Keys.ContractDataKeys.CONTRACTOR_NAME_FIELD);
-        Object homeTeamWinsObj = map.get(Keys.ContractDataKeys.HOME_TEAM_WINS_FIELD);
+        Object homeTeamWinsObj = map.get(Keys.ContractDataKeys.TEAM_ONE_WINNS);
 
         if (gameIdObj == null) {
             throw new IllegalArgumentException("gameId cannot be null");

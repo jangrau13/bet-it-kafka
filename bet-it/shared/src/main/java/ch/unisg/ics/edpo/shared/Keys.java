@@ -51,7 +51,7 @@ public class Keys {
 
         public static final String CONTRACTOR_NAME_FIELD = "contractorName";
 
-        public static final String HOME_TEAM_WINS_FIELD = "homeTeamWins";
+        public static final String TEAM_ONE_WINNS = "teamOneWinns";
 
         public static final String CONTRACT_ID_FIELD = "contractId";
 
@@ -91,4 +91,12 @@ public class Keys {
         public static final String CORRELATION_ID = Keys.CORRELATION_ID;
     }
 
+    public static class GameObjectFields {
+
+        public static final String GAME_ID = "gameId";
+        public static final String TEAM_1 = "team1";
+        public static final String TEAM_2 = "team2";
+        public static final String GAME_STATE = "gameState";
+        public static final String TEAM_1_WINS = "team1Wins";
+    }
 }
