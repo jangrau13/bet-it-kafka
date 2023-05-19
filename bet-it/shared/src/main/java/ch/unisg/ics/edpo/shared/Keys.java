@@ -51,7 +51,7 @@ public class Keys {
 
         public static final String CONTRACTOR_NAME_FIELD = "contractorName";
 
-        public static final String TEAM_ONE_WINNS = "teamOneWinns";
+        public static final String TEAM_ONE_WINNS = "teamOneWinsContract";
 
         public static final String CONTRACT_ID_FIELD = "contractId";
 
@@ -69,7 +69,9 @@ public class Keys {
         public static final String FROM_FIELD = "from";
         public static final String TO_FIELD = "to";
         public static final String AMOUNT_FIELD = "amount";
-        public static final String STATUS_FIELD = "status";
+        public static final String STATUS_FIELD = "transactionStatus";
+
+        public static final String CORELLATION_ID = Keys.CORRELATION_ID;
 
     }
 
