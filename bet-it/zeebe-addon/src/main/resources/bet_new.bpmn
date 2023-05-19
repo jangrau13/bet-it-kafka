@@ -69,16 +69,16 @@
         <zeebe:properties />
       </bpmn:extensionElements>
       <bpmn:incoming>freeze_contractor_worked</bpmn:incoming>
-      <bpmn:outgoing>Flow_09kvzfj</bpmn:outgoing>
+      <bpmn:outgoing>Flow_11i234g</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:endEvent id="Event_067fiwe">
       <bpmn:incoming>Flow_0jpr81q</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:eventBasedGateway id="Gateway_050miqg">
+      <bpmn:incoming>Flow_11i234g</bpmn:incoming>
       <bpmn:outgoing>Flow_1ai5v4h</bpmn:outgoing>
       <bpmn:outgoing>Flow_16pdeky</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:sequenceFlow id="Flow_09kvzfj" sourceRef="accept_bet_send" targetRef="Event_1mylhx1" />
     <bpmn:intermediateCatchEvent id="game_started_element" name="Game Ended">
       <bpmn:incoming>Flow_1ai5v4h</bpmn:incoming>
       <bpmn:messageEventDefinition id="MessageEventDefinition_08e2c12" messageRef="Message_0s9jbg7" />
@@ -133,9 +133,7 @@
       <bpmn:outgoing>Flow_0duzapn</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_0duzapn" sourceRef="Activity_0ttaq7d" targetRef="Gateway_08fb76p" />
-    <bpmn:endEvent id="Event_1mylhx1">
-      <bpmn:incoming>Flow_09kvzfj</bpmn:incoming>
-    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_11i234g" sourceRef="accept_bet_send" targetRef="Gateway_050miqg" />
   </bpmn:process>
   <bpmn:message id="Message_2es3js5" name="camunda.freeze-result">
     <bpmn:extensionElements>
@@ -152,7 +150,7 @@
       <zeebe:subscription correlationKey="=buyerName" />
     </bpmn:extensionElements>
   </bpmn:message>
-  <bpmn:message id="Message_0s9jbg7" name="camunda.game-won">
+  <bpmn:message id="Message_0s9jbg7" name="camunda.game.ended">
     <bpmn:extensionElements>
       <zeebe:subscription correlationKey="=gameId" />
     </bpmn:extensionElements>
@@ -211,9 +209,6 @@
       <bpmndi:BPMNShape id="BPMNShape_1p49k4x" bpmnElement="Gateway_08fb76p" isMarkerVisible="true">
         <dc:Bounds x="875" y="355" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1mylhx1_di" bpmnElement="Event_1mylhx1">
-        <dc:Bounds x="1322" y="232" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0vo5ra8" bpmnElement="Activity_0ttaq7d">
         <dc:Bounds x="850" y="240" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -238,11 +233,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="937" y="112" width="70" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_09kvzfj_di" bpmnElement="Flow_09kvzfj">
-        <di:waypoint x="1230" y="120" />
-        <di:waypoint x="1340" y="120" />
-        <di:waypoint x="1340" y="232" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ai5v4h_di" bpmnElement="Flow_1ai5v4h">
         <di:waypoint x="1315" y="510" />
@@ -290,6 +280,11 @@
       <bpmndi:BPMNEdge id="Flow_0duzapn_di" bpmnElement="Flow_0duzapn">
         <di:waypoint x="900" y="320" />
         <di:waypoint x="900" y="355" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11i234g_di" bpmnElement="Flow_11i234g">
+        <di:waypoint x="1230" y="120" />
+        <di:waypoint x="1340" y="120" />
+        <di:waypoint x="1340" y="485" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
