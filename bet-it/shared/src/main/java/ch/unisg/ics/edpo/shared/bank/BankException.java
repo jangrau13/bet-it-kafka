@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.bank.domain.utils;
+package ch.unisg.ics.edpo.shared.bank;
 
 public class BankException extends Exception {
     public BankException(String message) {

@@ -1,6 +1,6 @@
 package ch.unisg.service;
 
-import ch.unisg.ics.edpo.bank.domain.FreezeEvent;
+import ch.unisg.ics.edpo.shared.bank.FreezeEvent;
 import org.junit.Test;
 
 import java.util.HashMap;

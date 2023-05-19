@@ -1,9 +1,9 @@
 package ch.unisg.ics.edpo.bank.service;
 
 import ch.unisg.ics.edpo.bank.domain.Bank;
-import ch.unisg.ics.edpo.bank.domain.FreezeEvent;
+import ch.unisg.ics.edpo.shared.bank.FreezeEvent;
 import ch.unisg.ics.edpo.bank.domain.TransactionEvent;
-import ch.unisg.ics.edpo.bank.domain.utils.BankException;
+import ch.unisg.ics.edpo.shared.bank.BankException;
 import ch.unisg.ics.edpo.shared.Topics;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
