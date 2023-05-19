@@ -90,10 +90,13 @@ public class ReplayService {
             }
         } else if (record.topic().equals(freezeResultTopic)) {
             FreezeEvent freezeEvent = new FreezeEvent(record.value());
-            if (freezeEvent.getStatus() == FreezeEvent.STATUS.FREEZE_DONE) {
-                bank.freeze(freezeEvent);
-            } else if (freezeEvent.getStatus() == FreezeEvent.STATUS.UNFREEZE_DONE) {
-                bank.unfreeze(freezeEvent);
+            if (freezeEvent.getStatus() == FreezeEvent.STATUS.ACCEPTED) {
+                if(freezeEvent.getAmount() >= 0){
+                    bank.freeze(freezeEvent);
+                } else {
+                    freezeEvent.setAmount(-freezeEvent.getAmount());
+                    bank.unfreeze(freezeEvent);
+                }
             }
         }
     }
