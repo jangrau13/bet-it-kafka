@@ -28,7 +28,7 @@ public class KafkaConfig {
     KafkaStreamsConfiguration kStreamsConfig() {
 
         Map<String, Object> props = new HashMap<>();
-        props.put(APPLICATION_ID_CONFIG, "streams-app");
+        props.put(APPLICATION_ID_CONFIG, "game-master-streams");
         props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG, WallclockTimestampExtractor.class);
         props.put(CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);

@@ -59,10 +59,23 @@ public class GameManagerController {
     }
 
     @GetMapping("/bigChances")
-    public Map<String,Long> getWordCount() {
+    public Map<String,Long> getBigChances() {
         KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
         ReadOnlyKeyValueStore<String, Long> counts = kafkaStreams.store(
                 StoreQueryParameters.fromNameAndType("BigChances", QueryableStoreTypes.keyValueStore())
+        );
+        Map<String, Long> returnMap = new HashMap<>();
+        counts.all().forEachRemaining(k -> {
+            returnMap.put(k.key,k.value);
+        });
+        return returnMap;
+    }
+
+    @GetMapping("/testJoin")
+    public Map<String,Long> getJoinValue() {
+        KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
+        ReadOnlyKeyValueStore<String, Long> counts = kafkaStreams.store(
+                StoreQueryParameters.fromNameAndType("Join", QueryableStoreTypes.keyValueStore())
         );
         Map<String, Long> returnMap = new HashMap<>();
         counts.all().forEachRemaining(k -> {

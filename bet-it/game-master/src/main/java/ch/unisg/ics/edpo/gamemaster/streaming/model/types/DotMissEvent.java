@@ -1,11 +1,13 @@
 package ch.unisg.ics.edpo.gamemaster.streaming.model.types;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 
 public class DotMissEvent extends DotEvent{
-     @Getter @Setter
-    private final DotEventType dotEventType;
+    @Getter @Setter
+    @SerializedName("type")
+    private DotEventType dotEventType;
 
     public DotMissEvent() {
         super();

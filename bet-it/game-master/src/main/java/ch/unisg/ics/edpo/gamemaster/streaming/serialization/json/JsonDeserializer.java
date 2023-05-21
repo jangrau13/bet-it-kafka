@@ -41,7 +41,7 @@ public class JsonDeserializer<T> implements Deserializer<T> {
         try {
             return gson.fromJson(new String(bytes), type);
         } catch (JsonSyntaxException e) {
-            throw new CustomDeserilizationError("Failed to deserialize data for topic: " + topic, e);
+            throw new CustomDeserilizationError("Failed to deserialize data for topic: " + topic + " and for value " + new String(bytes) + " and type: " + type, e);
         }
     }
 

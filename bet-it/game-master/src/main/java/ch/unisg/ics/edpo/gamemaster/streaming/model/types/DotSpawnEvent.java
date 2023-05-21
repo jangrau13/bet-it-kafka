@@ -1,24 +1,20 @@
 package ch.unisg.ics.edpo.gamemaster.streaming.model.types;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 public class DotSpawnEvent extends DotEvent{
      @Getter @Setter
-    private final DotEventType dotEventType;
+     @SerializedName("type")
+    private DotEventType dotEventType;
 
     public DotSpawnEvent() {
         super();
         this.dotEventType = DotEventType.SPAWN;
     }
 
-    @Override
-    public String toString() {
-        return "DotSpawnEvent{" +
-                "Size=" + super.getSize() +
-                ", Color='" + super.getColor() + '\'' +
-                // Include other properties as needed
-                '}';
-    }
 }
 
