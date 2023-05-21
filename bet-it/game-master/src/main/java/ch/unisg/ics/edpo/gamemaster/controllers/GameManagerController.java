@@ -5,12 +5,19 @@ import ch.unisg.ics.edpo.shared.game.GameObject;
 import io.confluent.ksql.api.client.Client;
 import io.confluent.ksql.api.client.Row;
 import io.confluent.ksql.api.client.StreamedQueryResult;
+import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.StoreQueryParameters;
+import org.apache.kafka.streams.state.QueryableStoreTypes;
+import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -22,8 +29,11 @@ public class GameManagerController {
 
     private Client ksqlClient;
 
-    public GameManagerController(Client ksqlClient) {
+    private StreamsBuilderFactoryBean factoryBean;
+
+    public GameManagerController(Client ksqlClient, StreamsBuilderFactoryBean factoryBean) {
         this.ksqlClient = ksqlClient;
+        this.factoryBean = factoryBean;
     }
 
     @GetMapping("/activeGames")
@@ -40,13 +50,25 @@ public class GameManagerController {
         long timeout = 3000; // 3 seconds
 
         while ((row = sqr.poll()) != null) {
-            log.info("row: " + row.toString());
             l.add(mapRowToTransaction(row));
             if (System.currentTimeMillis() - startTime >= timeout) {
                 break;
             }
         }
         return l;
+    }
+
+    @GetMapping("/bigChances")
+    public Map<String,Long> getWordCount() {
+        KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
+        ReadOnlyKeyValueStore<String, Long> counts = kafkaStreams.store(
+                StoreQueryParameters.fromNameAndType("BigChances", QueryableStoreTypes.keyValueStore())
+        );
+        Map<String, Long> returnMap = new HashMap<>();
+        counts.all().forEachRemaining(k -> {
+            returnMap.put(k.key,k.value);
+        });
+        return returnMap;
     }
 
 

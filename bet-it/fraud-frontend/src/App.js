@@ -8,7 +8,7 @@ function App() {
 
   return (
       <div className="container">
-        <h1>Kafka Events</h1>
+        <h1 id={"overallTitle"}>Kafka Events</h1>
         <CreateGame/>
           <ActiveGames/>
       </div>

@@ -76,7 +76,7 @@ function CreateGame() {
     const startGameButton = () =>{
         if(showStart){
             return (
-                <button onClick={handleButtonClickStart}>Start Game</button>
+                <button id={"handleStart"} onClick={handleButtonClickStart}>Start Game</button>
             )
         }
     }
@@ -87,22 +87,22 @@ function CreateGame() {
                 <DotGame gameEvent={gameEvent} />
             ) : (
                 <>
-                    <label>
+                    <label id={"username"}>
                         Username:
                         <input type="text" value={username} onChange={handleUsernameChange} />
                     </label>
                     <br />
-                    <label>
+                    <label id={"hits"}>
                         Hits:
                         <input type="number" value={hits} onChange={handleHitsChange} />
                     </label>
                     <br />
-                    <label>
+                    <label id={"gameName"}>
                         Game Name:
                         <input type="text" value={gameName} onChange={handleGameNameChange} />
                     </label>
                     <br />
-                    <button onClick={handleButtonClickPublish}>Publish Game</button>
+                    <button id={"handlePublish"} onClick={handleButtonClickPublish}>Publish Game</button>
                     {startGameButton()}
                 </>
             )}

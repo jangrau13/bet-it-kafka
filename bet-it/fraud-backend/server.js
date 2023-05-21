@@ -21,6 +21,10 @@ app.ws('/hit', (ws, req) => {
     handleWebSocketRequest(ws, 'game.dot.hit' + testID);
 })
 
+app.ws('/friendlyfire', (ws, req) => {
+    handleWebSocketRequest(ws, 'game.dot.friendlyfire' + testID);
+})
+
 app.ws('/miss', (ws, req) => {
     handleWebSocketRequest(ws, 'game.dot.miss' + testID);
 })
