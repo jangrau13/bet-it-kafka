@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.gamemaster.streaming.model.types;
+package ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot;
 
 public enum DotEventType {
     SPAWN,

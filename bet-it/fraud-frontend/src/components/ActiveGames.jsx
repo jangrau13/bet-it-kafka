@@ -17,10 +17,12 @@ function ActiveGames() {
             }
         };
         fetchData();
+
     }, []);
 
     const handleStartGame = (gameId) => {
-        setSelectedGame(gameId);
+        let objectToSend = {...gameId, username: gameId.team1}
+        setSelectedGame(objectToSend);
     };
 
     const list = () => {
@@ -29,6 +31,8 @@ function ActiveGames() {
                 dataState.map((item) => (
                     <li className={"gameDetails"} key={item.gameId}>
                         <p>Game ID: {item.gameId}</p>
+                        <p>Description: {item.description}</p>
+                        <p>Projected hits: {item.projectedHits}</p>
                         <p>Team 1: {item.team1}</p>
                         <p>Team 2: {item.team2}</p>
                         <p>Game State: {item.gameState}</p>

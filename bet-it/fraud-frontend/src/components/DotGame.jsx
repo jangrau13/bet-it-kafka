@@ -11,8 +11,6 @@ const DotGame = (props) => {
     const [rounds, setRounds] = useState(0);
     const [gameEnded, setGameEnded] = useState(false);
 
-
-
     const sendCreate = () => {
             if (dot && dot.visible === true && dot.size > 0) {
                 let dotObject = {

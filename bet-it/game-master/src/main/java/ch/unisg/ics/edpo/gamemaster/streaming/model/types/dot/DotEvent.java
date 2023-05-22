@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.gamemaster.streaming.model.types;
+package ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;

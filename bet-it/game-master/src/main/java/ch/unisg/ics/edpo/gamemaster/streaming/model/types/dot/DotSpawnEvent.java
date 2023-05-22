@@ -1,11 +1,11 @@
-package ch.unisg.ics.edpo.gamemaster.streaming.model.types;
+package ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@ToString
+@ToString(callSuper = true)
 public class DotSpawnEvent extends DotEvent{
      @Getter @Setter
      @SerializedName("type")

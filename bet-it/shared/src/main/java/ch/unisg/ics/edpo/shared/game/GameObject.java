@@ -17,6 +17,9 @@ public class GameObject {
     @Getter
     private final String team2;
 
+    @Getter
+    private final String description;
+
     @Getter @Setter
     private GameState gameState;
 
@@ -26,18 +29,20 @@ public class GameObject {
     @Getter
     private final Boolean team1Wins;
 
-    public GameObject(String gameId, String team1, String team2, GameState gameState, Boolean team1Wins) {
+    public GameObject(String gameId, String team1, String team2, GameState gameState, Boolean team1Wins, String description) {
         this.gameId = gameId;
         this.team1 = team1;
         this.team2 = team2;
         this.gameState = gameState;
         this.team1Wins = team1Wins;
+        this.description = description;
     }
 
     public static GameObject fromMap(Map<String, Object> map) {
         String gameId = (String) map.get(Keys.GameObjectFields.GAME_ID);
         String team1 = (String) map.get(Keys.GameObjectFields.TEAM_1);
         String team2 = (String) map.get(Keys.GameObjectFields.TEAM_2);
+        String description = (String) map.get(Keys.GameObjectFields.DESCRIPTION);
 
         Object gameStateObj = map.get(Keys.GameObjectFields.GAME_STATE);
         if (!(gameStateObj instanceof String)) {
@@ -51,7 +56,7 @@ public class GameObject {
         }
         Boolean team1Wins = (Boolean) team1WinsObj;
 
-        return new GameObject(gameId, team1, team2, gameState, team1Wins);
+        return new GameObject(gameId, team1, team2, gameState, team1Wins, description);
     }
 
     public Map<String, Object> toMap() {
@@ -61,6 +66,7 @@ public class GameObject {
         map.put(Keys.GameObjectFields.TEAM_2, team2);
         map.put(Keys.GameObjectFields.GAME_STATE, gameState.toString());
         map.put(Keys.GameObjectFields.TEAM_1_WINS, team1Wins);
+        map.put(Keys.GameObjectFields.DESCRIPTION, description);
         return map;
     }
 

@@ -12,6 +12,7 @@ public class JsonSerializer<T> implements Serializer<T> {
     private Gson gson =
             new GsonBuilder()
                     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .serializeSpecialFloatingPointValues()
                     .create();
 
     /** Default constructor needed by Kafka */
@@ -22,7 +23,7 @@ public class JsonSerializer<T> implements Serializer<T> {
 
     @Override
     public byte[] serialize(String topic, T type) {
-        return gson.toJson(type.toString()).getBytes(StandardCharsets.UTF_8);
+        return gson.toJson(type).getBytes(StandardCharsets.UTF_8);
     }
     @Override
     public void close() {}

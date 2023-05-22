@@ -27,11 +27,16 @@ public class KafkaConfig {
     @Bean(name = KafkaStreamsDefaultConfiguration.DEFAULT_STREAMS_CONFIG_BEAN_NAME)
     KafkaStreamsConfiguration kStreamsConfig() {
 
+        String stateDir = System.getProperty("stateDir")!= null ? System.getProperty("stateDir") : "-DstateDir=/tmp/kafka-streams-ET"  ;
+
         Map<String, Object> props = new HashMap<>();
-        props.put(APPLICATION_ID_CONFIG, "game-master-streams");
+        props.put(APPLICATION_ID_CONFIG, "ygame-master-stream");
         props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG, WallclockTimestampExtractor.class);
         props.put(CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
+        props.put(STATE_DIR_CONFIG, stateDir);
+        props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.Long().getClass().getName());
 
         return new KafkaStreamsConfiguration(props);
     }

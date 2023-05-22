@@ -1,7 +1,10 @@
 package ch.unisg.ics.edpo.gamemaster.controllers;
 
 
+import ch.unisg.ics.edpo.gamemaster.streaming.model.joins.UserStats;
+import ch.unisg.ics.edpo.gamemaster.streaming.model.types.player.Player;
 import ch.unisg.ics.edpo.shared.game.GameObject;
+import ch.unisg.ics.edpo.shared.game.dot.DotGameObject;
 import io.confluent.ksql.api.client.Client;
 import io.confluent.ksql.api.client.Row;
 import io.confluent.ksql.api.client.StreamedQueryResult;
@@ -14,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +41,7 @@ public class GameManagerController {
     }
 
     @GetMapping("/activeGames")
-    public List<GameObject> getTransactionsByTargetAccountId() throws ExecutionException, InterruptedException {
+    public List<DotGameObject> getTransactionsByTargetAccountId() throws ExecutionException, InterruptedException {
         var streamQuery = """
                 select * from active_games;
                 """;
@@ -45,7 +49,7 @@ public class GameManagerController {
                 .streamQuery(streamQuery)
                 .get();
         Row row;
-        List<GameObject> l = new ArrayList<>();
+        List<DotGameObject> l = new ArrayList<>();
         long startTime = System.currentTimeMillis();
         long timeout = 3000; // 3 seconds
 
@@ -71,15 +75,42 @@ public class GameManagerController {
         return returnMap;
     }
 
-    @GetMapping("/testJoin")
+    @GetMapping("/hitsperGame")
     public Map<String,Long> getJoinValue() {
         KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
         ReadOnlyKeyValueStore<String, Long> counts = kafkaStreams.store(
-                StoreQueryParameters.fromNameAndType("Join", QueryableStoreTypes.keyValueStore())
+                StoreQueryParameters.fromNameAndType("HitsperGame", QueryableStoreTypes.keyValueStore())
         );
         Map<String, Long> returnMap = new HashMap<>();
         counts.all().forEachRemaining(k -> {
             returnMap.put(k.key,k.value);
+        });
+        return returnMap;
+    }
+
+    @GetMapping("/players")
+    public List<Player> getPlayers() {
+        KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
+        ReadOnlyKeyValueStore<String, Player> counts = kafkaStreams.store(
+                StoreQueryParameters.fromNameAndType("PlayerJoin", QueryableStoreTypes.keyValueStore())
+        );
+        List<Player> returnList = new ArrayList<>();
+        counts.all().forEachRemaining(k -> {
+
+            returnList.add(k.value);
+        });
+        return returnList;
+    }
+
+    @GetMapping("/userStats")
+    public Map<String,String> getUserStats() {
+        KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
+        ReadOnlyKeyValueStore<String, UserStats> counts = kafkaStreams.store(
+                StoreQueryParameters.fromNameAndType("UserStats", QueryableStoreTypes.keyValueStore())
+        );
+        Map<String, String> returnMap = new HashMap<>();
+        counts.all().forEachRemaining(k -> {
+            returnMap.put(k.key,k.value.toString());
         });
         return returnMap;
     }
@@ -92,7 +123,7 @@ public class GameManagerController {
                 .streamQuery(streamQuery)
                 .get();
         Row row;
-        List<GameObject> l = new ArrayList<>();
+        List<DotGameObject> l = new ArrayList<>();
         long startTime = System.currentTimeMillis();
         long timeout = 3000; // 3 seconds
 
@@ -105,8 +136,16 @@ public class GameManagerController {
         return l.size() > 0;
     }
 
-    private GameObject mapRowToTransaction(Row row) {
-        GameObject t = new GameObject(row.getString("GAMEID"), row.getString("TEAM1"), row.getString("TEAM2"),  GameObject.GameState.PUBLISHED, null);
+    private DotGameObject mapRowToTransaction(Row row) {
+        DotGameObject t = new DotGameObject(
+                row.getString("GAMEID"),
+                row.getString("TEAM1"),
+                row.getString("TEAM2"),
+                GameObject.GameState.PUBLISHED,
+                null,
+                row.getString("DESCRIPTION"),
+                row.getInteger("HITS")
+        );
         return t;
     }
 

@@ -21,6 +21,27 @@ app.ws('/hit', (ws, req) => {
     handleWebSocketRequest(ws, 'game.dot.hit' + testID);
 })
 
+app.ws('/newUser', (ws, req) => {
+    ws.on('message', msg => {
+        dotObject = JSON.parse(msg);
+        key = dotObject.playerId;
+        producer.send({
+            topic: "game.player",
+            messages: [
+                {
+                    key: key,
+                    value: msg
+                }
+            ],
+        })
+    })
+
+    ws.on('close', () => {
+        console.log('WebSocket was closed')
+    })
+})
+
+
 app.ws('/friendlyfire', (ws, req) => {
     handleWebSocketRequest(ws, 'game.dot.friendlyfire' + testID);
 })
@@ -39,6 +60,7 @@ app.ws('/publish', (ws, req) => {
 
 app.ws('/start', (ws, req) => {
     handleWebSocketRequest(ws, 'game.started'+ testID);
+    handleWebSocketRequest(ws, 'game.dot.started'+ testID);
 })
 
 app.ws('/end', (ws, req) => {
