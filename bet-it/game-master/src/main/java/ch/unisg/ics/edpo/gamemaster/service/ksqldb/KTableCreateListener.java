@@ -59,7 +59,7 @@ public class KTableCreateListener implements ApplicationListener<ContextRefreshe
                       state VARCHAR,
                       team1wins VARCHAR
                     ) WITH (
-                      kafka_topic='game.started',
+                      kafka_topic='camunda.game.started',
                       value_format='JSON'
                     );
                     """;

@@ -32,4 +32,8 @@ public class DotEvent {
     @Getter @Setter
     UUID gameId;
 
+    @SerializedName("projectedHits")
+    @Getter @Setter
+    int projectedHits;
+
 }
