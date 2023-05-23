@@ -100,5 +100,10 @@ public class Keys {
         public static final String TEAM_2 = "team2";
         public static final String GAME_STATE = "gameState";
         public static final String TEAM_1_WINS = "team1Wins";
+        public static final String DESCRIPTION = "description";
+    }
+
+    public static class DotGameObjectFields {
+        public static final String HITS = "hits";
     }
 }
