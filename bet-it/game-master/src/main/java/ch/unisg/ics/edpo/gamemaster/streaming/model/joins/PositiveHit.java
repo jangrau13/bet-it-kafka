@@ -31,6 +31,10 @@ public class PositiveHit {
     @Getter @Setter
     private boolean valid;
 
+    @SerializedName("projectedHits")
+    @Getter @Setter
+    private boolean projectedHits;
+
     public PositiveHit(){
 
     }

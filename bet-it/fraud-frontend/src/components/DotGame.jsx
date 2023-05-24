@@ -18,7 +18,8 @@ const DotGame = (props) => {
                     size: dot.size,
                     color: dot.color,
                     username: props.gameEvent.username,
-                    gameId: props.gameEvent.gameId
+                    gameId: props.gameEvent.gameId,
+                    projectedHits: props.gameEvent.projectedHits
                 };
 
                 const socket = new WebSocket('ws://localhost:3001/spawn');
@@ -69,7 +70,8 @@ const DotGame = (props) => {
             size: dot.size,
             color: dot.color,
             username: props.gameEvent.username,
-            gameId: props.gameEvent.gameId
+            gameId: props.gameEvent.gameId,
+            projectedHits: props.gameEvent.projectedHits
         };
 
         const socket = new WebSocket('ws://localhost:3001/hit');
@@ -91,7 +93,8 @@ const DotGame = (props) => {
             size: friendlyFireDot.size,
             color: friendlyFireDot.color,
             username: props.gameEvent.username,
-            gameId: props.gameEvent.gameId
+            gameId: props.gameEvent.gameId,
+            projectedHits: props.gameEvent.projectedHits
         };
 
         const socket = new WebSocket('ws://localhost:3001/friendlyfire');
@@ -111,7 +114,8 @@ const DotGame = (props) => {
             size: dot.size,
             color: dot.color,
             username: props.gameEvent.username,
-            gameId: props.gameEvent.gameId
+            gameId: props.gameEvent.gameId,
+            projectedHits: props.gameEvent.projectedHits
         };
 
         const socket = new WebSocket('ws://localhost:3001/miss');

@@ -1,5 +1,6 @@
 package ch.unisg.ics.edpo.gamemaster.streaming.serialization.json;
 
+import ch.unisg.ics.edpo.gamemaster.streaming.model.joins.GameResult;
 import ch.unisg.ics.edpo.gamemaster.streaming.model.joins.UserStats;
 import ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot.DotFriendlyFireEvent;
 import ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot.DotHitEvent;
@@ -15,6 +16,11 @@ public class JsonSerdes {
     public static Serde<DotSpawnEvent> DotSpawnEvent() {
         JsonSerializer<DotSpawnEvent> serializer = new JsonSerializer<>();
         JsonDeserializer<DotSpawnEvent> deserializer = new JsonDeserializer<>(DotSpawnEvent.class);
+        return Serdes.serdeFrom(serializer, deserializer);
+    }
+    public static Serde<GameResult> GameResult() {
+        JsonSerializer<GameResult> serializer = new JsonSerializer<>();
+        JsonDeserializer<GameResult> deserializer = new JsonDeserializer<>(GameResult.class);
         return Serdes.serdeFrom(serializer, deserializer);
     }
     public static Serde<DotMissEvent> DotMissEvent() {

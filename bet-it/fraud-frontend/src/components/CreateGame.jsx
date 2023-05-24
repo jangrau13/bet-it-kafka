@@ -80,7 +80,7 @@ function CreateGame() {
                     team1: username,
                     team2: "rest of the world",
                     description: gameName + ": " + username + "; projected hits: " + hits,
-                    hits,
+                    projectedHits: hits,
                     gameName,
                     gameType: "DOT",
                     state: "STARTED"
