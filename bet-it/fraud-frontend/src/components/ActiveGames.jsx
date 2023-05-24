@@ -21,7 +21,7 @@ function ActiveGames() {
     }, []);
 
     const handleStartGame = (gameId) => {
-        let objectToSend = {...gameId, username: gameId.team1}
+        let objectToSend = {...gameId, username: gameId.team1, projectedHits: gameId.projectedHits}
         setSelectedGame(objectToSend);
     };
 

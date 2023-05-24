@@ -1,5 +1,6 @@
 package ch.unisg.ics.edpo.gamemaster.streaming.topology;
 
+import ch.unisg.ics.edpo.gamemaster.streaming.model.joins.GameResult;
 import ch.unisg.ics.edpo.gamemaster.streaming.model.joins.PositiveHit;
 
 import ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot.DotHitEvent;
@@ -7,14 +8,21 @@ import ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot.DotHitEvent;
 import ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot.DotSpawnEvent;
 
 import ch.unisg.ics.edpo.gamemaster.streaming.model.types.game.DotGame;
+import ch.unisg.ics.edpo.gamemaster.streaming.model.types.player.Player;
 import ch.unisg.ics.edpo.gamemaster.streaming.serialization.json.JsonSerdes;
 import ch.unisg.ics.edpo.gamemaster.streaming.timestampExtractors.DotEventTimestampExtractor;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.StreamsBuilder;
 
+
 import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.processor.*;
+
+import org.apache.kafka.streams.state.KeyValueStore;
+import org.apache.kafka.streams.state.WindowStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.Date;
+import java.util.Map;
 
 
 @Component
@@ -54,7 +64,6 @@ public class DotGameTopology {
                             return (event.getSize() > 50);
                         });
 
-
         bigChancesStream.groupByKey().count(Materialized.as("BigChances"));
 
         KStream<String, PositiveHit> joined = spawnStream
@@ -66,10 +75,26 @@ public class DotGameTopology {
                                 .with(Serdes.String(),JsonSerdes.DotSpawnEvent(),JsonSerdes.DotHitEvent())
                 );
 
-        joined
-                        .filter((k,v) -> (v.isValid()))
-                        .groupByKey()
-                        .count(Materialized.as("Hitspergame"));
+        KTable<String, Long> hitsperGame = joined
+                .filter((k, v) -> (v.isValid()))
+                .groupByKey()
+                .count(Materialized.as("Hitspergame"));
+
+
+        spawnStream.toTable().leftJoin(
+                hitsperGame,
+                GameResult::new
+        )
+                .toStream()
+                .groupByKey()
+                //.windowedBy(TimeWindows.of(Duration.ofSeconds(10)))
+                .reduce(
+                        (value1, value2) -> value2,
+                        Materialized.with(Serdes.String(),JsonSerdes.GameResult())
+                )
+                .suppress(Suppressed.untilTimeLimit(Duration.ofSeconds(20),Suppressed.BufferConfig.unbounded()))
+                .toStream()
+                .to("camunda.game.ended", Produced.with(Serdes.String(), JsonSerdes.GameResult()));
 
    }
 

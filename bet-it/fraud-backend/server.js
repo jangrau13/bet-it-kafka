@@ -59,7 +59,7 @@ app.ws('/publish', (ws, req) => {
 })
 
 app.ws('/start', (ws, req) => {
-    handleWebSocketRequest(ws, 'game.started'+ testID);
+    handleWebSocketRequest(ws, 'camunda.game.started'+ testID);
     handleWebSocketRequest(ws, 'game.dot.started'+ testID);
 })
 
