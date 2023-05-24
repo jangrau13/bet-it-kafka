@@ -1,14 +1,11 @@
-package ch.unisg.ics.edpo.gamemaster.controllers;
+package ch.unisg.ics.edpo.gamemaster.port;
 
 
-import ch.unisg.ics.edpo.gamemaster.service.ksqldb.KTableCreator;
+import ch.unisg.ics.edpo.gamemaster.service.KTableCreator;
+import ch.unisg.ics.edpo.gamemaster.service.TableViewerService;
 import ch.unisg.ics.edpo.gamemaster.streaming.model.joins.UserStats;
 import ch.unisg.ics.edpo.gamemaster.streaming.model.types.player.Player;
-import ch.unisg.ics.edpo.shared.game.GameObject;
 import ch.unisg.ics.edpo.shared.game.dot.DotGameObject;
-import io.confluent.ksql.api.client.Client;
-import io.confluent.ksql.api.client.Row;
-import io.confluent.ksql.api.client.StreamedQueryResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StoreQueryParameters;
@@ -29,16 +26,17 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class GameManagerController {
 
-    private final Client ksqlClient;
 
     private final StreamsBuilderFactoryBean factoryBean;
 
     private final KTableCreator kTableCreator;
 
-    public GameManagerController(Client ksqlClient, StreamsBuilderFactoryBean factoryBean, KTableCreator kTableCreator) {
-        this.ksqlClient = ksqlClient;
+    private final TableViewerService tableViewerService;
+
+    public GameManagerController(StreamsBuilderFactoryBean factoryBean, KTableCreator kTableCreator, TableViewerService tableViewerService) {
         this.factoryBean = factoryBean;
         this.kTableCreator = kTableCreator;
+        this.tableViewerService = tableViewerService;
     }
 
     @GetMapping("/activeGames")
@@ -47,10 +45,9 @@ public class GameManagerController {
                 select * from active_games;
                 """;
         try {
-            return getAllDotGameObjects(streamQuery);
+            return tableViewerService.getAllDotGameObjects(streamQuery);
         } catch (Exception e){
             log.error("Error in active Games", e);
-            kTableCreator.createTables();
             return new ArrayList<>();
         }
     }
@@ -103,7 +100,6 @@ public class GameManagerController {
             return returnList;
         } catch (Exception e) {
             log.error("Error in player");
-            kTableCreator.createTables();
             return new ArrayList<>();
         }
     }
@@ -125,79 +121,8 @@ public class GameManagerController {
     @GetMapping("/check")
     public boolean getTransactionsByTargetAccountId(@RequestParam String gameId) throws ExecutionException, InterruptedException {
         var streamQuery = "select * from active_games where gameId = '" + gameId + "';";
-        return getAllDotGameObjects(streamQuery).size() > 0;
+        return tableViewerService.getAllDotGameObjects(streamQuery).size() > 0;
     }
 
-    private List<DotGameObject> getAllDotGameObjects(String streamQuery) throws InterruptedException, ExecutionException {
-        StreamedQueryResult sqr = this.ksqlClient
-                .streamQuery(streamQuery)
-                .get();
-        Row row;
-        List<DotGameObject> l = new ArrayList<>();
-        long startTime = System.currentTimeMillis();
-        long timeout = 3000; // 3 seconds
-
-        while ((row = sqr.poll()) != null) {
-            l.add(mapRowToTransaction(row));
-            if (System.currentTimeMillis() - startTime >= timeout) {
-                break;
-            }
-        }
-        return l;
-    }
-
-    private DotGameObject mapRowToTransaction(Row row) {
-        log.info("Trying to map Row {}", row);
-        String gameId = null;
-        String team1 = null;
-        String team2 = null;
-        GameObject.GameState gameState = GameObject.GameState.PUBLISHED;
-        String description = null;
-        Integer hits = null;
-        try {
-            gameId = row.getString("GAMEID");
-        } catch (Exception e) {
-            // Log the error
-            log.error("Error retrieving GAMEID: " + e.getMessage());
-        }
-
-        try {
-            team1 = row.getString("TEAM1");
-        } catch (Exception e) {
-            // Log the error
-            log.error("Error retrieving TEAM1: " + e.getMessage());
-        }
-
-        try {
-            team2 = row.getString("TEAM2");
-        } catch (Exception e) {
-            // Log the error
-            log.error("Error retrieving TEAM2: " + e.getMessage());
-        }
-
-        try {
-            description = row.getString("DESCRIPTION");
-        } catch (Exception e) {
-            // Log the error
-            log.error("Error retrieving DESCRIPTION: " + e.getMessage());
-        }
-
-        try {
-            hits = row.getInteger("HITS");
-        } catch (Exception e) {
-            // Log the error
-            log.error("Error retrieving HITS: " + e.getMessage());
-        }
-
-        return new DotGameObject(
-                gameId,
-                team1,
-                team2,
-                GameObject.GameState.PUBLISHED,
-                null,
-                description,
-                hits
-        );
-    }
 
 }

@@ -29,6 +29,10 @@ public class Bank {
         initBankMoney();
     }
 
+    public Double getMoneyOfUser(String user) {
+        return moneyBalances.getOrDefault(user, null);
+    }
+
     /**
      * Careful this wipes state
      */

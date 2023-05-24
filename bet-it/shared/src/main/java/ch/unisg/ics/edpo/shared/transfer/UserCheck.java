@@ -2,6 +2,7 @@ package ch.unisg.ics.edpo.shared.transfer;
 
 import ch.unisg.ics.edpo.shared.Keys;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +11,8 @@ public class UserCheck {
     @Getter
     private final String user;
 
-    @Getter
-    private final UserCheckResult result;
+    @Getter @Setter
+    private UserCheckResult result;
 
     @Getter
     private final String correlationKey;
@@ -35,8 +36,10 @@ public class UserCheck {
         map.put(Keys.UserCheckKeys.CORRELATION_ID, correlationKey);
         return map;
     }
+
+
     public enum UserCheckResult {
-        APPROVED, REJECTED
+        APPROVED, REJECTED, REQUESTED
     }
 }
 

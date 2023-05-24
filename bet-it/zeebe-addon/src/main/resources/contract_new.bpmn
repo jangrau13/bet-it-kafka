@@ -7,6 +7,8 @@
         <zeebe:taskDefinition type="send-to-kafka" />
         <zeebe:ioMapping>
           <zeebe:input source="=&#34;user.check-request&#34;" target="topic" />
+          <zeebe:input source="=contractorName" target="user" />
+          <zeebe:input source="=&#34;REQUESTED&#34;" target="userResult" />
         </zeebe:ioMapping>
         <zeebe:properties />
       </bpmn:extensionElements>
@@ -133,7 +135,7 @@
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_05syyl8" sourceRef="Gateway_1aslitf" targetRef="Event_0exygo8" />
     <bpmn:sequenceFlow id="Flow_04i2zs5" sourceRef="Event_0exygo8" targetRef="Gateway_0wyglcw" />
-    <bpmn:intermediateCatchEvent id="Event_1bvo6ny" name="15 sec">
+    <bpmn:intermediateCatchEvent id="Event_1bvo6ny" name="45 sec">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:output source="=&#34;REJECTED&#34;" target="gameCheckResult" />
@@ -142,7 +144,7 @@
       <bpmn:incoming>Flow_0bwxf3c</bpmn:incoming>
       <bpmn:outgoing>Flow_0sfn43z</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0iwondm">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT15S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT45S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_0bwxf3c" sourceRef="Gateway_1k9g539" targetRef="Event_1bvo6ny" />
@@ -203,6 +205,9 @@
       <bpmndi:BPMNShape id="BPMNShape_0o0k6nf" bpmnElement="Gateway_15kk2b4" isMarkerVisible="true">
         <dc:Bounds x="1175" y="305" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vcjpm6_di" bpmnElement="Event_0vcjpm6">
+        <dc:Bounds x="1302" y="312" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_17krtbn" bpmnElement="Gateway_05jx72o" isMarkerVisible="true">
         <dc:Bounds x="835" y="185" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -229,9 +234,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="684" y="82" width="33" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0vcjpm6_di" bpmnElement="Event_0vcjpm6">
-        <dc:Bounds x="1302" y="312" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1wma38a_di" bpmnElement="Flow_1wma38a">
         <di:waypoint x="310" y="340" />

@@ -145,7 +145,9 @@ const DotGame = (props) => {
 
                     const socket = new WebSocket('ws://localhost:3001/end');
 
+                    console.log()
                     socket.addEventListener('open', () => {
+                        console.log("Ending the game", gameObject)
                         socket.send(JSON.stringify(gameObject));
                     });
 

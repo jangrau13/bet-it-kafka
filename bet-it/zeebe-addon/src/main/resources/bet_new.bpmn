@@ -85,11 +85,11 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_08e2c12" messageRef="Message_0s9jbg7" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1ai5v4h" sourceRef="Gateway_050miqg" targetRef="game_ended_element" />
-    <bpmn:intermediateCatchEvent id="timer_game_ended" name="5 minute">
+    <bpmn:intermediateCatchEvent id="timer_game_ended" name="15 minute">
       <bpmn:incoming>Flow_16pdeky</bpmn:incoming>
       <bpmn:outgoing>Flow_1s91qqt</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0ay18r3">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT15M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_16pdeky" sourceRef="Gateway_050miqg" targetRef="timer_game_ended" />
@@ -295,7 +295,7 @@
       <bpmndi:BPMNShape id="Event_1jrze9f_di" bpmnElement="timer_game_ended" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
         <dc:Bounds x="1212" y="572" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1210" y="615" width="43" height="14" />
+          <dc:Bounds x="1207" y="615" width="49" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_07c8q6a_di" bpmnElement="Event_07c8q6a">
@@ -339,12 +339,12 @@
       <bpmndi:BPMNShape id="Gateway_0js7di9_di" bpmnElement="Gateway_0js7di9" isMarkerVisible="true">
         <dc:Bounds x="695" y="555" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17aflbm_di" bpmnElement="Event_17aflbm">
+        <dc:Bounds x="162" y="562" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_062773s" bpmnElement="send_bet_done_element" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
         <dc:Bounds x="275" y="540" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_17aflbm_di" bpmnElement="Event_17aflbm">
-        <dc:Bounds x="162" y="562" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1gocdzh_di" bpmnElement="buyer_frozen_true_condition">
         <di:waypoint x="495" y="130" />

@@ -27,7 +27,7 @@ public class AddonConsumerService {
 
     @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "addon")
     public void consumeCamundaMessage(Map<String, Object> variables, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
-        log.info("**** -> Consuming Camunda Variables:: {} from topic {}", variables, topic);
+        log.info("*******" + topic   + "-> Consuming Camunda Variables:: {} from topic {}", variables, topic);
         String correlationId = getCorrelationId(variables);
         if (startTopics.contains(topic)) {
             startCamundaProcess(topic, variables);

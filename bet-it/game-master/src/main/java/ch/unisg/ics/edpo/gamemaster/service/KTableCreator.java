@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.gamemaster.service.ksqldb;
+package ch.unisg.ics.edpo.gamemaster.service;
 
 import io.confluent.ksql.api.client.Client;
 import io.confluent.ksql.api.client.ExecuteStatementResult;
@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class KTableCreator implements ApplicationListener<ContextRefreshedEvent> {
 
-    private Client ksqlClient;
+    private final Client ksqlClient;
 
     public KTableCreator(Client ksqlClient) {
         this.ksqlClient = ksqlClient;
@@ -53,7 +53,7 @@ public class KTableCreator implements ApplicationListener<ContextRefreshedEvent>
                   team1 VARCHAR,
                   team2 VARCHAR,
                   description VARCHAR,
-                  hits INT,
+                  projectedHits INT,
                   gameName VARCHAR,
                   gameType VARCHAR,
                   state VARCHAR,
@@ -75,7 +75,7 @@ public class KTableCreator implements ApplicationListener<ContextRefreshedEvent>
                   team1 VARCHAR,
                   team2 VARCHAR,
                   description VARCHAR,
-                  hits INT,
+                  projectedHits INT,
                   gameName VARCHAR,
                   gameType VARCHAR,
                   state VARCHAR,
@@ -97,7 +97,7 @@ public class KTableCreator implements ApplicationListener<ContextRefreshedEvent>
                   team1 VARCHAR,
                   team2 VARCHAR,
                   description VARCHAR,
-                  hits INT,
+                  projectedHits INT,
                   gameName VARCHAR,
                   gameType VARCHAR,
                   state VARCHAR,
@@ -114,15 +114,15 @@ public class KTableCreator implements ApplicationListener<ContextRefreshedEvent>
     private void createActiveGameTable() throws ExecutionException, InterruptedException {
         String sql = """
                 CREATE TABLE IF NOT EXISTS active_games AS
-                SELECT p.gameId gameId, 
-                p.username username, 
-                p.team1 team1, 
-                p.team2 team2, 
-                p.description description, 
-                p.hits hits, 
-                p.gameName gameName, 
-                p.gameType gameType, 
-                p.state state, 
+                SELECT p.gameId gameId,
+                p.username username,
+                p.team1 team1,
+                p.team2 team2,
+                p.description description,
+                p.projectedHits hits,
+                p.gameName gameName,
+                p.gameType gameType,
+                p.state state,
                 p.team1wins team1wins
                 FROM game_published_view p
                 LEFT OUTER JOIN game_started_view s ON p.gameId = s.gameId
