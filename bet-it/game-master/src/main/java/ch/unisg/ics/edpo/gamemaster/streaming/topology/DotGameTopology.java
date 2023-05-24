@@ -2,46 +2,29 @@ package ch.unisg.ics.edpo.gamemaster.streaming.topology;
 
 import ch.unisg.ics.edpo.gamemaster.streaming.model.joins.GameResult;
 import ch.unisg.ics.edpo.gamemaster.streaming.model.joins.PositiveHit;
-
 import ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot.DotHitEvent;
-
 import ch.unisg.ics.edpo.gamemaster.streaming.model.types.dot.DotSpawnEvent;
-
-import ch.unisg.ics.edpo.gamemaster.streaming.model.types.game.DotGame;
-import ch.unisg.ics.edpo.gamemaster.streaming.model.types.player.Player;
 import ch.unisg.ics.edpo.gamemaster.streaming.serialization.json.JsonSerdes;
 import ch.unisg.ics.edpo.gamemaster.streaming.timestampExtractors.DotEventTimestampExtractor;
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.StreamsBuilder;
-
-
 import org.apache.kafka.streams.kstream.*;
-import org.apache.kafka.streams.processor.*;
-
-import org.apache.kafka.streams.state.KeyValueStore;
-import org.apache.kafka.streams.state.WindowStore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.Date;
-import java.util.Map;
 
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class DotGameTopology {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     void buildPipeline(StreamsBuilder builder){
-
+        log.info("The Streambuilder actually has been called");
         Consumed<String, DotSpawnEvent> spawnConsumerOptions =
                 Consumed.with(Serdes.String(), JsonSerdes.DotSpawnEvent())
                         .withTimestampExtractor(new DotEventTimestampExtractor());

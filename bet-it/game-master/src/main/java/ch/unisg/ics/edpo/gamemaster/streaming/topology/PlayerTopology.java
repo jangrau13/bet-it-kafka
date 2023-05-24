@@ -8,6 +8,7 @@ import ch.unisg.ics.edpo.gamemaster.streaming.model.types.player.Player;
 import ch.unisg.ics.edpo.gamemaster.streaming.serialization.json.JsonSerdes;
 import ch.unisg.ics.edpo.gamemaster.streaming.timestampExtractors.DotEventTimestampExtractor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
@@ -22,9 +23,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class PlayerTopology {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     void buildPipeline(StreamsBuilder builder) {
 

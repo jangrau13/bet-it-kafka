@@ -22,7 +22,7 @@ function CreateUser() {
 
         socket.addEventListener('open', () => {
             socket.send(JSON.stringify(userObject));
-            console.log('Player Published');
+            console.log('Player Published', JSON.stringify(userObject));
         });
 
         socket.addEventListener('error', (error) => {

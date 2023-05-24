@@ -2,6 +2,7 @@ package ch.unisg.ics.edpo.shared.transfer;
 
 import ch.unisg.ics.edpo.shared.Keys;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +14,8 @@ public class GameValidCheck {
     @Getter
     private final String correlationKey;
 
-    @Getter
-    private final GameValidStatus result;
+    @Getter @Setter
+    private GameValidStatus result;
     public GameValidCheck(String gameId, GameValidStatus gameValidStatus) {
         this.gameId = gameId;
         this.correlationKey = gameId;

@@ -35,7 +35,7 @@ public class DotGame {
     @Setter
     String description;
 
-    @SerializedName("hits")
+    @SerializedName("projectedHits")
     @Getter
     @Setter
     int hits;

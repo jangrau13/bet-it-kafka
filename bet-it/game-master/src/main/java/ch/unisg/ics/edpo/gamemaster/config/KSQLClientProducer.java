@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.gamemaster.service.ksqldb;
+package ch.unisg.ics.edpo.gamemaster.config;
 
 import io.confluent.ksql.api.client.Client;
 import io.confluent.ksql.api.client.ClientOptions;

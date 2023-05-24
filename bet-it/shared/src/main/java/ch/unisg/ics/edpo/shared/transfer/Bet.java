@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -65,6 +66,9 @@ public class Bet extends ContractData {
     }
 
     private LocalDateTime convertDateFromMap(Map<String, Object> map){
+        if (map.get(Keys.BetDataKeys.BET_CREATION_TIMESTAMP) == null) {
+            return LocalDateTime.now();
+        }
         String dateTime = (String) map.get(Keys.BetDataKeys.BET_CREATION_TIMESTAMP);
         return LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME);
     }

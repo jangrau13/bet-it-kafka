@@ -7,6 +7,7 @@ import ch.unisg.ics.edpo.shared.transfer.ContractData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -27,5 +28,15 @@ public class KafkaProducerService {
     public void requestBet(Bet bet) {
         Map<String, Object> map = bet.toMap();
         kafkaMapProducer.sendMessage(map, Topics.Bet.BET_REQUESTED, USELESS_KEY_TO_SAME_PARTITION);
+    }
+
+    public void startAddUserWorkflow() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("hihi", "hoho");
+        kafkaMapProducer.sendMessage(map, Topics.User.ADD_USER, USELESS_KEY_TO_SAME_PARTITION);
+    }
+
+    public void send2FA(Map<String, Object> map){
+        kafkaMapProducer.sendMessage(map, Topics.User.TWO_FA, USELESS_KEY_TO_SAME_PARTITION);
     }
 }

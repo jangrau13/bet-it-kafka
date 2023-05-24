@@ -55,6 +55,19 @@ public class Topics {
         public static final String BET_REJECTED = "bet.rejected";
 
         public static final String BET_ACCEPTED = "bet.accepted";
+
+        public static final String BET_DONE = "bet.done";
+
+        public static final String BET_ERROR = "bet.error";
+    }
+    public static class User {
+        public static final String ADD_USER = "camunda.add-user";
+
+        public static final String NEW_USER_CREATED = "user.new";
+
+        public static final String USER_CORRELATION_ID = "user.correlation-id";
+
+        public static final String TWO_FA = "camunda.twofa";
     }
 }
 

@@ -7,19 +7,99 @@ install the following software:
 select Camunda Platform Version 8.2 (alpha) for all the documents created and creating.
 
 ## Build
+```shell
+cd bet-it
 mvn clean install -DskipTests
 docker-compose up --build -d
+```
 
 ## Development
 Run frontend in docker
 ```shell
-docker-compose -f bet-it/docker-compose.yml up fraud-frontend --build 
-docker-compose -f bet-it/docker-compose.yml up fraud-backend --build
-docker-compose -f bet-it/docker-compose.yml up bank --build
+cd bet-it
+docker-compose -f docker-compose.yml up fraud-frontend --build 
+docker-compose -f docker-compose.yml up fraud-backend --build
+docker-compose -f docker-compose.yml up bank --build
+docker-compose -f docker-compose.yml up bet-it-platform --build
+docker-compose -f docker-compose.yml up game-master --build
 ```
 
-## Monitor Kafka
+### Monitor Kafka
 open [kafdrop](http://localhost:9000) and have a look at the topics
+## Add a User
+### 1. Start Add User Workflow
+```shell
+1. curl --location --request POST 'localhost:8082/platform/addUser'
+```
+### 2. Do Usertask
+Open [Zeebe Tasklist](http://localhost:8181) and login with user demo and password demo
+### 3. Get Correlation ID
+Open bet-platform logs and copy correlationId
+### 4. Send 2FA Request
+```shell
+curl --location 'localhost:8082/platform/twoFactor' \
+--header 'Content-Type: application/json' \
+--data '{
+    "user": "Ping",
+    "password": "Passw12",
+    "correlationId": "d3f4d0b1-f9be-4c9b-94cc-f788aec2e746"
+}'
+```
+
+
+## Bank
+### Add Balance 
+```shell
+curl --location 'localhost:8081/demo/add_money' \
+--header 'Content-Type: application/json' \
+--data '{"name": "klaus", "amount": 2000.0}'
+```
+### Show balances
+```shell
+curl --location 'localhost:8081/demo/balance'
+```
+### Wipe in-memory balances
+```shell
+curl --location 'localhost:8081/demo/wipe'
+```
+### Replay balances from kafka events
+```shell
+curl --location 'localhost:8081/demo/replay'
+```
+## Bet Platform
+### Create Contract (Game must exist and contractorName User)
+```shell
+curl --location 'localhost:8082/platform/publishContract' \
+--header 'Content-Type: application/json' \
+--data '{
+    "ratio": 4.3,
+    "contractorName": "lukas",
+    "gameId": "47ef6d49-ff73-4ff6-a91a-ac4e450276a7",
+    "teamOneWinsContract": true
+}'
+```
+### Checkout Contract State
+```shell
+curl --location 'localhost:8082/platform/contract/{contractId}
+```
+### Create Bet (Contract must be in accepted state)
+```shell
+curl --location 'localhost:8082/platform/publishBet' \
+--header 'Content-Type: application/json' \
+--data '{
+   "buyerName": "albrecht",
+   "amountBought": 20.01,
+   "contractId": "eb21f70e-64e9-4c24-a517-50d62480c8ef"
+}'
+```
+## Game
+1. Go to http://localhost:3000
+2. Publish a game
+3. Create contract on the game
+4. Create bet on the contract
+5. Play the game
+6. Use [operate-service](http://localhost:8180) to see the process workflows
+
 
 ## add a new User
 1. Open Desktop Modeler
@@ -38,65 +118,9 @@ open [kafdrop](http://localhost:9000) and have a look at the topics
 14. if done right, you can inspect [kafdrop](http://localhost:9000) for the topic bet.added-new-customer to see. Also intersting is the camunda topic. There you will see everything via the [Kafka Camunda API](#kafka-camunda-api)
 
 
-## How to Create and Win a Bet
-1. publish a game via the game-master 
-```shell
-curl - --location 'localhost:8083/game/publish' \
---data 'STRING :: your name of the game'
-```
-2. get the gameId from the response header
-3. use it to create a contract via the bet platform
-```shell
-curl -v --location 'localhost:8082/platform/publishContract' \
---header 'Content-Type: application/json' \
---data '{
-    "ratio": <FLOAT :: the ratio you want to set your contract (i.e.2.0 for 1 to 2 bets)>,
-    "homeTeamWinsBet": <"False/True" :: to tell whether the Home Team will win>,
-    "contractorName": <STRING :: not checked yet(since we are integrating Kafka Streams for this feature as well), however if you want to be save, take a user name that starts with "good" for a successfull result, "bad" for a declined result and "error" for an error-result>, 
-    "gameId": <STRING :: gameId from above>
-}'
-```
-4. use the [operate-service](http://localhost:8180) with demo/demo to see the state of the processes
-5. get the contractId from the response header
-6. go to the [tasklist](http://localhost:8181) with demo/demo and select the task "check risk manually". Check the box if you trust this user and continue
-7. use the gameId and the contractId to create a bet via the bet platform
-```shell
-curl -v --location 'localhost:8082/platform/publishBet' \
---header 'Content-Type: application/json' \
---data '{
-    "amount": <INTEGER :: the amount you want to bet on>,
-    "bidderName": <STRING :: not checked yet(since we are integrating Kafka Streams for this feature as well), however if you want to be save, take a user name that starts with "good" for a successfull result, "bad" for a declined result and "error" for an error-result>, 
-    "gameId": <STRING :: gameId from above>,
-    "contractId": <STRING :: contractId from above>
-}'
-```
-8. get the betId from the response
-10. use the [operate-service](http://localhost:8180) with demo/demo to see the state of the processes
-11. start the game via the game-platform
-```shell
-curl --location --request PUT 'localhost:8083/game/start' \
---data '<STRING :: gameId from above>'
-```
-11. end the game via the game-platform
-```shell
-curl --location --request PUT 'localhost:8083/game/end' \
---data '<STRING :: gameId from above>'
-```
-12. use the [operate-service](http://localhost:8180) with demo/demo to see the state of the processes
-13. if detected, tell the riskmanagement that the bet was frauded:
-```shell
-curl --location --request PUT 'localhost:8083/game/end' \
---data '<STRING :: betId from above>'
-```
-14. use the [operate-service](http://localhost:8180) with demo/demo to see the state of the processes
-15. if you don't detect any fraud, the bet will finalized after 5 minutes
-
-
 ## ToDos
 - [ ] use Kafka Streaming to have a ledger
 - [ ] use KSQL for the bet platform to keep the state of game, contracts and bets
-
-
 
 ## Kafka Camunda API
 We were expecting Kafka and Camunda to operate more easily, so that you can tell camunda as a task (with an own implementation for every task) to post a topic on Kafka and for a Microservice to start a Camunda Process by posting something on Kafka.

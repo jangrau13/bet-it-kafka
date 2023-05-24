@@ -70,9 +70,6 @@ public class RiskManagementController {
     public ResponseEntity<Void> publishContract(@RequestBody String betId) {
         log.info("Publishing Fraud detection for Bet: " + betId);
 
-
-
-
         HttpHeaders responseHeaders = new HttpHeaders();
         // Construct and advertise the URI of the newly created task; we retrieve the base URI
         // from the application.properties file
@@ -81,7 +78,6 @@ public class RiskManagementController {
         fraudMap.put(BET_ID, betId);
         fraudMap.put(CORRELATION_ID, betId);
         fraudMap.put(MESSAGE_NAME, FRAUD_DETECTED);
-
 
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     }

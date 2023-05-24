@@ -1,17 +1,21 @@
 package ch.unisg.ics.edpo.gamemaster.config;
 
+import ch.unisg.ics.edpo.shared.Topics;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.processor.WallclockTimestampExtractor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.EnableKafkaStreams;
 import org.springframework.kafka.annotation.KafkaStreamsDefaultConfiguration;
 import org.springframework.kafka.config.KafkaStreamsConfiguration;
+import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.kafka.core.KafkaAdmin;
 
+import java.beans.BeanProperty;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +41,7 @@ public class KafkaConfig {
         props.put(STATE_DIR_CONFIG, stateDir);
         props.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.Long().getClass().getName());
-
+        props.put("allow.auto.create.topics", true);
         return new KafkaStreamsConfiguration(props);
     }
 }

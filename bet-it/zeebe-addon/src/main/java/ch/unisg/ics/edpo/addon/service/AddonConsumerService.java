@@ -22,12 +22,12 @@ public class AddonConsumerService {
 
     public AddonConsumerService(ZeebeClientLifecycle client) {
         this.client = client;
-        this.startTopics = List.of(new String[]{Topics.Contract.CONTRACT_REQUESTED, Topics.Bet.BET_REQUESTED});
+        this.startTopics = List.of(new String[]{Topics.Contract.CONTRACT_REQUESTED, Topics.Bet.BET_REQUESTED, Topics.User.ADD_USER});
     }
 
     @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "addon")
     public void consumeCamundaMessage(Map<String, Object> variables, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
-        log.info("**** -> Consuming Camunda Variables:: {} from topic {}", variables, topic);
+        log.info("*******" + topic   + "-> Consuming Camunda Variables:: {} from topic {}", variables, topic);
         String correlationId = getCorrelationId(variables);
         if (startTopics.contains(topic)) {
             startCamundaProcess(topic, variables);

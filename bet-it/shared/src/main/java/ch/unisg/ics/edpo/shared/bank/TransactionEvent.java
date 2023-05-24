@@ -1,4 +1,4 @@
-package ch.unisg.ics.edpo.bank.domain;
+package ch.unisg.ics.edpo.shared.bank;
 
 import ch.unisg.ics.edpo.shared.util.ParseUtils;
 import ch.unisg.ics.edpo.shared.Keys;
@@ -28,11 +28,15 @@ public class TransactionEvent {
     @Setter
     private TRANSACTION_STATUS status;
 
-    public TransactionEvent(String from, String to, Double amount, TRANSACTION_STATUS status){
+    @Getter
+    private final String correlationId;
+
+    public TransactionEvent(String from, String to, Double amount, TRANSACTION_STATUS status, String correlationId){
         this.from = from;
         this.to = to;
         this.amount = amount;
         this.status = status;
+        this.correlationId = correlationId;
     }
 
     public TransactionEvent(Map<String, Object> map) {
@@ -40,7 +44,18 @@ public class TransactionEvent {
         this.to = ParseUtils.parseObject(map, Keys.TransactionEventKeys.TO_FIELD, String.class);
         this.amount = ParseUtils.parseObject(map, Keys.TransactionEventKeys.AMOUNT_FIELD, Double.class);
         this.status = parseStatus(map);
+        this.correlationId = getCorrelationId(map);
     }
+
+
+    private String getCorrelationId(Map<String, Object> map){
+        Object correlationObject = map.get(Keys.TransactionEventKeys.CORELLATION_ID);
+        if(correlationObject != null){
+            return ParseUtils.parseObject(map, Keys.TransactionEventKeys.CORELLATION_ID, String.class);
+        }
+        return "";
+    }
+
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -48,6 +63,7 @@ public class TransactionEvent {
         map.put(Keys.TransactionEventKeys.TO_FIELD, this.to);
         map.put(Keys.TransactionEventKeys.STATUS_FIELD, this.status.toString());
         map.put(Keys.TransactionEventKeys.AMOUNT_FIELD, this.amount);
+        map.put(Keys.TransactionEventKeys.CORELLATION_ID, this.correlationId);
         return map;
     }
 

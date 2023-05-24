@@ -11,6 +11,10 @@ import static ch.unisg.ics.edpo.shared.Keys.GAME_ID;
 public class Platform {
     private static final Platform instance = new Platform();
     private final HashMap<String, ContractData> contracts = new HashMap<>();
+
+    private final HashMap<String, ContractData> rejectedContracts = new HashMap<>();
+
+    private final HashMap<String, ContractData> expiredContracts = new HashMap<>();
     private final HashMap<String, Object> games = new HashMap<>();
 
     private Platform(){}
@@ -35,6 +39,27 @@ public class Platform {
         this.contracts.put(contract.getContractId(), contract);
     }
 
+    public void removeContract(ContractData contractData) {
+        this.contracts.remove(contractData.getContractId());
+    }
+
+    public void addRejectedContract(ContractData contractData) {
+        this.rejectedContracts.put(contractData.getContractId(), contractData);
+    }
+
+    public void addExpiredContract(ContractData contractData) {
+        this.expiredContracts.put(contractData.getContractId(), contractData);
+    }
+    public String getContractState(String contractId){
+       if(this.contracts.get(contractId) != null){
+           return "Accepted";
+       } else if (this.rejectedContracts.get(contractId) != null) {
+           return "Rejected";
+       } else if(this.expiredContracts.get(contractId) != null){
+           return "Expired";
+       }
+        return "Not found";
+    }
     public ContractData getContract(String contractId) {
         return contracts.get(contractId);
     }

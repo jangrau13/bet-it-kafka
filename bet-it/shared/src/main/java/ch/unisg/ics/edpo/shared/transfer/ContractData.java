@@ -33,7 +33,7 @@ public class ContractData {
         this.contractId = (contractId != null && !contractId.isEmpty()) ? contractId : UUID.randomUUID().toString();
     }
 
-    public ContractData(Map<String, Object> map) {
+    public ContractData(Map<String, Object> map) throws IllegalArgumentException {
         validateMap(map);
         this.gameId = (String) map.get(Keys.ContractDataKeys.GAME_ID_FIELD);
         this.ratio = (Double) map.get(Keys.ContractDataKeys.CONTRACT_RATIO_FIELD);
@@ -64,36 +64,36 @@ public class ContractData {
 
     // Populate the object from a Map<String, Object>
 
-    private void validateMap(Map<String, Object> map) {
+    private void validateMap(Map<String, Object> map) throws IllegalArgumentException {
         Object gameIdObj = map.get(Keys.ContractDataKeys.GAME_ID_FIELD);
         Object ratioObj = map.get(Keys.ContractDataKeys.CONTRACT_RATIO_FIELD);
         Object contractorNameObj = map.get(Keys.ContractDataKeys.CONTRACTOR_NAME_FIELD);
         Object homeTeamWinsObj = map.get(Keys.ContractDataKeys.TEAM_ONE_WINNS);
 
         if (gameIdObj == null) {
-            throw new IllegalArgumentException("gameId cannot be null");
+            throw new IllegalArgumentException(Keys.ContractDataKeys.GAME_ID_FIELD +" cannot be null");
         }
         if (!(gameIdObj instanceof String)) {
-            throw new IllegalArgumentException("gameId must be of type String");
+            throw new IllegalArgumentException(Keys.ContractDataKeys.GAME_ID_FIELD + " must be of type String");
         }
         if (ratioObj == null) {
-            throw new IllegalArgumentException("ratio cannot be null");
+            throw new IllegalArgumentException(Keys.ContractDataKeys.GAME_ID_FIELD +" cannot be null");
         }
         if (!(ratioObj instanceof Double)) {
-            throw new IllegalArgumentException("ratio must be a numeric value");
+            throw new IllegalArgumentException(Keys.ContractDataKeys.GAME_ID_FIELD +" must be a numeric value");
         }
 
         if (contractorNameObj == null) {
-            throw new IllegalArgumentException("contractorName cannot be null");
+            throw new IllegalArgumentException(Keys.ContractDataKeys.CONTRACTOR_NAME_FIELD + " cannot be null");
         }
         if (!(contractorNameObj instanceof String)) {
-            throw new IllegalArgumentException("contractorName must be of type String");
+            throw new IllegalArgumentException(Keys.ContractDataKeys.CONTRACTOR_NAME_FIELD +" must be of type String");
         }
         if (homeTeamWinsObj == null) {
-            throw new IllegalArgumentException("homeTeamWins cannot be null");
+            throw new IllegalArgumentException(Keys.ContractDataKeys.TEAM_ONE_WINNS +" cannot be null");
         }
         if (!(homeTeamWinsObj instanceof Boolean)) {
-            throw new IllegalArgumentException("homeTeamWins must be a boolean value");
+            throw new IllegalArgumentException(Keys.ContractDataKeys.TEAM_ONE_WINNS +"homeTeamWins must be a boolean value");
         }
 
     }
