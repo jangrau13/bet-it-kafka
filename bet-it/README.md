@@ -26,11 +26,26 @@ docker-compose -f docker-compose.yml up game-master --build
 
 ### Monitor Kafka
 open [kafdrop](http://localhost:9000) and have a look at the topics
-## User
-### Start Add User Workflow
+## Add a User
+### 1. Start Add User Workflow
 ```shell
-curl --location --request POST 'localhost:8082/platform/addUser'
+1. curl --location --request POST 'localhost:8082/platform/addUser'
 ```
+### 2. Do Usertask
+Open [Zeebe Tasklist](http://localhost:8181) and login with user demo and password demo
+### 3. Get Correlation ID
+Open bet-platform logs and copy correlationId
+### 4. Send 2FA Request
+```shell
+curl --location 'localhost:8082/platform/twoFactor' \
+--header 'Content-Type: application/json' \
+--data '{
+    "user": "Ping",
+    "password": "Passw12",
+    "correlationId": "d3f4d0b1-f9be-4c9b-94cc-f788aec2e746"
+}'
+```
+
 
 ## Bank
 ### Add Balance 

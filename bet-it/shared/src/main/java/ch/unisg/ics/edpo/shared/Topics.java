@@ -64,6 +64,10 @@ public class Topics {
         public static final String ADD_USER = "camunda.add-user";
 
         public static final String NEW_USER_CREATED = "user.new";
+
+        public static final String USER_CORRELATION_ID = "user.correlation-id";
+
+        public static final String TWO_FA = "camunda.twofa";
     }
 }
 

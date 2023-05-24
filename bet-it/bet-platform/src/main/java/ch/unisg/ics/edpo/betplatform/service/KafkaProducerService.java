@@ -35,4 +35,8 @@ public class KafkaProducerService {
         map.put("hihi", "hoho");
         kafkaMapProducer.sendMessage(map, Topics.User.ADD_USER, USELESS_KEY_TO_SAME_PARTITION);
     }
+
+    public void send2FA(Map<String, Object> map){
+        kafkaMapProducer.sendMessage(map, Topics.User.TWO_FA, USELESS_KEY_TO_SAME_PARTITION);
+    }
 }

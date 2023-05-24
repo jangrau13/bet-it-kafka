@@ -9,10 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -96,6 +98,27 @@ public class PlatformController {
         return ResponseEntity.ok(platform.getContractState(id));
     }
 
+    @PostMapping(
+            value = "/twoFactor",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Map<String, Object>> doTwoFactor(@RequestBody Map<String, Object> userPassword) {
+        log.info("Trying to two Factor: " + userPassword);
+        if (userPassword.containsKey("user") && userPassword.containsKey("password") && userPassword.containsKey("correlationId")) {
+            String user = (String) userPassword.get("user");
+            String password = (String) userPassword.get("password");
+            String correlationId = (String) userPassword.get("correlationId");
+            Map<String, Object> variablesMap = new HashMap<>();
+            variablesMap.put("passwordTest", password);
+            variablesMap.put("customerNameTest", user);
+            variablesMap.put("correlationId", correlationId);
+            kafkaProducerService.send2FA(variablesMap);
+
+            return new ResponseEntity<>(userPassword, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 
     private void validateBetCreationMap(Map<String, Object> map) throws ValidationException {
         if (!map.containsKey(BetDataKeys.BUYER_FIELD)) {

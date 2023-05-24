@@ -11,9 +11,15 @@ import java.util.Map;
 
 @Component
 @Slf4j
-public class KafkaContractConsumer {
+public class KafkaBetPlatformConsumer {
+
+    @KafkaListener(topics = {Topics.User.USER_CORRELATION_ID}, containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
+    public void listen_2_factor(Map<String, Object> data) {
+        log.info("Receiving User Correlation Id {}", data);
+    }
+
     @KafkaListener(topics = {Topics.Contract.CONTRACT_ACCEPTED}, containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
-    public void listenContractAccepted(Map<String, Object> data){
+    public void listenContractAccepted(Map<String, Object> data) {
         log.info("Receiving Contract Accepted {}", data);
         ContractData contractData;
         try {
@@ -25,8 +31,9 @@ public class KafkaContractConsumer {
         Platform platform = Platform.getInstance();
         platform.putContract(contractData);
     }
+
     @KafkaListener(topics = {Topics.Contract.CONTRACT_EXPIRED}, containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
-    public void listenContractExpired(Map<String, Object> data){
+    public void listenContractExpired(Map<String, Object> data) {
         log.info("Receiving Contract Expired {}", data);
         ContractData contractData;
         try {
@@ -41,7 +48,7 @@ public class KafkaContractConsumer {
     }
 
     @KafkaListener(topics = {Topics.Contract.CONTRACT_REJECTED}, containerFactory = "kafkaListenerMapFactory", groupId = "bet-platform")
-    public void listenContractRejected(Map<String, Object> data){
+    public void listenContractRejected(Map<String, Object> data) {
         log.info("Receiving Contract Rejected {}", data);
         ContractData contractData;
         try {
