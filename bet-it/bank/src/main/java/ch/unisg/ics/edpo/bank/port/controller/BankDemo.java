@@ -29,10 +29,11 @@ public class BankDemo {
     }
 
     @PostMapping("/add_money")
-    public ResponseEntity<String> createUser(@RequestBody String user) {
-
-        System.out.println("Received username: " + user);
-        TransactionEvent event = new TransactionEvent("bank", user, 2000.0, TransactionEvent.TRANSACTION_STATUS.REQUESTED, "");
+    public ResponseEntity<String> createUser(@RequestBody Map<String, Object> body) {
+        String name = (String) body.get("name");
+        Double amount = (Double) body.get("amount");
+        System.out.println("Received name: " + name);
+        TransactionEvent event = new TransactionEvent("bank", name, amount, TransactionEvent.TRANSACTION_STATUS.REQUESTED, "");
         kafkaMapProducer.sendMessage(event.toMap(), Topics.Bank.Transaction.TRANSACTION_REQUEST, "key");
         return ResponseEntity.status(HttpStatus.OK).body("Blub");
     }
