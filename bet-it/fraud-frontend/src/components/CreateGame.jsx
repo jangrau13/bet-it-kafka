@@ -4,7 +4,7 @@ import DotGame from './DotGame';
 
 function CreateGame() {
     const [username, setUsername] = useState('placeholder');
-    const [hits, setHits] = useState(0);
+    const [projectedHits, setProjectedHits] = useState(0);
     const [gameName, setGameName] = useState('');
     const [startGame, setStartGame] = useState(false);
     const [uuid, setUUID] = useState('');
@@ -41,7 +41,7 @@ function CreateGame() {
     };
 
     const handleHitsChange = (event) => {
-        setHits(parseInt(event.target.value));
+        setProjectedHits(parseInt(event.target.value));
     };
 
     const handleGameNameChange = (event) => {
@@ -79,8 +79,8 @@ function CreateGame() {
                     username,
                     team1: username,
                     team2: "rest of the world",
-                    description: gameName + ": " + username + "; projected hits: " + hits,
-                    projectedHits: hits,
+                    description: gameName + ": " + username + "; projectedHits: " + projectedHits,
+                    projectedHits,
                     gameName,
                     gameType: "DOT",
                     state: "PUBLISHED"
@@ -140,7 +140,7 @@ function CreateGame() {
 
                     <label id="hits">
                         Hits:
-                        <input type="number" value={hits} onChange={handleHitsChange} />
+                        <input type="number" value={projectedHits} onChange={handleHitsChange} />
                     </label>
                     <br />
                     <label id="gameName">
