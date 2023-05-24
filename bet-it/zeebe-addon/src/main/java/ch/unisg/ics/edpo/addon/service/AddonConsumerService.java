@@ -22,7 +22,7 @@ public class AddonConsumerService {
 
     public AddonConsumerService(ZeebeClientLifecycle client) {
         this.client = client;
-        this.startTopics = List.of(new String[]{Topics.Contract.CONTRACT_REQUESTED, Topics.Bet.BET_REQUESTED});
+        this.startTopics = List.of(new String[]{Topics.Contract.CONTRACT_REQUESTED, Topics.Bet.BET_REQUESTED, Topics.User.ADD_USER});
     }
 
     @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "addon")

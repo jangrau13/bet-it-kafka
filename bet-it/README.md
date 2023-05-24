@@ -26,6 +26,12 @@ docker-compose -f docker-compose.yml up game-master --build
 
 ### Monitor Kafka
 open [kafdrop](http://localhost:9000) and have a look at the topics
+## User
+### Start Add User Workflow
+```shell
+curl --location --request POST 'localhost:8082/platform/addUser'
+```
+
 ## Bank
 ### Add Balance 
 ```shell

@@ -50,6 +50,12 @@ public class PlatformController {
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/addUser")
+    public ResponseEntity<String> addUser() {
+        kafkaProducerService.startAddUserWorkflow();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     /**
      * Needs to contain buyer and amountBought and contractId
      */

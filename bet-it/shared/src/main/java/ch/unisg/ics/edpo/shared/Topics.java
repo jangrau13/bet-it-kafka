@@ -60,5 +60,10 @@ public class Topics {
 
         public static final String BET_ERROR = "bet.error";
     }
+    public static class User {
+        public static final String ADD_USER = "camunda.add-user";
+
+        public static final String NEW_USER_CREATED = "user.new";
+    }
 }
 
