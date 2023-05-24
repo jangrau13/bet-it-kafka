@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"ch.unisg.kafka.spring", "ch.unisg.ics.edpo.shared"})
+@ComponentScan(basePackages = {"ch.unisg.ics.edpo.betplatform", "ch.unisg.ics.edpo.shared"})
 public class BetPlatform {
 	public static void main(String[] args) {
 		SpringApplication.run(BetPlatform.class, args);

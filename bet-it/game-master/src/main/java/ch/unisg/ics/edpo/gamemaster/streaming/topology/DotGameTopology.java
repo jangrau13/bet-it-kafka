@@ -38,7 +38,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DotGameTopology {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     void buildPipeline(StreamsBuilder builder){
 

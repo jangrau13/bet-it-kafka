@@ -7,15 +7,21 @@ install the following software:
 select Camunda Platform Version 8.2 (alpha) for all the documents created and creating.
 
 ## Build
+```shell
+cd bet-it
 mvn clean install -DskipTests
 docker-compose up --build -d
+```
 
 ## Development
 Run frontend in docker
 ```shell
-docker-compose -f bet-it/docker-compose.yml up fraud-frontend --build 
-docker-compose -f bet-it/docker-compose.yml up fraud-backend --build
-docker-compose -f bet-it/docker-compose.yml up bank --build
+cd bet-it
+docker-compose -f docker-compose.yml up fraud-frontend --build 
+docker-compose -f docker-compose.yml up fraud-backend --build
+docker-compose -f docker-compose.yml up bank --build
+docker-compose -f docker-compose.yml up bet-it-platform --build
+docker-compose -f docker-compose.yml up game-master --build
 ```
 
 ## Monitor Kafka

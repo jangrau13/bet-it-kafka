@@ -55,6 +55,10 @@ public class Topics {
         public static final String BET_REJECTED = "bet.rejected";
 
         public static final String BET_ACCEPTED = "bet.accepted";
+
+        public static final String BET_DONE = "bet.done";
+
+        public static final String BET_ERROR = "bet.error";
     }
 }
 

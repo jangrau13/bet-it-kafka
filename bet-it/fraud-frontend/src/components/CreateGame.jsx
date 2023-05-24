@@ -83,7 +83,7 @@ function CreateGame() {
                     projectedHits: hits,
                     gameName,
                     gameType: "DOT",
-                    state: "STARTED"
+                    state: "PUBLISHED"
                 }
                 setGameEvent(gameEventObj)
                 socket.send(JSON.stringify(gameEventObj));

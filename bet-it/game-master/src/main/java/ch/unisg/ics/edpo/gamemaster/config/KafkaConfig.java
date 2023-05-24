@@ -1,17 +1,20 @@
 package ch.unisg.ics.edpo.gamemaster.config;
 
+import ch.unisg.ics.edpo.shared.Topics;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.processor.WallclockTimestampExtractor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.EnableKafkaStreams;
 import org.springframework.kafka.annotation.KafkaStreamsDefaultConfiguration;
 import org.springframework.kafka.config.KafkaStreamsConfiguration;
+import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.kafka.core.KafkaAdmin;
 
+import java.beans.BeanProperty;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +26,25 @@ import static org.apache.kafka.streams.StreamsConfig.*;
 public class KafkaConfig {
     @Value(value = "${spring.kafka.consumer.bootstrap-servers}")
     private String bootstrapAddress;
+
+    @Bean
+    public NewTopic gameDotHit(){
+        return TopicBuilder.name(Topics.Game.GameDot.DOT_HITS).partitions(1).replicas(1).build();
+    }
+
+    @Bean
+    public NewTopic gameDotMiss(){
+        return TopicBuilder.name(Topics.Game.GameDot.DOT_MISSES).partitions(1).replicas(1).build();
+    }
+    @Bean
+    public NewTopic gameDotSpawn(){
+        return TopicBuilder.name(Topics.Game.GameDot.DOT_SPAWN).partitions(1).replicas(1).build();
+    }
+
+    @Bean
+    public NewTopic gam(){
+        return TopicBuilder.name(Topics.Game.GAME_PUBLISHED).partitions(1).replicas(1).build();
+    }
 
     @Bean(name = KafkaStreamsDefaultConfiguration.DEFAULT_STREAMS_CONFIG_BEAN_NAME)
     KafkaStreamsConfiguration kStreamsConfig() {
