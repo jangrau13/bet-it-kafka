@@ -48,7 +48,7 @@ public class TableViewerService {
         String team2 = null;
         GameObject.GameState gameState = GameObject.GameState.PUBLISHED;
         String description = null;
-        Integer hits = null;
+        Integer projectedHits = null;
         try {
             gameId = row.getString("GAMEID");
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class TableViewerService {
         }
 
         try {
-            hits = row.getInteger("HITS");
+            projectedHits = row.getInteger("PROJECTEDHITS");
         } catch (Exception e) {
             // Log the error
             log.error("Error retrieving HITS: " + e.getMessage());
@@ -91,7 +91,7 @@ public class TableViewerService {
                 GameObject.GameState.PUBLISHED,
                 null,
                 description,
-                hits
+                projectedHits
         );
     }
 }

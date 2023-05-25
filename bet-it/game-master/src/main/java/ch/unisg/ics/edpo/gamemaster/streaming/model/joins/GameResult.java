@@ -43,6 +43,10 @@ public class GameResult {
     @Getter @Setter
     private int actualHits;
 
+    @SerializedName("correlationId")
+    @Getter @Setter
+    private String correlationId;
+
     public GameResult(String gameId, String team1, String team2, GameObject.GameState gameState, Boolean team1Wins, String description, int projectedHits, int actualHits) {
         this.gameId = gameId;
         this.team1 = team1;
@@ -52,7 +56,7 @@ public class GameResult {
         this.description = description;
         this.projectedHits = projectedHits;
         this.actualHits = actualHits;
-
+        this.correlationId = gameId;
     }
 
     public GameResult(DotSpawnEvent dotSpawnEvent, Long count){
@@ -62,6 +66,7 @@ public class GameResult {
         this.team2 = "Rest of the World";
         this.description = dotSpawnEvent.toString();
         this.projectedHits = dotSpawnEvent.getProjectedHits();
+        this.correlationId = dotSpawnEvent.getGameId().toString();
         if(count != null){
             this.actualHits = count.intValue();
             if(count.intValue() >= dotSpawnEvent.getProjectedHits()){

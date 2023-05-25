@@ -21,8 +21,21 @@ function ActiveGames() {
     }, []);
 
     const handleStartGame = (gameId) => {
+        console.log('starting game with projected hits: ', gameId.projectedHits)
         let objectToSend = {...gameId, username: gameId.team1, projectedHits: gameId.projectedHits}
         setSelectedGame(objectToSend);
+        const socket = new WebSocket('ws://localhost:3001/start');
+
+        socket.addEventListener('open', () => {
+            let gameEventObj = { ...objectToSend, state: "STARTED" }
+            socket.send(JSON.stringify(gameEventObj));
+            console.log('Game Published');
+        });
+
+        socket.addEventListener('error', (error) => {
+            console.error('WebSocket error:', error);
+        });
+
     };
 
     const list = () => {
@@ -51,7 +64,7 @@ function ActiveGames() {
                 {list()}
             </ul>
 
-            {selectedGame && <DotGame gameEvent={selectedGame} />}
+            {selectedGame && <DotGame gameEvent={{...selectedGame, username: selectedGame.team1}} />}
         </div>
     );
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_040y56z" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.10.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_040y56z" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
   <bpmn:process id="camunda.bet.requested" name="Camunda Bet Process" isExecutable="true">
     <bpmn:startEvent id="Start_Bet_Requested" name="Start Bet Element">
       <bpmn:extensionElements>
@@ -135,7 +135,7 @@
     </bpmn:callActivity>
     <bpmn:sequenceFlow id="Flow_0duzapn" sourceRef="Activity_0ttaq7d" targetRef="Gateway_08fb76p" />
     <bpmn:sequenceFlow id="Flow_11i234g" sourceRef="accept_bet_send" targetRef="Gateway_050miqg" />
-    <bpmn:exclusiveGateway id="Gateway_0zh032z">
+    <bpmn:exclusiveGateway id="Gateway_0zh032z" default="Flow_15znm5v">
       <bpmn:incoming>Flow_0n4tv0o</bpmn:incoming>
       <bpmn:outgoing>contractor_wins</bpmn:outgoing>
       <bpmn:outgoing>Flow_15znm5v</bpmn:outgoing>
@@ -207,9 +207,7 @@
       <bpmn:incoming>Flow_15znm5v</bpmn:incoming>
       <bpmn:outgoing>Flow_0azmvqd</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_15znm5v" name="contractor does not win" sourceRef="Gateway_0zh032z" targetRef="Activity_1kxnl1n">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=(not(team1Wins) and teamOneWinsContract) or (team1Wins and not(teamOneWinsContract)) </bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_15znm5v" name="contractor does not win" sourceRef="Gateway_0zh032z" targetRef="Activity_1kxnl1n" />
     <bpmn:exclusiveGateway id="Gateway_0js7di9">
       <bpmn:incoming>Flow_0azmvqd</bpmn:incoming>
       <bpmn:incoming>Flow_0pz6c10</bpmn:incoming>

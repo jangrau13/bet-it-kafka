@@ -119,7 +119,7 @@ public class KTableCreator implements ApplicationListener<ContextRefreshedEvent>
                 p.team1 team1,
                 p.team2 team2,
                 p.description description,
-                p.projectedHits hits,
+                p.projectedHits projectedHits,
                 p.gameName gameName,
                 p.gameType gameType,
                 p.state state,
