@@ -201,7 +201,7 @@
           <zeebe:input source="=buyerName" target="to" />
           <zeebe:input source="=amountBought" target="amount" />
           <zeebe:input source="=&#34;REQUESTED&#34;" target="transactionStatus" />
-          <zeebe:input source="=from + to + time()" target="correlationId" />
+          <zeebe:input source="=from + to" target="correlationId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_15znm5v</bpmn:incoming>
