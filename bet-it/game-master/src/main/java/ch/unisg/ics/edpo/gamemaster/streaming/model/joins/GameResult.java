@@ -74,6 +74,8 @@ public class GameResult {
             }else{
                 this.team1Wins = false;
             }
+        }else{
+            this.team1Wins = false;
         }
     }
 
