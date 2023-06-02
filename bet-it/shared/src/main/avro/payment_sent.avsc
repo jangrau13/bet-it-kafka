@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "namespace": "ch.unisg.ics.edpo.shared.avroschema",
+  "name": "SendPayment",
+  "version": "1",
+  "fields": [
+    { "name": "amount", "type": "double" },
+    { "name": "to_account", "type": "string" },
+    { "name": "from_account", "type": "string" }
+  ]
+}

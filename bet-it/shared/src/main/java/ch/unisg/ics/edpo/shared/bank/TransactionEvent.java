@@ -15,7 +15,6 @@ import static ch.unisg.ics.edpo.shared.Keys.TransactionEventKeys.FROM_FIELD;
 @Slf4j
 public class TransactionEvent {
 
-
     @Getter
     private final String from;
     @Getter

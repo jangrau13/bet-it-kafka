@@ -14,6 +14,8 @@ public class Topics {
 
             public static final String TRANSACTION_RESULT = "camunda.transaction-result";
 
+            public static final String SEND_PAYMENT = "bank.send-payment";
+
         }
         public static class User {
             public static final String CHECK_REQUEST = "user.check-request";

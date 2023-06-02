@@ -96,11 +96,11 @@
       </bpmn:sendTask>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1seus8s" sourceRef="Wait42Factor" targetRef="OneMinute2FactorWait" />
-    <bpmn:intermediateCatchEvent id="OneMinute2FactorWait" name="1 minute for 2 Factor">
+    <bpmn:intermediateCatchEvent id="OneMinute2FactorWait" name="3 minute for 2 Factor">
       <bpmn:incoming>Flow_1seus8s</bpmn:incoming>
       <bpmn:outgoing>Flow_11egef5</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0ay18r3">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT3M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_11egef5" name="time for 2Factor is up" sourceRef="OneMinute2FactorWait" targetRef="TwoFactorFailedGeneralError" />
@@ -263,16 +263,6 @@
           <dc:Bounds x="1726" y="335" width="90" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_19g8nkf_di" bpmnElement="start_element">
-        <dc:Bounds x="202" y="192" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="190" y="235" width="68" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0qyidxu" bpmnElement="send_corr_element" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="540" y="300" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1n3qg5e_di" bpmnElement="Activity_0t4l1j9" isExpanded="true">
         <dc:Bounds x="1410" y="490" width="350" height="200" />
       </bpmndi:BPMNShape>
@@ -405,6 +395,16 @@
         <dc:Bounds x="540" y="170" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19g8nkf_di" bpmnElement="start_element">
+        <dc:Bounds x="202" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="190" y="235" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0qyidxu" bpmnElement="send_corr_element" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="540" y="300" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_103yj9k_di" bpmnElement="TextAnnotation_103yj9k">
         <dc:Bounds x="1760" y="410" width="100" height="41" />
         <bpmndi:BPMNLabel />
@@ -446,10 +446,6 @@
         <di:waypoint x="590" y="250" />
         <di:waypoint x="590" y="300" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0g0sf1u_di" bpmnElement="Association_0g0sf1u">
-        <di:waypoint x="1721" y="490" />
-        <di:waypoint x="1775" y="451" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1saow44_di" bpmnElement="Flow_1saow44">
         <di:waypoint x="238" y="210" />
         <di:waypoint x="320" y="210" />
@@ -457,6 +453,10 @@
       <bpmndi:BPMNEdge id="Flow_15lw5dg_di" bpmnElement="Flow_15lw5dg">
         <di:waypoint x="590" y="380" />
         <di:waypoint x="590" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0g0sf1u_di" bpmnElement="Association_0g0sf1u">
+        <di:waypoint x="1721" y="490" />
+        <di:waypoint x="1775" y="451" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

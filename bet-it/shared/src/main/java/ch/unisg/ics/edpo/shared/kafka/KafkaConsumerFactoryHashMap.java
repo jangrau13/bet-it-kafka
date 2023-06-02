@@ -1,9 +1,6 @@
 package ch.unisg.ics.edpo.shared.kafka;
 
-import ch.unisg.ics.edpo.shared.Topics;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,8 +10,6 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.core.KafkaAdmin;
-import org.springframework.kafka.listener.KafkaListenerErrorHandler;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
@@ -47,6 +42,5 @@ public class KafkaConsumerFactoryHashMap {
         return factory;
 
     }
-
 
 }
