@@ -209,6 +209,8 @@ services:
       - schema-registry
       - zeebe
       - connectors
+      - tasklist
+      - operate
       - kafka-create-topics
 
   dot-game-frontend:
@@ -294,6 +296,7 @@ services:
     depends_on:
       - kafka
       - zookeeper
+    restart: always
     hostname: kafka-create-topics
     command: [ "bash", "./create-topics.sh" ]
     working_dir: /scripts
