@@ -4,6 +4,8 @@ import ch.unisg.ics.edpo.shared.Keys;
 import ch.unisg.ics.edpo.shared.Topics;
 import io.camunda.zeebe.spring.client.lifecycle.ZeebeClientLifecycle;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.stereotype.Component;
@@ -20,9 +22,24 @@ public class AddonConsumerService {
 
     private final List<String> startTopics;
 
+
     public AddonConsumerService(ZeebeClientLifecycle client) {
         this.client = client;
-        this.startTopics = List.of(new String[]{Topics.Contract.CONTRACT_REQUESTED, Topics.Bet.BET_REQUESTED, Topics.User.ADD_USER});
+        this.startTopics = List.of(new String[]{Topics.Contract.CONTRACT_REQUESTED,
+                Topics.Bet.BET_REQUESTED, Topics.User.ADD_USER
+        });
+        log.info("AddonConsumerService started");
+    }
+
+    @KafkaListener(topics = Topics.User.CHECK_RESULT, containerFactory = "kafkaListenerMapFactory", groupId = "addon")
+    public void consumeGameCamundaMessage(Map<String, Object> variables, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+        log.info("*******" + topic   + "-> Consuming Camunda Variables:: {} from topic {}", variables, topic);
+        String correlationId = getCorrelationId(variables);
+        if (startTopics.contains(topic)) {
+            startCamundaProcess(topic, variables);
+        } else {
+            sendToCamunda(topic, correlationId, variables);
+        }
     }
 
     @KafkaListener(topicPattern = "camunda.*", containerFactory = "kafkaListenerMapFactory", groupId = "addon")

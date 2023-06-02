@@ -42,6 +42,8 @@ public class Topics {
 
         public static final String PLAYER = "game.player";
 
+        public static final String VALID = "camunda.game.valid-for-contract-result";
+
         public static class GameDot {
             public static final String DOT_HITS = "game.dot.hit";
 
@@ -76,6 +78,9 @@ public class Topics {
         public static final String USER_CORRELATION_ID = "user.correlation-id";
 
         public static final String TWO_FA = "camunda.twofa";
+
+        public static final String CHECK_RESULT = "camunda.user.check-result";
+
     }
 
 }

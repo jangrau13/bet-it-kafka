@@ -1,6 +1,5 @@
 @echo off
 
-
 docker-compose -f bet-it/docker-compose.yml up kafdrop --build -d
 docker-compose -f bet-it/docker-compose.yml up ksqldb-server --build -d
 
@@ -38,12 +37,13 @@ if %errorlevel% neq 0 (
 
 echo compiling done
 
-docker-compose -f bet-it/docker-compose.yml up game-master --build -d
 docker-compose -f bet-it/docker-compose.yml up zeebe-addon --build -d
+docker-compose -f bet-it/docker-compose.yml up game-master --build -d
 docker-compose -f bet-it/docker-compose.yml up dot-game-frontend --build -d
 docker-compose -f bet-it/docker-compose.yml up dot-game-backend --build -d
 docker-compose -f bet-it/docker-compose.yml up bet-it-platform --build -d
 docker-compose -f bet-it/docker-compose.yml up bank --build -d
+
 
 call :check_container game-master
 call :check_container zeebe-addon
@@ -51,6 +51,9 @@ call :check_container dot-game-frontend
 call :check_container dot-game-backend
 call :check_container bet-it-platform
 call :check_container bank
+
+REM Restart zeebe-addon service
+docker-compose -f bet-it/docker-compose.yml restart zeebe-addon
 
 
 call :check_logs dot-game-frontend "Compiled successfully!"
