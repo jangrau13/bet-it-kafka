@@ -42,12 +42,22 @@ public class Topics {
 
         public static final String GAME_STARTED = "camunda.game.started";
 
+        public static final String PLAYER = "game.player";
+
+        public static final String VALID = "camunda.game.valid-for-contract-result";
+
         public static class GameDot {
             public static final String DOT_HITS = "game.dot.hit";
 
             public static final String DOT_MISSES = "game.dot.miss";
 
             public static final String DOT_SPAWN = "game.dot.spawn";
+
+            public static final String DOT_GAME_ENDED = "game.dot.ended";
+
+            public static final String FRIENDLY_FIRE = "game.dot.friendlyfire";
+
+            public static final String STARTED = "game.dot.started";
         }
     }
 
@@ -70,6 +80,10 @@ public class Topics {
         public static final String USER_CORRELATION_ID = "user.correlation-id";
 
         public static final String TWO_FA = "camunda.twofa";
+
+        public static final String CHECK_RESULT = "camunda.user.check-result";
+
     }
+
 }
 

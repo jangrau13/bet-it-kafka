@@ -73,9 +73,12 @@ public class GameManagerController {
     @GetMapping("/hitsperGame")
     public Map<String,Long> getJoinValue() {
         KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
-        ReadOnlyKeyValueStore<String, Long> counts = kafkaStreams.store(
-                StoreQueryParameters.fromNameAndType("HitsperGame", QueryableStoreTypes.keyValueStore())
-        );
+        ReadOnlyKeyValueStore<String, Long> counts = null;
+        if (kafkaStreams != null) {
+            counts = kafkaStreams.store(
+                    StoreQueryParameters.fromNameAndType("HitsperGame", QueryableStoreTypes.keyValueStore())
+            );
+        }
         Map<String, Long> returnMap = new HashMap<>();
         counts.all().forEachRemaining(k -> {
             returnMap.put(k.key,k.value);
@@ -86,17 +89,20 @@ public class GameManagerController {
     @GetMapping("/players")
     public List<Player> getPlayers() {
         try {
-
             KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
-            //todo fix this
-            ReadOnlyKeyValueStore<String, Player> counts = kafkaStreams.store(
-                    StoreQueryParameters.fromNameAndType("PlayerJoin", QueryableStoreTypes.keyValueStore())
-            );
+            ReadOnlyKeyValueStore<String, Player> counts = null;
+            if (kafkaStreams != null) {
+                counts = kafkaStreams.store(
+                        StoreQueryParameters.fromNameAndType("PlayerJoin", QueryableStoreTypes.keyValueStore())
+                );
+            }
             List<Player> returnList = new ArrayList<>();
-            counts.all().forEachRemaining(k -> {
+            if (counts != null) {
+                counts.all().forEachRemaining(k -> {
 
-                returnList.add(k.value);
-            });
+                    returnList.add(k.value);
+                });
+            }
             return returnList;
         } catch (Exception e) {
             log.error("Error in player");
@@ -107,14 +113,19 @@ public class GameManagerController {
     @GetMapping("/userStats")
     public Map<String,String> getUserStats() {
         KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
-        // todo fix this
-        ReadOnlyKeyValueStore<String, UserStats> counts = kafkaStreams.store(
-                StoreQueryParameters.fromNameAndType("UserStats", QueryableStoreTypes.keyValueStore())
-        );
+
+        ReadOnlyKeyValueStore<String, UserStats> counts = null;
+        if (kafkaStreams != null) {
+            counts = kafkaStreams.store(
+                    StoreQueryParameters.fromNameAndType("UserStats", QueryableStoreTypes.keyValueStore())
+            );
+        }
         Map<String, String> returnMap = new HashMap<>();
-        counts.all().forEachRemaining(k -> {
-            returnMap.put(k.key,k.value.toString());
-        });
+        if (counts != null) {
+            counts.all().forEachRemaining(k -> {
+                returnMap.put(k.key,k.value.toString());
+            });
+        }
         return returnMap;
     }
 

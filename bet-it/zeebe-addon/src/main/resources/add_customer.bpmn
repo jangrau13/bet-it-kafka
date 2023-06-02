@@ -3,53 +3,53 @@
   <bpmn:process id="camunda.add-user" name="Add Customer" isExecutable="true">
     <bpmn:extensionElements>
       <zeebe:userTaskForm id="userTaskForm_0aelva9">{
-  "components": [
-    {
-      "text": "# Debit Suisse\n## Add Customer",
-      "type": "text",
-      "id": "Field_0pnrhf6"
-    },
-    {
-      "label": "Customer Name",
-      "type": "textfield",
-      "id": "Field_120x2xv",
-      "key": "customerName",
-      "defaultValue": "Your Name",
-      "validate": {
+        "components": [
+        {
+        "text": "# Debit Suisse\n## Add Customer",
+        "type": "text",
+        "id": "Field_0pnrhf6"
+        },
+        {
+        "label": "Customer Name",
+        "type": "textfield",
+        "id": "Field_120x2xv",
+        "key": "customerName",
+        "defaultValue": "Your Name",
+        "validate": {
         "required": true
-      }
-    },
-    {
-      "label": "Password",
-      "type": "textfield",
-      "id": "Field_0c2432r",
-      "key": "password",
-      "description": "enter your One-Time Password",
-      "defaultValue": "1234",
-      "validate": {
+        }
+        },
+        {
+        "label": "Password",
+        "type": "textfield",
+        "id": "Field_0c2432r",
+        "key": "password",
+        "description": "enter your One-Time Password",
+        "defaultValue": "1234",
+        "validate": {
         "required": true,
         "minLength": 3,
         "maxLength": 16
-      }
-    },
-    {
-      "action": "submit",
-      "label": "Add",
-      "type": "button",
-      "id": "Field_07n3k19",
-      "key": "field_0w9ap7k"
-    }
-  ],
-  "type": "default",
-  "id": "add_customer",
-  "executionPlatform": "Camunda Cloud",
-  "executionPlatformVersion": "8.2.0",
-  "exporter": {
-    "name": "Camunda Modeler",
-    "version": "5.9.0"
-  },
-  "schemaVersion": 7
-}</zeebe:userTaskForm>
+        }
+        },
+        {
+        "action": "submit",
+        "label": "Add",
+        "type": "button",
+        "id": "Field_07n3k19",
+        "key": "field_0w9ap7k"
+        }
+        ],
+        "type": "default",
+        "id": "add_customer",
+        "executionPlatform": "Camunda Cloud",
+        "executionPlatformVersion": "8.2.0",
+        "exporter": {
+        "name": "Camunda Modeler",
+        "version": "5.9.0"
+        },
+        "schemaVersion": 7
+        }</zeebe:userTaskForm>
     </bpmn:extensionElements>
     <bpmn:userTask id="AddCustomerCommand" name="Add Customer">
       <bpmn:extensionElements>

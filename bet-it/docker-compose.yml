@@ -139,7 +139,7 @@ services:
       ALLOW_PLAINTEXT_LISTENER: 'yes'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_LISTENERS: PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
       - kafka:/bitnami/kafka/data
@@ -207,10 +207,13 @@ services:
     depends_on:
       - kafka
       - schema-registry
+      - zeebe
+      - connectors
+      - kafka-create-topics
 
-  fraud-frontend:
+  dot-game-frontend:
     build:
-      context: fraud-frontend
+      context: dot-game-frontend
       dockerfile: Dockerfile
     networks:
       - bet-it
@@ -219,11 +222,11 @@ services:
     depends_on:
       - kafka
 
-  fraud-backend:
-    hostname: fraud-backend
+  dot-game-backend:
+    hostname: dot-game-backend
     restart: always
     build:
-      context: fraud-backend
+      context: dot-game-backend
       dockerfile: Dockerfile
     networks:
       - bet-it
@@ -285,6 +288,19 @@ services:
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
+
+  kafka-create-topics:
+    image: confluentinc/cp-enterprise-kafka:6.0.0
+    depends_on:
+      - kafka
+      - zookeeper
+    hostname: kafka-create-topics
+    command: [ "bash", "./create-topics.sh" ]
+    working_dir: /scripts
+    volumes:
+      - ./scripts1:/scripts
+    networks:
+      - bet-it
 
 volumes:
   zeebe:

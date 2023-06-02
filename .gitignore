@@ -37,3 +37,5 @@ node_modules
 *.iml
 /bet-it/kafka_docker_data/
 /bet-it/zookeeper_docker_data/
+logs.txt
+tmp.txt
