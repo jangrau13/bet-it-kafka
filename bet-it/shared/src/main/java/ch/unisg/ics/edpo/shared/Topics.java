@@ -40,12 +40,20 @@ public class Topics {
 
         public static final String GAME_STARTED = "camunda.game.started";
 
+        public static final String PLAYER = "game.player";
+
         public static class GameDot {
             public static final String DOT_HITS = "game.dot.hit";
 
             public static final String DOT_MISSES = "game.dot.miss";
 
             public static final String DOT_SPAWN = "game.dot.spawn";
+
+            public static final String DOT_GAME_ENDED = "game.dot.ended";
+
+            public static final String FRIENDLY_FIRE = "game.dot.friendlyfire";
+
+            public static final String STARTED = "game.dot.started";
         }
     }
 
@@ -69,5 +77,6 @@ public class Topics {
 
         public static final String TWO_FA = "camunda.twofa";
     }
+
 }
 

@@ -17,8 +17,8 @@ docker-compose up --build -d
 Run frontend in docker
 ```shell
 cd bet-it
-docker-compose -f docker-compose.yml up fraud-frontend --build 
-docker-compose -f docker-compose.yml up fraud-backend --build
+docker-compose -f docker-compose.yml up dot-game-frontend --build 
+docker-compose -f docker-compose.yml up dot-game-backend --build
 docker-compose -f docker-compose.yml up bank --build
 docker-compose -f docker-compose.yml up bet-it-platform --build
 docker-compose -f docker-compose.yml up game-master --build

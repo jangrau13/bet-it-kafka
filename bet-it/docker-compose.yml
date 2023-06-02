@@ -202,10 +202,12 @@ services:
       - "8084:8084"
     depends_on:
       - kafka
+      - zeebe
+      - connectors
 
-  fraud-frontend:
+  dot-game-frontend:
     build:
-      context: fraud-frontend
+      context: dot-game-frontend
       dockerfile: Dockerfile
     networks:
       - bet-it
@@ -214,9 +216,9 @@ services:
     depends_on:
       - kafka
 
-  fraud-backend:
+  dot-game-backend:
     build:
-      context: fraud-backend
+      context: dot-game-backend
       dockerfile: Dockerfile
     networks:
       - bet-it

@@ -1,0 +1,23 @@
+bet-it-fraud-frontend-1  | 
+bet-it-fraud-frontend-1  | > fraud-frontend@0.1.0 start
+bet-it-fraud-frontend-1  | > react-scripts start
+bet-it-fraud-frontend-1  | 
+bet-it-fraud-frontend-1  | (node:30) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+bet-it-fraud-frontend-1  | (Use `node --trace-deprecation ...` to show where the warning was created)
+bet-it-fraud-frontend-1  | (node:30) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+bet-it-fraud-frontend-1  | Starting the development server...
+bet-it-fraud-frontend-1  | 
+bet-it-fraud-frontend-1  | Compiled successfully!
+bet-it-fraud-frontend-1  | 
+bet-it-fraud-frontend-1  | You can now view fraud-frontend in the browser.
+bet-it-fraud-frontend-1  | 
+bet-it-fraud-frontend-1  |   Local:            http://localhost:3000
+bet-it-fraud-frontend-1  |   On Your Network:  http://172.19.0.12:3000
+bet-it-fraud-frontend-1  | 
+bet-it-fraud-frontend-1  | Note that the development build is not optimized.
+bet-it-fraud-frontend-1  | To create a production build, use npm run build.
+bet-it-fraud-frontend-1  | 
+bet-it-fraud-frontend-1  | webpack compiled successfully
+bet-it-fraud-frontend-1  | Compiling...
+bet-it-fraud-frontend-1  | Compiled successfully!
+bet-it-fraud-frontend-1  | webpack compiled successfully
