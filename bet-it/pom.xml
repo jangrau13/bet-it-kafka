@@ -20,6 +20,7 @@
         <module>shared</module>
         <module>bank</module>
         <module>zeebe-addon</module>
+        <module>fraud-detector</module>
     </modules>
 
     <properties>
