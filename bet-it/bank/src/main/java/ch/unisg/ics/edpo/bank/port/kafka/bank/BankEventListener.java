@@ -1,6 +1,9 @@
 package ch.unisg.ics.edpo.bank.port.kafka.bank;
 
+import ch.unisg.ics.edpo.bank.domain.Bank;
 import ch.unisg.ics.edpo.bank.service.CheckUserService;
+import ch.unisg.ics.edpo.shared.avroschema.SendPayment;
+import ch.unisg.ics.edpo.shared.bank.BankException;
 import ch.unisg.ics.edpo.shared.bank.FreezeEvent;
 import ch.unisg.ics.edpo.shared.bank.TransactionEvent;
 import ch.unisg.ics.edpo.bank.service.FreezeService;
@@ -63,6 +66,20 @@ public class BankEventListener {
             checkUserService.handleEvent(userCheck);
         } catch (Exception e) {
             log.error("There was an error trying to parse Usercheck", e);
+        }
+    }
+
+    /**
+     * Used by compensating events from the fraud-detector service
+     */
+    @KafkaListener(topics = {Topics.Bank.Transaction.SEND_PAYMENT}, containerFactory = "consumerSendPaymentFactory", groupId = "bank")
+    public void fraud_happened(SendPayment sendPayment) {
+        log.info("**** -> Consuming Send Payment:: {}", sendPayment);
+        Bank bank = Bank.getInstance();
+        try {
+            bank.pay((String) sendPayment.getFromAccount(), (String) sendPayment.getToAccount(), sendPayment.getAmount());
+        } catch (BankException e) {
+            log.error("There was an error when trying to compensate", e);
         }
     }
 
