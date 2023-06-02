@@ -18,9 +18,14 @@
     <bpmn:sequenceFlow id="Flow_0yp9m33" sourceRef="StartEvent_1" targetRef="send_pay_request" />
     <bpmn:intermediateCatchEvent id="pay_result_received" name="Pay Result">
       <bpmn:incoming>Flow_0ed73yi</bpmn:incoming>
+      <bpmn:outgoing>Flow_07q3g0m</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1adpimm" messageRef="Message_1j1prj6" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_0ed73yi" sourceRef="send_pay_request" targetRef="pay_result_received" />
+    <bpmn:endEvent id="Event_0seqyh9">
+      <bpmn:incoming>Flow_07q3g0m</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_07q3g0m" sourceRef="pay_result_received" targetRef="Event_0seqyh9" />
   </bpmn:process>
   <bpmn:message id="Message_3fglbb1" name="camunda.game.valid-for-contract-result">
     <bpmn:extensionElements>
@@ -47,6 +52,9 @@
           <dc:Bounds x="449" y="145" width="54" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0seqyh9_di" bpmnElement="Event_0seqyh9">
+        <dc:Bounds x="602" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0yp9m33_di" bpmnElement="Flow_0yp9m33">
         <di:waypoint x="188" y="120" />
         <di:waypoint x="260" y="120" />
@@ -54,6 +62,10 @@
       <bpmndi:BPMNEdge id="Flow_0ed73yi_di" bpmnElement="Flow_0ed73yi">
         <di:waypoint x="360" y="120" />
         <di:waypoint x="452" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07q3g0m_di" bpmnElement="Flow_07q3g0m">
+        <di:waypoint x="488" y="120" />
+        <di:waypoint x="602" y="120" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
