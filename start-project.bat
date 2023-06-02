@@ -43,6 +43,8 @@ docker-compose -f bet-it/docker-compose.yml up dot-game-frontend --build -d
 docker-compose -f bet-it/docker-compose.yml up dot-game-backend --build -d
 docker-compose -f bet-it/docker-compose.yml up bet-it-platform --build -d
 docker-compose -f bet-it/docker-compose.yml up bank --build -d
+docker-compose -f bet-it/docker-compose.yml up fraud-detector --build -d
+
 
 
 call :check_container game-master
@@ -51,6 +53,7 @@ call :check_container dot-game-frontend
 call :check_container dot-game-backend
 call :check_container bet-it-platform
 call :check_container bank
+call :check_container fraud-detector
 
 REM Restart zeebe-addon service
 docker-compose -f bet-it/docker-compose.yml restart zeebe-addon
@@ -59,6 +62,7 @@ docker-compose -f bet-it/docker-compose.yml restart zeebe-addon
 call :check_logs dot-game-frontend "Compiled successfully!"
 call :check_logs dot-game-backend "Server started"
 call :check_logs zeebe-addon "Tomcat started on port"
+call :check_logs fraud-detector "Tomcat started on port"
 call :check_logs bank "Tomcat started on port"
 call :check_logs bet-it-platform "Tomcat started on port"
 
