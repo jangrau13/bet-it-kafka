@@ -1,4 +1,5 @@
 # Bet Platform
+There is a glossary available [here](glossary.md).
 
 ## Setup
 install the following software:
@@ -16,7 +17,7 @@ for Linux run
 .\start-project.sh
 ```
 
-After the script has run, 21 (with the livescore API) docker container should be running for the bet-it application.
+After the script has run, 21 (with the livescore API) docker container should be running for the bet-it application.[^1]
 If not, try to re-run the script until successful. You can check it with:
 ```shell
 docker-compose -f bet-it/docker-compose.yml ps
@@ -65,6 +66,8 @@ curl --location 'localhost:8082/platform/twoFactor' \
 8.  if done right, you can inspect [kafdrop](http://localhost:9000) for the topic bet.added-new-customer to see. Also intersting is the camunda topic. There you will see everything via the [Kafka Camunda API](#kafka-camunda-api)
 
 ### Debug with kafka
+The same process can be "debugged" with having a look at the Kafka messages. Here there is a list on how it should go:
+
 1. Start Add User Workflow
 2. Do user task :: Open [Zeebe Tasklist](http://localhost:8181) and login with user demo and password demo
 :: topic camunda.twofa with a JSON value like this
@@ -343,3 +346,4 @@ and some more, in case of miss or friendly fire
 ### Add Connector Templates
 If you want to use templates for the Camunda Desktop Modeler download the templates and follow the [instructions](https://docs.camunda.io/docs/self-managed/connectors-deployment/install-and-start/)
 
+[^1]: We spent several hours to make this 21 containers large application run on every device and also included runscripts to make it even more resilient. However, we know that setup-problems can occur anywhere. Should you encounter any problems you reckon unsolvable for you, do not hesistate to write an email to the developer. We are more than happy to help you with your setup-problem.
