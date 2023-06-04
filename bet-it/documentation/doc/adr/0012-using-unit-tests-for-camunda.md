@@ -8,12 +8,13 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+Developing camunda workflows can be difficult, as the logic gets very big very quickly. Furthermore it's hard to debug in case of errors.
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We decided to develop the camunda workflows test-driven, to speed up development speed and rule out potential errors.
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+Over time the development speed will be faster, as there will be less errors to debug.
+There is quit an overhead at the beginning. Also the Unit-Tests Frameworks are not perfect as of today, which some bugs in them.

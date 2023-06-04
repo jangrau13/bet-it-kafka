@@ -8,12 +8,14 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+Our system should work with various sources, including our own game.
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+Because our system should be able to be fed by various sources, we decided to split up the game-master, to make sure we can do this in a safe manner.
+
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+One more service, will cost more money. 
+No issues when developing different sources for the platform as they just need to match the kafka schemas.
