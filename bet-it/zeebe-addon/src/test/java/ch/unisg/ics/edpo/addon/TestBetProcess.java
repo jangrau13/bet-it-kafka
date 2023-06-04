@@ -102,15 +102,22 @@ public class TestBetProcess {
     }
 
 
+
     @Test
-    public void testBuyerFreezeFailed(){
-        ContractData contractData = new ContractData("gameid123", 2.1, "lukas", true, "123345");
-        Bet bet = new Bet(contractData, "betId123", "jan", 500.0, LocalDateTime.now());
+    public void testContractorFreezeFailed(){
+        ContractData contractData = new ContractData("gameid123", 2.1, "contractor", true, "123345");
+        Bet bet = new Bet(contractData, "betId123", "buyer", 500.0, LocalDateTime.now());
         ProcessInstanceEvent instance = startCamunda(Topics.Bet.BET_REQUESTED, bet.toMap(), zeebe);
-        FreezeEvent firstFreezeResponse = new FreezeEvent(bet.getBuyerName(), bet.getAmountBought() * bet.getRatio(), FreezeEvent.STATUS.FAILED);
+        FreezeEvent firstFreezeResponse = new FreezeEvent(bet.getBuyerName(), bet.getAmountBought() * bet.getRatio(), FreezeEvent.STATUS.ACCEPTED);
         sendToCamunda(Topics.Bank.Freeze.FREEZE_RESULT, bet.getBuyerName(),firstFreezeResponse.toMap(), zeebe );
         waitForProcessInstanceHasPassedElement(instance, "freeze_buyer");
-        waitForProcessInstanceHasPassedElement(instance, "rejectBetSendElement");
+        FreezeEvent secondFreezeResponse = new FreezeEvent(bet.getContractorName(), bet.getAmountBought(), FreezeEvent.STATUS.FAILED);
+        sendToCamunda(Topics.Bank.Freeze.FREEZE_RESULT, bet.getContractorName(), secondFreezeResponse.toMap(), zeebe);
+        waitForProcessInstanceHasPassedElement(instance, "freeze_contractor");
+        waitForProcessInstanceHasPassedElement(instance, "Error");
+        FreezeEvent unfreezeBuyerEvent = new FreezeEvent(bet.getBuyerName(), -bet.getAmountBought() * bet.getRatio(), FreezeEvent.STATUS.ACCEPTED);
+        sendToCamunda(Topics.Bank.Freeze.FREEZE_RESULT, bet.getBuyerName(), unfreezeBuyerEvent.toMap(), zeebe);
+        waitForProcessInstanceHasPassedElement(instance, "unfreeze_buyer_compensation");
         assertThat(instance).
                 hasNoIncidents()
                 .isCompleted();
