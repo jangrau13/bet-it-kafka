@@ -1,0 +1,3633 @@
+{
+  "success": true,
+  "data": {
+    "match": [
+      {
+        "score": "1 - 2",
+        "odds": {
+          "pre": {
+            "1": 1.33,
+            "2": 8.5,
+            "X": 4.75
+          },
+          "live": {
+            "1": 41,
+            "2": 1.1,
+            "X": 7
+          }
+        },
+        "away_id": 5458,
+        "ht_score": "1 - 2",
+        "home_name": "Alashkert FC",
+        "competition_name": "Premier League",
+        "last_changed": "2023-05-16 14:53:08",
+        "league_name": "",
+        "country": {
+          "id": 190,
+          "name": "Armenia",
+          "flag": "ARM.png"
+        },
+        "competition_id": 238,
+        "fixture_id": 1567457,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=4392&team2_id=5458",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 4392,
+        "added": "2023-05-16 11:45:05",
+        "ft_score": "1 - 2",
+        "ps_score": "",
+        "location": "Stadion Nairi",
+        "id": 427167,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "BKMA",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427167",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 1.19,
+            "2": 20,
+            "X": 5.14
+          }
+        },
+        "away_id": 7530,
+        "ht_score": "1 - 0",
+        "home_name": "Neftchi Baku ii",
+        "competition_name": "Birinci Dasta",
+        "last_changed": "2023-05-16 14:53:08",
+        "league_name": "",
+        "country": {
+          "id": 28,
+          "name": "Azerbaijan",
+          "flag": "AZE.png"
+        },
+        "competition_id": 134,
+        "fixture_id": 1570735,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3816&team2_id=7530",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 3816,
+        "added": "2023-05-16 11:45:05",
+        "ft_score": "2 - 1",
+        "ps_score": "",
+        "location": "Olimpiya Atletika Stadionu",
+        "id": 427168,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Araz Nakhchivan",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427168",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 2",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 101,
+            "2": 1.01,
+            "X": 26
+          }
+        },
+        "away_id": 3398,
+        "ht_score": "0 - 1",
+        "home_name": "Legetafo Legedadi",
+        "competition_name": "Premier League",
+        "last_changed": "2023-05-16 14:53:09",
+        "league_name": "",
+        "country": {
+          "id": 142,
+          "name": "Ethiopia",
+          "flag": "ETH.png"
+        },
+        "competition_id": 273,
+        "fixture_id": 1609297,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=7576&team2_id=3398",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 7576,
+        "added": "2023-05-16 11:45:06",
+        "ft_score": "0 - 2",
+        "ps_score": "",
+        "location": "Legetafo Legedadi Stadium",
+        "id": 427170,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Fasil Ketema",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427170",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 2",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 3144,
+        "ht_score": "",
+        "home_name": "Tire 1922 Spor",
+        "competition_name": "2nd Lig",
+        "last_changed": "2023-05-16 14:56:08",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 345,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1907&team2_id=3144",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1907,
+        "added": "2023-05-16 11:45:06",
+        "ft_score": "3 - 2",
+        "ps_score": "",
+        "location": "",
+        "id": 427171,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Erzin Belediyespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427171",
+        "outcomes": {
+          "half_time": null,
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 9",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 3099,
+        "ht_score": "0 - 8",
+        "home_name": "Sivas Belediyespor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6256&team2_id=3099",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 6256,
+        "added": "2023-05-16 11:45:09",
+        "ft_score": "0 - 9",
+        "ps_score": "",
+        "location": "Muhsin Yazıcıoğlu Stadyumu",
+        "id": 427182,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Menemen Belediyespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427182",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 3",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 6,
+            "2": 2.1,
+            "X": 2.05
+          }
+        },
+        "away_id": 2516,
+        "ht_score": "2 - 2",
+        "home_name": "Balikesirspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1390&team2_id=2516",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1390,
+        "added": "2023-05-16 11:45:09",
+        "ft_score": "3 - 3",
+        "ps_score": "",
+        "location": "Balıkesir Atatürk Stadyumu",
+        "id": 427183,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Zonguldakspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427183",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 3093,
+        "ht_score": "",
+        "home_name": "Kocaelispor",
+        "competition_name": "2nd Lig",
+        "last_changed": "2023-05-16 14:56:08",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 345,
+        "fixture_id": 1549539,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1904&team2_id=3093",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1904,
+        "added": "2023-05-16 11:45:09",
+        "ft_score": "2 - 1",
+        "ps_score": "",
+        "location": "İsmetpaşa Stadyumu",
+        "id": 427184,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Kastamonuspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427184",
+        "outcomes": {
+          "half_time": null,
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 2",
+        "odds": {
+          "pre": {
+            "1": 2.1,
+            "2": 3.2,
+            "X": 3.2
+          },
+          "live": {
+            "1": 1.01,
+            "2": 126,
+            "X": 26
+          }
+        },
+        "away_id": 3144,
+        "ht_score": "1 - 1",
+        "home_name": "Bucaspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1316&team2_id=3144",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1316,
+        "added": "2023-05-16 11:45:09",
+        "ft_score": "3 - 2",
+        "ps_score": "",
+        "location": "Buca Arena",
+        "id": 427185,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Erzin Belediyespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427185",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 3093,
+        "ht_score": "1 - 1",
+        "home_name": "Korfez Spor Kulubu",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2512&team2_id=3093",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2512,
+        "added": "2023-05-16 11:45:10",
+        "ft_score": "2 - 1",
+        "ps_score": "",
+        "location": "",
+        "id": 427186,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Kastamonuspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427186",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 1863,
+        "ht_score": "0 - 0",
+        "home_name": "Fethiyespor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:13",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2563&team2_id=1863",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2563,
+        "added": "2023-05-16 11:45:10",
+        "ft_score": "1 - 0",
+        "ps_score": "",
+        "location": "",
+        "id": 427189,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Hekimoglu Trabzon",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427189",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 2",
+        "odds": {
+          "pre": {
+            "1": 4,
+            "2": 1.8,
+            "X": 3.25
+          },
+          "live": {
+            "1": 81,
+            "2": 1.02,
+            "X": 19
+          }
+        },
+        "away_id": 1859,
+        "ht_score": "1 - 1",
+        "home_name": "Utas Usakspor A.S",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:13",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 1572846,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3715&team2_id=1859",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 3715,
+        "added": "2023-05-16 11:45:11",
+        "ft_score": "1 - 2",
+        "ps_score": "",
+        "location": "Uşak 1 Eylül Stadı",
+        "id": 427190,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Belediye Vanspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427190",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 1",
+        "odds": {
+          "pre": {
+            "1": 2.5,
+            "2": 2.6,
+            "X": 3.1
+          },
+          "live": {
+            "1": 15,
+            "2": 11,
+            "X": 1.04
+          }
+        },
+        "away_id": 2460,
+        "ht_score": "0 - 0",
+        "home_name": "Kirklarelispor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:13",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2442&team2_id=2460",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2442,
+        "added": "2023-05-16 11:45:11",
+        "ft_score": "1 - 1",
+        "ps_score": "",
+        "location": "Kırklareli Atatürk Stadyumu",
+        "id": 427191,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Ankara Demirspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427191",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 3",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 2570,
+        "ht_score": "1 - 0",
+        "home_name": "Afjet Afyonspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:11",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 1572699,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2020&team2_id=2570",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2020,
+        "added": "2023-05-16 11:45:11",
+        "ft_score": "2 - 3",
+        "ps_score": "",
+        "location": "Zafer Stadı",
+        "id": 427192,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Sanliurfaspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427192",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 4",
+        "odds": {
+          "pre": {
+            "1": 1.95,
+            "2": 3.4,
+            "X": 3.3
+          },
+          "live": {
+            "1": 51,
+            "2": 1.01,
+            "X": 29
+          }
+        },
+        "away_id": 2514,
+        "ht_score": "0 - 3",
+        "home_name": "Kirsehir Belediye Spor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:13",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2515&team2_id=2514",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2515,
+        "added": "2023-05-16 11:45:11",
+        "ft_score": "2 - 4",
+        "ps_score": "",
+        "location": "",
+        "id": 427193,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Etimesgut Belediyespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427193",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "4 - 0",
+        "odds": {
+          "pre": {
+            "1": 1.91,
+            "2": 3.6,
+            "X": 3.4
+          },
+          "live": {
+            "1": 1.02,
+            "2": 29,
+            "X": 17
+          }
+        },
+        "away_id": 3721,
+        "ht_score": "1 - 0",
+        "home_name": "Amedspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:11",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 1572700,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2589&team2_id=3721",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2589,
+        "added": "2023-05-16 11:45:11",
+        "ft_score": "4 - 0",
+        "ps_score": "",
+        "location": "Seyrantepe Spor Kompleksi Stadyumu 1",
+        "id": 427194,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Duzcespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427194",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 1",
+        "odds": {
+          "pre": {
+            "1": 2.75,
+            "2": 2.3,
+            "X": 3.2
+          },
+          "live": {
+            "1": 10,
+            "2": 12,
+            "X": 1.06
+          }
+        },
+        "away_id": 3685,
+        "ht_score": "0 - 0",
+        "home_name": "Serik Belediyespor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:14",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2567&team2_id=3685",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2567,
+        "added": "2023-05-16 11:45:12",
+        "ft_score": "0 - 1",
+        "ps_score": "",
+        "location": "İsmail Ogan Stadyumu",
+        "id": 427195,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Karacabey Birlik Spor A.S",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427195",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "4 - 0",
+        "odds": {
+          "pre": {
+            "1": 1.8,
+            "2": 3.8,
+            "X": 3.4
+          },
+          "live": {
+            "1": 1.01,
+            "2": 51,
+            "X": 29
+          }
+        },
+        "away_id": 2524,
+        "ht_score": "3 - 0",
+        "home_name": "Ankaraspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:11",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 1549154,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1101&team2_id=2524",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1101,
+        "added": "2023-05-16 11:45:12",
+        "ft_score": "4 - 0",
+        "ps_score": "",
+        "location": "Eryaman Stadyumu",
+        "id": 427196,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Inegolspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427196",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 1",
+        "odds": {
+          "pre": {
+            "1": 2.7,
+            "2": 2.5,
+            "X": 2.9
+          },
+          "live": {
+            "1": 1.02,
+            "2": 81,
+            "X": 19
+          }
+        },
+        "away_id": 6472,
+        "ht_score": "1 - 1",
+        "home_name": "Karsiyaka",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1949&team2_id=6472",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1949,
+        "added": "2023-05-16 11:45:12",
+        "ft_score": "3 - 1",
+        "ps_score": "",
+        "location": "",
+        "id": 427197,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Belediye Kutahyaspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427197",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 6437,
+        "ht_score": "1 - 0",
+        "home_name": "Batman Petrolspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 1572698,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1315&team2_id=6437",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1315,
+        "added": "2023-05-16 11:45:12",
+        "ft_score": "1 - 0",
+        "ps_score": "",
+        "location": "16 Mayıs Şehir Stadyumu",
+        "id": 427198,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Arnavutkoy Belediyespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427198",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 4",
+        "odds": {
+          "pre": {
+            "1": 6,
+            "2": 1.45,
+            "X": 3.8
+          },
+          "live": {
+            "1": 56,
+            "2": 1.01,
+            "X": 29
+          }
+        },
+        "away_id": 2509,
+        "ht_score": "0 - 2",
+        "home_name": "Sile Yildizspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2528&team2_id=2509",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2528,
+        "added": "2023-05-16 11:45:13",
+        "ft_score": "0 - 4",
+        "ps_score": "",
+        "location": "",
+        "id": 427199,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "A. Selcukluspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427199",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 5",
+        "odds": {
+          "pre": {
+            "1": 2.55,
+            "2": 2.45,
+            "X": 3.2
+          },
+          "live": {
+            "1": 34,
+            "2": 1.08,
+            "X": 7.5
+          }
+        },
+        "away_id": 5988,
+        "ht_score": "1 - 2",
+        "home_name": "Bursaspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 1572703,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1318&team2_id=5988",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1318,
+        "added": "2023-05-16 11:45:13",
+        "ft_score": "3 - 5",
+        "ps_score": "",
+        "location": "Bursa Büyükşehir Belediye Stadyumu",
+        "id": 427200,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Soma Spor Dernegi",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427200",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "4 - 0",
+        "odds": {
+          "pre": {
+            "1": 4,
+            "2": 1.8,
+            "X": 3.2
+          },
+          "live": {
+            "1": 1.02,
+            "2": 34,
+            "X": 19
+          }
+        },
+        "away_id": 2466,
+        "ht_score": "0 - 0",
+        "home_name": "Yomraspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1864&team2_id=2466",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1864,
+        "added": "2023-05-16 11:45:13",
+        "ft_score": "4 - 0",
+        "ps_score": "",
+        "location": "Yomra İlçe Stadyumu",
+        "id": 427201,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Yeni Orduspor Kulubu",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427201",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 1",
+        "odds": {
+          "pre": {
+            "1": 1.65,
+            "2": 4,
+            "X": 3.6
+          },
+          "live": {
+            "1": 21,
+            "2": 29,
+            "X": 1.03
+          }
+        },
+        "away_id": 3032,
+        "ht_score": "1 - 0",
+        "home_name": "Esenler Erokspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 1572697,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2507&team2_id=3032",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2507,
+        "added": "2023-05-16 11:45:13",
+        "ft_score": "1 - 1",
+        "ps_score": "",
+        "location": "Esenler Erokspor Stadyumu",
+        "id": 427202,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Erzincan Refahiyespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427202",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 6468,
+        "ht_score": "0 - 0",
+        "home_name": "Agrispor 1970",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=4829&team2_id=6468",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 4829,
+        "added": "2023-05-16 11:45:14",
+        "ft_score": "1 - 1",
+        "ps_score": "",
+        "location": "Vali Lütfü Yiğenoğlu Stadyumu",
+        "id": 427203,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Edirnespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427203",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 9",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 3099,
+        "ht_score": "",
+        "home_name": "Sivasspor",
+        "competition_name": "2nd Lig",
+        "last_changed": "2023-05-16 14:56:08",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 345,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=867&team2_id=3099",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 867,
+        "added": "2023-05-16 11:45:17",
+        "ft_score": "0 - 9",
+        "ps_score": "",
+        "location": "Yeni Sivas 4 Eylül Stadyumu",
+        "id": 427204,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Menemen Belediyespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427204",
+        "outcomes": {
+          "half_time": null,
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 6",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 13,
+            "2": 1.01,
+            "X": 11
+          }
+        },
+        "away_id": 1170,
+        "ht_score": "1 - 3",
+        "home_name": "Eskisehirspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1424&team2_id=1170",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1424,
+        "added": "2023-05-16 11:45:18",
+        "ft_score": "3 - 6",
+        "ps_score": "",
+        "location": "Yeni Eskişehir Stadyumu",
+        "id": 427205,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Elazigspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427205",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 6430,
+        "ht_score": "2 - 0",
+        "home_name": "Corum Belediyespor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 1572696,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3714&team2_id=6430",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 3714,
+        "added": "2023-05-16 11:45:18",
+        "ft_score": "2 - 1",
+        "ps_score": "",
+        "location": "Dr. Turhan Kılıçcıoğlu Stadyumu",
+        "id": 427206,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Isparta Davraz Spor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427206",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 2",
+        "odds": {
+          "pre": {
+            "1": 3.6,
+            "2": 1.95,
+            "X": 3.1
+          },
+          "live": {
+            "1": 12.1,
+            "2": 1.21,
+            "X": 5.53
+          }
+        },
+        "away_id": 6470,
+        "ht_score": "0 - 1",
+        "home_name": "Altindag Belediye Spor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2440&team2_id=6470",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2440,
+        "added": "2023-05-16 11:45:18",
+        "ft_score": "0 - 2",
+        "ps_score": "",
+        "location": "",
+        "id": 427207,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Belediye Derince",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427207",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 2",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 17,
+            "2": 1.01,
+            "X": 13.5
+          }
+        },
+        "away_id": 3718,
+        "ht_score": "0 - 1",
+        "home_name": "Karaman Belediyespor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2513&team2_id=3718",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2513,
+        "added": "2023-05-16 11:45:19",
+        "ft_score": "0 - 2",
+        "ps_score": "",
+        "location": "",
+        "id": 427208,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Nevsehir Belediye Spor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427208",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 14,
+            "2": 1.08,
+            "X": 8
+          }
+        },
+        "away_id": 4831,
+        "ht_score": "0 - 0",
+        "home_name": "1954 Kelkit Belediyespor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=4847&team2_id=4831",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 4847,
+        "added": "2023-05-16 11:45:19",
+        "ft_score": "0 - 0",
+        "ps_score": "",
+        "location": "",
+        "id": 427209,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Icel Idmanyurdu Spor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427209",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 8.7,
+            "2": 14,
+            "X": 1.07
+          }
+        },
+        "away_id": 1947,
+        "ht_score": "0 - 0",
+        "home_name": "Amasyaspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:15",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2500&team2_id=1947",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2500,
+        "added": "2023-05-16 11:45:20",
+        "ft_score": "0 - 0",
+        "ps_score": "",
+        "location": "",
+        "id": 427210,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Huseyin Kocer Insaat Catalcaspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427210",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 34,
+            "2": 29,
+            "X": 1.02
+          }
+        },
+        "away_id": 2505,
+        "ht_score": "0 - 1",
+        "home_name": "Turgutluspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:16",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1908&team2_id=2505",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1908,
+        "added": "2023-05-16 11:45:20",
+        "ft_score": "1 - 1",
+        "ps_score": "",
+        "location": "Turgutlu 7 Eylül Stadyumu",
+        "id": 427211,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Gumushanespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427211",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "7 - 3",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 1.07,
+            "2": 19.7,
+            "X": 7.79
+          }
+        },
+        "away_id": 4891,
+        "ht_score": "5 - 0",
+        "home_name": "Elazig Belediyespor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:16",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1862&team2_id=4891",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1862,
+        "added": "2023-05-16 11:45:21",
+        "ft_score": "7 - 3",
+        "ps_score": "",
+        "location": "",
+        "id": 427212,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Kirikkale Buyuk Anadoluspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427212",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "4 - 0",
+        "odds": {
+          "pre": {
+            "1": 1.25,
+            "2": 9,
+            "X": 5
+          },
+          "live": {
+            "1": 1.01,
+            "2": 34,
+            "X": 26
+          }
+        },
+        "away_id": 3716,
+        "ht_score": "3 - 0",
+        "home_name": "Kestelspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:16",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6477&team2_id=3716",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 6477,
+        "added": "2023-05-16 11:45:22",
+        "ft_score": "4 - 0",
+        "ps_score": "",
+        "location": "Alanya Kestel Sahası",
+        "id": 427213,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Ergene Velimese Spor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427213",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "6 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 1.02,
+            "2": 34,
+            "X": 16
+          }
+        },
+        "away_id": 4018,
+        "ht_score": "3 - 1",
+        "home_name": "Akhisar Belediye Genclik Ve Spor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:16",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=375&team2_id=4018",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 375,
+        "added": "2023-05-16 11:45:23",
+        "ft_score": "6 - 1",
+        "ps_score": "",
+        "location": "Spor Toto Akhisar Belediye Stadı",
+        "id": 427214,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Buyukcekmece Tepecikspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427214",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 6478,
+        "ht_score": "0 - 0",
+        "home_name": "Erbaaspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:16",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2504&team2_id=6478",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2504,
+        "added": "2023-05-16 11:45:24",
+        "ft_score": "0 - 1",
+        "ps_score": "",
+        "location": "",
+        "id": 427215,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "68 Aksaray Belediyespor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427215",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 1",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 1.14,
+            "2": 18,
+            "X": 5.3
+          }
+        },
+        "away_id": 3145,
+        "ht_score": "1 - 0",
+        "home_name": "Halide Edip Adivarspor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:16",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3148&team2_id=3145",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 3148,
+        "added": "2023-05-16 11:45:25",
+        "ft_score": "3 - 1",
+        "ps_score": "",
+        "location": "Yıldıztabya Stadyumu",
+        "id": 427216,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Bergama",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427216",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 8.84,
+            "2": 10.9,
+            "X": 1.16
+          }
+        },
+        "away_id": 3143,
+        "ht_score": "0 - 0",
+        "home_name": "Bursa Yildirim Spor",
+        "competition_name": "3rd Lig",
+        "last_changed": "2023-05-16 14:53:16",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 346,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6479&team2_id=3143",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 6479,
+        "added": "2023-05-16 11:45:26",
+        "ft_score": "0 - 0",
+        "ps_score": "",
+        "location": "Minareli Çavuş Spor Tesisleri",
+        "id": 427217,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Artvin Hopaspor",
+        "scheduled": "12:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427217",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 3",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 7529,
+        "ht_score": "0 - 2",
+        "home_name": "Qarabag II",
+        "competition_name": "Birinci Dasta",
+        "last_changed": "2023-05-16 14:53:08",
+        "league_name": "",
+        "country": {
+          "id": 28,
+          "name": "Azerbaijan",
+          "flag": "AZE.png"
+        },
+        "competition_id": 134,
+        "fixture_id": 1562291,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=5393&team2_id=7529",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 5393,
+        "added": "2023-05-16 11:48:05",
+        "ft_score": "1 - 3",
+        "ps_score": "",
+        "location": "Olimpiya Atletika Stadionu",
+        "id": 427218,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Turan II",
+        "scheduled": "12:03",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427218",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 7532,
+        "ht_score": "0 - 0",
+        "home_name": "FK Qaradag Lokbatan",
+        "competition_name": "Birinci Dasta",
+        "last_changed": "2023-05-16 14:53:08",
+        "league_name": "",
+        "country": {
+          "id": 28,
+          "name": "Azerbaijan",
+          "flag": "AZE.png"
+        },
+        "competition_id": 134,
+        "fixture_id": 1562292,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3518&team2_id=7532",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 3518,
+        "added": "2023-05-16 11:48:05",
+        "ft_score": "1 - 0",
+        "ps_score": "",
+        "location": "Lökbatan OIK stadionu",
+        "id": 427219,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Energetik",
+        "scheduled": "12:03",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427219",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 15,
+            "2": 19,
+            "X": 1.04
+          }
+        },
+        "away_id": 3515,
+        "ht_score": "0 - 0",
+        "home_name": "Shabail II",
+        "competition_name": "Birinci Dasta",
+        "last_changed": "2023-05-16 14:53:09",
+        "league_name": "",
+        "country": {
+          "id": 28,
+          "name": "Azerbaijan",
+          "flag": "AZE.png"
+        },
+        "competition_id": 134,
+        "fixture_id": 1576187,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3519&team2_id=3515",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 3519,
+        "added": "2023-05-16 11:48:06",
+        "ft_score": "0 - 0",
+        "ps_score": "",
+        "location": "Bayıl Arena",
+        "id": 427220,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "FK MOIK Baku",
+        "scheduled": "12:03",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427220",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 2",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 7001,
+        "ht_score": "1 - 2",
+        "home_name": "Zaqatala",
+        "competition_name": "Birinci Dasta",
+        "last_changed": "2023-05-16 14:53:09",
+        "league_name": "",
+        "country": {
+          "id": 28,
+          "name": "Azerbaijan",
+          "flag": "AZE.png"
+        },
+        "competition_id": 134,
+        "fixture_id": 1570734,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3830&team2_id=7001",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 3830,
+        "added": "2023-05-16 11:48:07",
+        "ft_score": "2 - 2",
+        "ps_score": "",
+        "location": "Şəhər stadionu",
+        "id": 427221,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "FK Gabala II",
+        "scheduled": "12:03",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427221",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": "X",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 3",
+        "odds": {
+          "pre": {
+            "1": 12,
+            "2": 1.22,
+            "X": 6.5
+          },
+          "live": {
+            "1": 501,
+            "2": 1.01,
+            "X": 26
+          }
+        },
+        "away_id": 586,
+        "ht_score": "1 - 1",
+        "home_name": "FC Groningen",
+        "competition_name": "Eredivisie",
+        "last_changed": "2023-05-16 14:53:09",
+        "league_name": "",
+        "country": {
+          "id": 42,
+          "name": "Netherlands",
+          "flag": "NED.png"
+        },
+        "competition_id": 196,
+        "fixture_id": 1610868,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1147&team2_id=586",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 1147,
+        "added": "2023-05-16 12:45:14",
+        "ft_score": "2 - 3",
+        "ps_score": "",
+        "location": "Hitachi Capital Mobility Stadium",
+        "id": 427223,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Ajax",
+        "scheduled": "13:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427223",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "2",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 4",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 23,
+            "2": 1.05,
+            "X": 13
+          }
+        },
+        "away_id": 2977,
+        "ht_score": "1 - 4",
+        "home_name": "Arua Hill",
+        "competition_name": "Super League",
+        "last_changed": "2023-05-16 14:56:13",
+        "league_name": "",
+        "country": {
+          "id": 98,
+          "name": "Uganda",
+          "flag": "UGA.png"
+        },
+        "competition_id": 81,
+        "fixture_id": 1577628,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=7054&team2_id=2977",
+        "status": "ADDED TIME",
+        "federation": null,
+        "home_id": 7054,
+        "added": "2023-05-16 12:45:18",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Aura Hill Stadium",
+        "id": 427224,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "90+",
+        "league_id": 0,
+        "away_name": "Jinja SSS",
+        "scheduled": "13:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427224",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 2",
+        "odds": {
+          "pre": {
+            "1": 2.6,
+            "2": 2.9,
+            "X": 2.6
+          },
+          "live": {
+            "1": 1.12,
+            "2": 28,
+            "X": 7.06
+          }
+        },
+        "away_id": 7055,
+        "ht_score": "2 - 2",
+        "home_name": "Blacks Power",
+        "competition_name": "Super League",
+        "last_changed": "2023-05-16 14:53:16",
+        "league_name": "",
+        "country": {
+          "id": 98,
+          "name": "Uganda",
+          "flag": "UGA.png"
+        },
+        "competition_id": 81,
+        "fixture_id": 1575605,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=7569&team2_id=7055",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 7569,
+        "added": "2023-05-16 12:45:20",
+        "ft_score": "3 - 2",
+        "ps_score": "",
+        "location": "Akii Bua Stadium",
+        "id": 427225,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Gaddafi",
+        "scheduled": "13:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427225",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 2",
+        "odds": {
+          "pre": {
+            "1": 2.7,
+            "2": 2.6,
+            "X": 2.8
+          },
+          "live": {
+            "1": 41,
+            "2": 1.07,
+            "X": 9
+          }
+        },
+        "away_id": 5359,
+        "ht_score": "0 - 0",
+        "home_name": "UPDF",
+        "competition_name": "Super League",
+        "last_changed": "2023-05-16 14:53:17",
+        "league_name": "",
+        "country": {
+          "id": 98,
+          "name": "Uganda",
+          "flag": "UGA.png"
+        },
+        "competition_id": 81,
+        "fixture_id": 1575604,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3380&team2_id=5359",
+        "status": "ADDED TIME",
+        "federation": null,
+        "home_id": 3380,
+        "added": "2023-05-16 12:45:21",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Bombo Stadium",
+        "id": 427226,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "90+",
+        "league_id": 0,
+        "away_name": "SC Villa",
+        "scheduled": "13:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427226",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 1.02,
+            "2": 134,
+            "X": 10.6
+          }
+        },
+        "away_id": 2972,
+        "ht_score": "1 - 0",
+        "home_name": "Kampala CCA",
+        "competition_name": "Super League",
+        "last_changed": "2023-05-16 14:56:13",
+        "league_name": "",
+        "country": {
+          "id": 98,
+          "name": "Uganda",
+          "flag": "UGA.png"
+        },
+        "competition_id": 81,
+        "fixture_id": 1575608,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2970&team2_id=2972",
+        "status": "ADDED TIME",
+        "federation": null,
+        "home_id": 2970,
+        "added": "2023-05-16 12:45:22",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Star Times Uganda Stadium",
+        "id": 427227,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "90+",
+        "league_id": 0,
+        "away_name": "Bidco FC",
+        "scheduled": "13:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427227",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 1.01,
+            "2": 61,
+            "X": 34
+          }
+        },
+        "away_id": 2971,
+        "ht_score": "1 - 0",
+        "home_name": "Maroons FC",
+        "competition_name": "Super League",
+        "last_changed": "2023-05-16 14:53:17",
+        "league_name": "",
+        "country": {
+          "id": 98,
+          "name": "Uganda",
+          "flag": "UGA.png"
+        },
+        "competition_id": 81,
+        "fixture_id": 1575606,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2984&team2_id=2971",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 2984,
+        "added": "2023-05-16 12:45:22",
+        "ft_score": "1 - 0",
+        "ps_score": "",
+        "location": "Luzira Maximum Prisons Stadium",
+        "id": 427228,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Onduparaka",
+        "scheduled": "13:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427228",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 1.01,
+            "2": 51,
+            "X": 26
+          }
+        },
+        "away_id": 2974,
+        "ht_score": "1 - 0",
+        "home_name": "Wakiso Giants FC",
+        "competition_name": "Super League",
+        "last_changed": "2023-05-16 14:53:17",
+        "league_name": "",
+        "country": {
+          "id": 98,
+          "name": "Uganda",
+          "flag": "UGA.png"
+        },
+        "competition_id": 81,
+        "fixture_id": 1575609,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=5052&team2_id=2974",
+        "status": "FINISHED",
+        "federation": null,
+        "home_id": 5052,
+        "added": "2023-05-16 12:45:23",
+        "ft_score": "2 - 0",
+        "ps_score": "",
+        "location": "Kabaka Kyabaggu Sports Stadium",
+        "id": 427229,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "FT",
+        "league_id": 0,
+        "away_name": "Bright Stars",
+        "scheduled": "13:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427229",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "5 - 2",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": 1.5,
+            "2": 6,
+            "X": 3.6
+          }
+        },
+        "away_id": 2976,
+        "ht_score": "3 - 1",
+        "home_name": "Vipers SC",
+        "competition_name": "Super League",
+        "last_changed": "2023-05-16 14:56:13",
+        "league_name": "",
+        "country": {
+          "id": 98,
+          "name": "Uganda",
+          "flag": "UGA.png"
+        },
+        "competition_id": 81,
+        "fixture_id": 1575607,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2968&team2_id=2976",
+        "status": "ADDED TIME",
+        "federation": null,
+        "home_id": 2968,
+        "added": "2023-05-16 13:09:39",
+        "ft_score": "5 - 2",
+        "ps_score": "",
+        "location": "St. Mary's Stadium",
+        "id": 427230,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "90+",
+        "league_id": 0,
+        "away_name": "Express",
+        "scheduled": "13:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427230",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": "1",
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 2",
+        "odds": {
+          "pre": {
+            "1": 1.45,
+            "2": 6.5,
+            "X": 3.8
+          },
+          "live": {
+            "1": 8,
+            "2": 1.25,
+            "X": 5.5
+          }
+        },
+        "away_id": 7612,
+        "ht_score": "0 - 2",
+        "home_name": "AS Khroub",
+        "competition_name": "Ligue 2",
+        "last_changed": "2023-05-16 14:56:09",
+        "league_name": "",
+        "country": {
+          "id": 67,
+          "name": "Algeria",
+          "flag": "ALG.png"
+        },
+        "competition_id": 229,
+        "fixture_id": 1610098,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6804&team2_id=7612",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 6804,
+        "added": "2023-05-16 13:45:06",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Stade Abed Hamdani",
+        "id": 427231,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "E Sour El-Ghozlane",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427231",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "3 - 0",
+        "odds": {
+          "pre": {
+            "1": 1.13,
+            "2": 17,
+            "X": 7
+          },
+          "live": {
+            "1": 1.06,
+            "2": 27,
+            "X": 11.9
+          }
+        },
+        "away_id": 7097,
+        "ht_score": "3 - 0",
+        "home_name": "IB Khemis El Khechna",
+        "competition_name": "Ligue 2",
+        "last_changed": "2023-05-16 14:56:09",
+        "league_name": "",
+        "country": {
+          "id": 67,
+          "name": "Algeria",
+          "flag": "ALG.png"
+        },
+        "competition_id": 229,
+        "fixture_id": 1610091,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=7610&team2_id=7097",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 7610,
+        "added": "2023-05-16 13:45:07",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Stade Communal de Reghaia",
+        "id": 427232,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Hamra Annaba",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427232",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 1729,
+        "ht_score": "2 - 0",
+        "home_name": "RB Ouargla",
+        "competition_name": "Ligue 2",
+        "last_changed": "2023-05-16 14:56:09",
+        "league_name": "",
+        "country": {
+          "id": 67,
+          "name": "Algeria",
+          "flag": "ALG.png"
+        },
+        "competition_id": 229,
+        "fixture_id": 1610093,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=7098&team2_id=1729",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 7098,
+        "added": "2023-05-16 13:45:08",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "-",
+        "id": 427233,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Ain M'lila",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427233",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 7611,
+        "ht_score": "0 - 0",
+        "home_name": "JSM Skikda",
+        "competition_name": "Ligue 2",
+        "last_changed": "2023-05-16 14:56:09",
+        "league_name": "",
+        "country": {
+          "id": 67,
+          "name": "Algeria",
+          "flag": "ALG.png"
+        },
+        "competition_id": 229,
+        "fixture_id": 1610092,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6534&team2_id=7611",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 6534,
+        "added": "2023-05-16 13:45:08",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Stade du 20 Août 1955",
+        "id": 427234,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "US Souf",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427234",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 0",
+        "odds": {
+          "pre": {
+            "1": 1.4,
+            "2": 7.5,
+            "X": 3.75
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 5572,
+        "ht_score": "",
+        "home_name": "MC EL Eulma",
+        "competition_name": "Ligue 2",
+        "last_changed": "2023-05-16 14:56:09",
+        "league_name": "",
+        "country": {
+          "id": 67,
+          "name": "Algeria",
+          "flag": "ALG.png"
+        },
+        "competition_id": 229,
+        "fixture_id": 1610094,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6806&team2_id=5572",
+        "status": "ADDED TIME",
+        "federation": null,
+        "home_id": 6806,
+        "added": "2023-05-16 13:45:09",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Stade Messaoud Zougar",
+        "id": 427236,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "45+",
+        "league_id": 0,
+        "away_name": "CA Batna",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427236",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 0",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 7088,
+        "ht_score": "0 - 0",
+        "home_name": "Nrb Teleghma",
+        "competition_name": "Ligue 2",
+        "last_changed": "2023-05-16 14:56:09",
+        "league_name": "",
+        "country": {
+          "id": 67,
+          "name": "Algeria",
+          "flag": "ALG.png"
+        },
+        "competition_id": 229,
+        "fixture_id": 1610095,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6809&team2_id=7088",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 6809,
+        "added": "2023-05-16 13:45:09",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "-",
+        "id": 427238,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "JS Bordj Menaiel",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427238",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 0",
+        "odds": {
+          "pre": {
+            "1": 1.62,
+            "2": 6,
+            "X": 3.2
+          },
+          "live": {
+            "1": 1.89,
+            "2": 4.5,
+            "X": 2.5
+          }
+        },
+        "away_id": 6812,
+        "ht_score": "1 - 0",
+        "home_name": "USM Annaba",
+        "competition_name": "Ligue 2",
+        "last_changed": "2023-05-16 14:56:09",
+        "league_name": "",
+        "country": {
+          "id": 67,
+          "name": "Algeria",
+          "flag": "ALG.png"
+        },
+        "competition_id": 229,
+        "fixture_id": 1610097,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6803&team2_id=6812",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 6803,
+        "added": "2023-05-16 13:45:10",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Stade 19 Mai 1956",
+        "id": 427240,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "US Chaouia",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427240",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 0",
+        "odds": {
+          "pre": {
+            "1": 1.2,
+            "2": 17,
+            "X": 5.5
+          },
+          "live": {
+            "1": 1.03,
+            "2": 34,
+            "X": 10.3
+          }
+        },
+        "away_id": 6808,
+        "ht_score": "2 - 0",
+        "home_name": "USM El Harrach",
+        "competition_name": "Ligue 2",
+        "last_changed": "2023-05-16 14:56:10",
+        "league_name": "",
+        "country": {
+          "id": 67,
+          "name": "Algeria",
+          "flag": "ALG.png"
+        },
+        "competition_id": 229,
+        "fixture_id": 1610096,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=408&team2_id=6808",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 408,
+        "added": "2023-05-16 13:45:11",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Stade 1er Novembre 1954",
+        "id": 427242,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "MO Constantine",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427242",
+        "outcomes": {
+          "half_time": "1",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 2",
+        "odds": {
+          "pre": {
+            "1": 3.8,
+            "2": 1.95,
+            "X": 3
+          },
+          "live": {
+            "1": 29,
+            "2": 1.03,
+            "X": 15
+          }
+        },
+        "away_id": 100,
+        "ht_score": "0 - 2",
+        "home_name": "El Hodood",
+        "competition_name": "Premier League",
+        "last_changed": "2023-05-16 14:56:10",
+        "league_name": "",
+        "country": {
+          "id": 74,
+          "name": "Egypt",
+          "flag": "EGY.png"
+        },
+        "competition_id": 36,
+        "fixture_id": 1609330,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2230&team2_id=100",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 2230,
+        "added": "2023-05-16 13:45:12",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Border Guard Stadium (Haras El-Hodod Stadium)",
+        "id": 427245,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Al Mokawloon Al Arab",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427245",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 1",
+        "odds": {
+          "pre": {
+            "1": 1.45,
+            "2": 6,
+            "X": 4.2
+          },
+          "live": {
+            "1": 6,
+            "2": 1.61,
+            "X": 3.6
+          }
+        },
+        "away_id": 3031,
+        "ht_score": "0 - 1",
+        "home_name": "Samsunspor",
+        "competition_name": "2nd Lig",
+        "last_changed": "2023-05-16 14:56:10",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 345,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=2441&team2_id=3031",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 2441,
+        "added": "2023-05-16 13:45:13",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Stadyum Samsun",
+        "id": 427248,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Bodrum Belediyesi Bodrumspor",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427248",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 1",
+        "odds": {
+          "pre": {
+            "1": 2.2,
+            "2": 2.88,
+            "X": 3.4
+          },
+          "live": {
+            "1": 2.87,
+            "2": 2.5,
+            "X": 3
+          }
+        },
+        "away_id": 2522,
+        "ht_score": "0 - 1",
+        "home_name": "Genclerbirligi",
+        "competition_name": "2nd Lig",
+        "last_changed": "2023-05-16 14:56:11",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 345,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1102&team2_id=2522",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 1102,
+        "added": "2023-05-16 13:45:13",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Ankara Ondokuz Mayıs Stadyumu",
+        "id": 427249,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Sakaryaspor",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427249",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "1 - 1",
+        "odds": {
+          "pre": {
+            "1": 4.33,
+            "2": 1.65,
+            "X": 3.75
+          },
+          "live": {
+            "1": 12,
+            "2": 1.22,
+            "X": 6
+          }
+        },
+        "away_id": 3149,
+        "ht_score": "",
+        "home_name": "Tuzlaspor",
+        "competition_name": "2nd Lig",
+        "last_changed": "2023-05-16 14:56:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 345,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3152&team2_id=3149",
+        "status": "ADDED TIME",
+        "federation": null,
+        "home_id": 3152,
+        "added": "2023-05-16 13:45:14",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Tuzla Belediyesi Stadı",
+        "id": 427251,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "45+",
+        "league_id": 0,
+        "away_name": "Manisa Buyuksehir Belediyespor",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427251",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 0",
+        "odds": {
+          "pre": {
+            "1": 3.5,
+            "2": 1.85,
+            "X": 3.75
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 3142,
+        "ht_score": "0 - 0",
+        "home_name": "Boluspor",
+        "competition_name": "1st Lig",
+        "last_changed": "2023-05-16 14:56:07",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 344,
+        "fixture_id": 1570000,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=970&team2_id=3142",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 970,
+        "added": "2023-05-16 13:45:14",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Bolu Atatürk Stadyumu",
+        "id": 427252,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Eyupspor",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427252",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "2 - 1",
+        "odds": {
+          "pre": {
+            "1": 3.1,
+            "2": 2.1,
+            "X": 3.3
+          },
+          "live": {
+            "1": 1.5,
+            "2": 7,
+            "X": 4
+          }
+        },
+        "away_id": 868,
+        "ht_score": "",
+        "home_name": "Goztepe",
+        "competition_name": "2nd Lig",
+        "last_changed": "2023-05-16 14:56:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 345,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1167&team2_id=868",
+        "status": "ADDED TIME",
+        "federation": null,
+        "home_id": 1167,
+        "added": "2023-05-16 13:45:14",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Bornova Doğanlar Stadı",
+        "id": 427253,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "45+",
+        "league_id": 0,
+        "away_name": "Rizespor",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427253",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 1",
+        "odds": {
+          "pre": {
+            "1": 1.95,
+            "2": 3.5,
+            "X": 3.5
+          },
+          "live": {
+            "1": 3.6,
+            "2": 2.1,
+            "X": 3.2
+          }
+        },
+        "away_id": 1274,
+        "ht_score": "0 - 1",
+        "home_name": "Altinordu",
+        "competition_name": "2nd Lig",
+        "last_changed": "2023-05-16 14:56:12",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 345,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1357&team2_id=1274",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 1357,
+        "added": "2023-05-16 13:45:15",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "İzmir Atatürk Stadyumu",
+        "id": 427254,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Erzurum BB",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427254",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 1",
+        "odds": {
+          "pre": {
+            "1": 1.75,
+            "2": 3.75,
+            "X": 3.8
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 2519,
+        "ht_score": "0 - 1",
+        "home_name": "Pendikspor",
+        "competition_name": "1st Lig",
+        "last_changed": "2023-05-16 14:56:07",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 344,
+        "fixture_id": 1542025,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3100&team2_id=2519",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 3100,
+        "added": "2023-05-16 13:45:19",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Pendik Stadyumu",
+        "id": 427255,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Bandirmaspor",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427255",
+        "outcomes": {
+          "half_time": "2",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "0 - 0",
+        "odds": {
+          "pre": {
+            "1": 1.91,
+            "2": 3.8,
+            "X": 3.5
+          },
+          "live": {
+            "1": 2.37,
+            "2": 4,
+            "X": 2.6
+          }
+        },
+        "away_id": 967,
+        "ht_score": "0 - 0",
+        "home_name": "Sivasspor",
+        "competition_name": "Super Lig",
+        "last_changed": "2023-05-16 14:56:13",
+        "league_name": "",
+        "country": {
+          "id": 48,
+          "name": "Turkey",
+          "flag": "TUR.png"
+        },
+        "competition_id": 6,
+        "fixture_id": 0,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=867&team2_id=967",
+        "status": "HALF TIME BREAK",
+        "federation": null,
+        "home_id": 867,
+        "added": "2023-05-16 13:45:23",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Yeni Sivas 4 Eylül Stadyumu",
+        "id": 427256,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "HT",
+        "league_id": 0,
+        "away_name": "Kasimpasa",
+        "scheduled": "14:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427256",
+        "outcomes": {
+          "half_time": "X",
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "? - ?",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 5082,
+        "ht_score": "",
+        "home_name": "Botev Plovdiv II",
+        "competition_name": "Second Professional League",
+        "last_changed": "2023-05-16 14:45:07",
+        "league_name": "",
+        "country": {
+          "id": 38,
+          "name": "Bulgaria",
+          "flag": "BUL.png"
+        },
+        "competition_id": 140,
+        "fixture_id": 1540021,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=6938&team2_id=5082",
+        "status": "NOT STARTED",
+        "federation": null,
+        "home_id": 6938,
+        "added": "2023-05-16 14:45:07",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Sporten kompleks Botev 1912",
+        "id": 427257,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "15:00",
+        "league_id": 0,
+        "away_name": "Ludogorets II",
+        "scheduled": "15:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427257",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "? - ?",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 7575,
+        "ht_score": "",
+        "home_name": "Dire Dawa Kenema",
+        "competition_name": "Premier League",
+        "last_changed": "2023-05-16 14:45:08",
+        "league_name": "",
+        "country": {
+          "id": 142,
+          "name": "Ethiopia",
+          "flag": "ETH.png"
+        },
+        "competition_id": 273,
+        "fixture_id": 1609298,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=3406&team2_id=7575",
+        "status": "NOT STARTED",
+        "federation": null,
+        "home_id": 3406,
+        "added": "2023-05-16 14:45:08",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Hawassa Stadium",
+        "id": 427258,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "15:00",
+        "league_id": 0,
+        "away_name": "Ethiopian Medhin",
+        "scheduled": "15:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427258",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "? - ?",
+        "odds": {
+          "pre": {
+            "1": 12,
+            "2": 1.18,
+            "X": 5.75
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 1910,
+        "ht_score": "",
+        "home_name": "FK Auda Riga",
+        "competition_name": "Virsliga",
+        "last_changed": "2023-05-16 14:45:08",
+        "league_name": "",
+        "country": {
+          "id": 24,
+          "name": "Latvia",
+          "flag": "LVA.png"
+        },
+        "competition_id": 20,
+        "fixture_id": 1595667,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=7345&team2_id=1910",
+        "status": "NOT STARTED",
+        "federation": null,
+        "home_id": 7345,
+        "added": "2023-05-16 14:45:08",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Baldones Stadions",
+        "id": 427260,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "15:00",
+        "league_id": 0,
+        "away_name": "Riga FC",
+        "scheduled": "15:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427260",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "? - ?",
+        "odds": {
+          "pre": {
+            "1": 2.2,
+            "2": 3.25,
+            "X": 3.5
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 2177,
+        "ht_score": "",
+        "home_name": "Moss FK",
+        "competition_name": "1 Division",
+        "last_changed": "2023-05-16 14:45:09",
+        "league_name": "",
+        "country": {
+          "id": 6,
+          "name": "Norway",
+          "flag": "NOR.png"
+        },
+        "competition_id": 204,
+        "fixture_id": 1599517,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=4253&team2_id=2177",
+        "status": "NOT STARTED",
+        "federation": null,
+        "home_id": 4253,
+        "added": "2023-05-16 14:45:09",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Melløs Stadion",
+        "id": 427262,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "15:00",
+        "league_id": 0,
+        "away_name": "Aasane",
+        "scheduled": "15:00",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427262",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "? - ?",
+        "odds": {
+          "pre": {
+            "1": 2.3,
+            "2": 2.55,
+            "X": 3.6
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 4592,
+        "ht_score": "",
+        "home_name": "Uhersky Brod",
+        "competition_name": "3rd league",
+        "last_changed": "2023-05-16 14:48:13",
+        "league_name": "",
+        "country": {
+          "id": 11,
+          "name": "Czech Republic",
+          "flag": "CZE.png"
+        },
+        "competition_id": 146,
+        "fixture_id": 1601445,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=5665&team2_id=4592",
+        "status": "NOT STARTED",
+        "federation": null,
+        "home_id": 5665,
+        "added": "2023-05-16 14:48:13",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Orelský stadion",
+        "id": 427263,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "15:03",
+        "league_id": 0,
+        "away_name": "FC Viktoria Otrokovice",
+        "scheduled": "15:03",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427263",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "? - ?",
+        "odds": {
+          "pre": {
+            "1": null,
+            "2": null,
+            "X": null
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 1637,
+        "ht_score": "",
+        "home_name": "FC Tekstilshchik Ivanovo",
+        "competition_name": "National Football League 2",
+        "last_changed": "2023-05-16 14:48:13",
+        "league_name": "",
+        "country": {
+          "id": 12,
+          "name": "Russia",
+          "flag": "RUS.png"
+        },
+        "competition_id": 310,
+        "fixture_id": 1609292,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=1701&team2_id=1637",
+        "status": "NOT STARTED",
+        "federation": null,
+        "home_id": 1701,
+        "added": "2023-05-16 14:48:13",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Stadion Tekstilshchik",
+        "id": 427264,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "15:03",
+        "league_id": 0,
+        "away_name": "Leningradets",
+        "scheduled": "15:03",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427264",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      },
+      {
+        "score": "? - ?",
+        "odds": {
+          "pre": {
+            "1": 1.8,
+            "2": 4.2,
+            "X": 3.1
+          },
+          "live": {
+            "1": null,
+            "2": null,
+            "X": null
+          }
+        },
+        "away_id": 126,
+        "ht_score": "",
+        "home_name": "Al Qadasiya",
+        "competition_name": "Division 1",
+        "last_changed": "2023-05-16 14:49:11",
+        "league_name": "",
+        "country": {
+          "id": 75,
+          "name": "Saudi Arabia",
+          "flag": "KSA.png"
+        },
+        "competition_id": 314,
+        "fixture_id": 1583455,
+        "h2h": "https://livescore-api.com/api-client/teams/head2head.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&team1_id=127&team2_id=126",
+        "status": "NOT STARTED",
+        "federation": null,
+        "home_id": 127,
+        "added": "2023-05-16 14:49:11",
+        "ft_score": "",
+        "ps_score": "",
+        "location": "Prince Saud bin Jalawi Stadium",
+        "id": 427265,
+        "has_lineups": true,
+        "et_score": "",
+        "time": "15:04",
+        "league_id": 0,
+        "away_name": "Ohod",
+        "scheduled": "15:04",
+        "events": "https://livescore-api.com/api-client/scores/events.json?key=H7ryKbpMfH1jmWFY&secret=TEj5E5DwJKIw0d2Hkug4GFRVnTfKPVII&id=427265",
+        "outcomes": {
+          "half_time": null,
+          "full_time": null,
+          "extra_time": null
+        }
+      }
+    ]
+  }
+}
