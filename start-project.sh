@@ -6,7 +6,7 @@ docker-compose -f bet-it/docker-compose.yml up ksqldb-server --build -d
 echo "compiling Microservices"
 
 cd bet-it
-echo mvn clean install -DskipTests
+mvn clean install -DskipTests
 cd ..
 
 echo "compiling done"
