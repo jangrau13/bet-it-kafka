@@ -257,6 +257,20 @@ services:
       - kafka
       - schema-registry
 
+  api2kafka:
+    hostname: api2kafka
+    container_name: api2kafka
+    build:
+      context: api2kafka
+      dockerfile: Dockerfile
+    networks:
+      - bet-it
+    ports:
+      - "8099:8099"
+    depends_on:
+      - kafka
+
+
   schema-registry:
     image: confluentinc/cp-schema-registry:5.2.1
     hostname: schema-registry

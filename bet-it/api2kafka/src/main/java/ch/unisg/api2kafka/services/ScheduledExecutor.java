@@ -1,12 +1,17 @@
 package ch.unisg.api2kafka.services;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class ScheduledExecutor {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final Api2KafkaService service;
+
 
     public ScheduledExecutor(Api2KafkaService service) {
         this.service = service;

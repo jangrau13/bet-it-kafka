@@ -11,5 +11,4 @@ kafka-topics --create --bootstrap-server kafka:9092 --topic camunda.twofa --repl
 kafka-topics --create --bootstrap-server kafka:9092 --topic camunda.user.check-result --replication-factor 1 --partitions 1
 kafka-topics --create --bootstrap-server kafka:9092 --topic camunda.TwoFactorSuccessEvent --replication-factor 1 --partitions 1
 
-
 sleep infinity
