@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM openjdk
 VOLUME /tmp
 RUN apk add --no-cache libstdc++
 ADD target/*.jar app.jar

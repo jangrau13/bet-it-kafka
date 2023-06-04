@@ -31,14 +31,12 @@ public class AddonConsumerService {
         log.info("AddonConsumerService started");
     }
 
-    @KafkaListener(topics = Topics.User.CHECK_RESULT, containerFactory = "kafkaListenerMapFactory", groupId = "addon")
+    @KafkaListener(topics = Topics.User.USER_CORRELATION_ID, containerFactory = "kafkaListenerMapFactory", groupId = "addon")
     public void consumeGameCamundaMessage(Map<String, Object> variables, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
-        log.info("*******" + topic   + "-> Consuming Camunda Variables:: {} from topic {}", variables, topic);
-        String correlationId = getCorrelationId(variables);
-        if (startTopics.contains(topic)) {
-            startCamundaProcess(topic, variables);
-        } else {
-            sendToCamunda(topic, correlationId, variables);
+        log.info("*******" + topic   + "-> Receiving TwoFactorForm from Adduser Formula:: {} from topic {}", variables, topic);
+        if (variables.containsKey(Keys.CORRELATION_ID)) {
+            var uuid = (String) variables.get(Keys.CORRELATION_ID);
+            log.info("Notification Service TwoFactor-Code: " + uuid);
         }
     }
 
