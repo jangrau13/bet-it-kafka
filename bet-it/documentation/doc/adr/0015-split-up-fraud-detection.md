@@ -8,12 +8,12 @@ Accepted
 
 ## Context
 
-The issue motivating this decision, and any context that influences or constrains the decision.
+Previously, the fraud detection had to respond immediately in the bet workflow. In our opinion however the fraud detection is an area that observes bets over a long time from multiple bets. Also frauds should be detectable well after a bet has ended, and thus actions should be taken at that time.
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We decided to split the fraud detection into its own service and moved it out of the bet workflow. The goal is that the fraud detection should be able to listen to various topics and make decisions on fraud claims based on Streams etc. Compensating actions will be events thrown, consumed by the bank. For this schema we will use avro.
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+The bet workflow will get leaner which improves surveilability. Furthermore the communication will get asynchronous, allowing the system to scale better.
