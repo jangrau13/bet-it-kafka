@@ -162,6 +162,7 @@ services:
 
 
   bet-it-platform:
+    restart: always
     build:
       context: bet-platform
       dockerfile: Dockerfile
@@ -172,6 +173,7 @@ services:
     depends_on:
       - kafka
   bank:
+    restart: always
     build:
       context: bank
       dockerfile: Dockerfile
@@ -183,6 +185,7 @@ services:
       - kafka
 
   game-master:
+    restart: always
     build:
       context: game-master
       dockerfile: Dockerfile
@@ -208,6 +211,8 @@ services:
       - kafka
       - schema-registry
       - zeebe
+      - operate
+      - tasklist
       - connectors
       - kafka-create-topics
 
@@ -238,6 +243,7 @@ services:
       - schema-registry
 
   fraud-detector:
+    restart: always
     hostname: fraud-detector
     container_name: fraud-detector
     build:
@@ -290,6 +296,7 @@ services:
       PORT: 9021
 
   kafka-create-topics:
+    restart: always
     image: confluentinc/cp-enterprise-kafka:6.0.0
     depends_on:
       - kafka
