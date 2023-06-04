@@ -7,13 +7,12 @@ Date: 2023-06-04
 Accepted
 
 ## Context
-
-The issue motivating this decision, and any context that influences or constrains the decision.
+A bank should have some time to make transactions, meaning that the communication shall not be asynchronous. For example, if unusual transactions happen, human intervention should be necessary to make the transaction. Furthermore a bank should be able to recover if its in-memory state gets lost.
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We decided to make the bank communicate over kafka instead of http. Because of this we can use event-sourcing to recover the in-memory state by replaying the messages in case of failure. Furthermore the communication became asynchronous by that.
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+By having the communication asynchronous, the whole system gets more fail-safe, as a short disruption of the bank service won't make the workflows fail, but rather wait until the bank is availible again. The system will also be able to scale better. Eventual consistency is hard to manage as a bank, that needs to go trough audits. 
