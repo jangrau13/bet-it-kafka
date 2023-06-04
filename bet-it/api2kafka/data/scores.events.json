@@ -1,0 +1,90 @@
+{
+  "success": true,
+  "data": {
+    "match": {
+      "id": "431649",
+      "home_name": "Yangpyeong",
+      "away_name": "Pocheon Citizens FC",
+      "score": "3 - 1",
+      "ht_score": "2 - 0",
+      "ft_score": "3 - 1",
+      "et_score": "",
+      "ps_score": "",
+      "time": "FT",
+      "league_id": "0",
+      "status": "FINISHED",
+      "added": "2023-06-03 07:45:09",
+      "last_changed": "2023-06-03 10:54:10",
+      "home_id": "4277",
+      "away_id": "4276",
+      "competition_id": "450",
+      "location": "Yangpyeong Sports Complex",
+      "fixture_id": "1604523",
+      "scheduled": "08:00",
+      "home": {
+        "id": "4277",
+        "name": "Yangpyeong",
+        "stadium": "",
+        "location": ""
+      },
+      "away": {
+        "id": "4276",
+        "name": "Pocheon Citizens FC",
+        "stadium": "",
+        "location": ""
+      },
+      "competition": {
+        "id": "450",
+        "name": "K3 League",
+        "is_league": "1",
+        "is_cup": "0",
+        "tier": "3",
+        "has_groups": "1",
+        "active": "1",
+        "national_teams_only": "0"
+      }
+    },
+    "event": [
+      {
+        "id": "64823087",
+        "match_id": "431649",
+        "player": "",
+        "time": "30",
+        "event": "GOAL",
+        "sort": "0",
+        "home_away": "h",
+        "info": ""
+      },
+      {
+        "id": "64823088",
+        "match_id": "431649",
+        "player": "AHN YU-JUN",
+        "time": "36",
+        "event": "GOAL",
+        "sort": "1",
+        "home_away": "h",
+        "info": ""
+      },
+      {
+        "id": "64823089",
+        "match_id": "431649",
+        "player": "",
+        "time": "86",
+        "event": "GOAL",
+        "sort": "2",
+        "home_away": "a",
+        "info": ""
+      },
+      {
+        "id": "64823090",
+        "match_id": "431649",
+        "player": "MUN KYUNG-MIN",
+        "time": "90",
+        "event": "GOAL",
+        "sort": "3",
+        "home_away": "h",
+        "info": ""
+      }
+    ]
+  }
+}
