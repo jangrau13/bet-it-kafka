@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM openjdk
 VOLUME /tmp
 ADD target/*.jar app.jar
 ADD src/main/resources/application.yml app/resources/application.properties
