@@ -19,6 +19,7 @@ docker-compose -f bet-it/docker-compose.yml up bet-it-platform --build -d
 docker-compose -f bet-it/docker-compose.yml up bank --build -d
 docker-compose -f bet-it/docker-compose.yml up fraud-detector --build -d
 docker-compose -f bet-it/docker-compose.yml up control-center --build -d
+docker-compose -f bet-it/docker-compose.yml up api2kafka --build -d
 
 
 

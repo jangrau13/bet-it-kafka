@@ -173,6 +173,7 @@ curl --location 'localhost:8081/demo/replay'
 ![](bet-it/documentation/images/BB_14.png)
 
 ## Bet Platform
+Side-Note: this workflow works independently of the Add-Customer workflow in order to achieve a greater decoupling.
 ### Create Contract (Game must exist and contractorName User)
 ```shell
 curl --location 'localhost:8082/platform/publishContract' \
@@ -342,8 +343,16 @@ and some more, in case of miss or friendly fire
 
 18.   Refresh the [Zeebe Operate](http://localhost:8180) and you should see the process run through and depending on whether you hit the black dots enough, you should see a pay seller or a pay contractor event.
 
+## API2Kafka
+1. start the fetching with
+```shell
+curl --location 'localhost:8099/start
+```
+2. observe [kafdrop](http://localhost:9000) on the topic game.published
+3. if you are lucky, a game is published, so you can follow the same procedure as above by taking the gameId and bet on it
+
 
 ### Add Connector Templates
 If you want to use templates for the Camunda Desktop Modeler download the templates and follow the [instructions](https://docs.camunda.io/docs/self-managed/connectors-deployment/install-and-start/)
 
-[^1]: We spent several hours to make this 21 containers large application run on every device and also included runscripts to make it even more resilient. However, we know that setup-problems can occur anywhere. Should you encounter any problems you reckon unsolvable for you, do not hesistate to write an email to the developer. We are more than happy to help you with your setup-problem.
+[^1]: We spent several hours to make this 21 containers large application run on every device and also included runscripts to make it even more resilient. However, we know that setup-problems can occur anywhere. Should you encounter any problems you reckon unsolvable for you, do not hesistate to write an email to the developer. We are more than happy to help you with your setup-problem. If something is not working, it might be due to an error in the kafka-create-topics container. Due to working on linux and windows, there is sometimes a problem with the setup, we didn't manage to fully evaluate. A clean docker setup restart (delete all container and run the start script again) ususally works. If not please do not hesistate to contact us.

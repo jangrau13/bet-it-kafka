@@ -9,6 +9,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,6 +20,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+@Component
 public class LiveScoreAPI {
     private final static String API_KEY = "1HoL0Y76QSeVPWgk";
     private final static String API_SECRET = "CORLYM9bCWy3zN3AvrmvquChmQdcNuxq";

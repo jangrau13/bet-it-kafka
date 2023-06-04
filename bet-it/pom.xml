@@ -21,6 +21,7 @@
         <module>bank</module>
         <module>zeebe-addon</module>
         <module>fraud-detector</module>
+        <module>api2kafka</module>
     </modules>
 
     <properties>

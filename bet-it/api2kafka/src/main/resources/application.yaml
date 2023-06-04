@@ -14,5 +14,5 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
     game-topic-published: game.published
-    game-topic-started: game.started
-    game-topic-ended: game.ended
+    game-topic-started: camunda.game.started
+    game-topic-ended: camunda.game.ended
